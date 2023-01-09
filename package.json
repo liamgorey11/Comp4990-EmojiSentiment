@@ -1,0 +1,27 @@
+{
+    "name": "twitter-monitoring",
+    "version": "1.0.0",
+    "description": "",
+    "main": "twitter_api.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Liam",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "export": "^0.1.337",
+        "express": "^4.18.2",
+        "fb-sdk-wrapper": "^1.1.0",
+        "franc": "^6.0.0",
+        "fs": "^0.0.1-security",
+        "node-fetch": "^2.6.7",
+        "node-notifier": "^10.0.1",
+        "open": "^7.0.3",
+        "raw.js": "^0.1.8",
+        "rereddit": "^1.0.0",
+        "sentiment": "^5.0.2",
+        "snoowrap": "^1.23.0",
+        "twit": "^2.2.11"
+    }
+}
