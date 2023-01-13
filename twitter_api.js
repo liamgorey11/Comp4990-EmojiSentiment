@@ -2,16 +2,17 @@
 const Twit = require('twit');
 //sentiment library
 //const Sentiment = require('sentiment');
-//const express = require('express');
-//const app = express();
+const express = require('express');
+const app = express();
 //const fetch = require('node-fetch');
 require('dotenv').config();
 //start listening on port 3000\
-/*
-app.listen(3000, () => console.log('listening on port 3000'))
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Starting server at ${port}`));
 app.use(express.static('public'));
 app.use(express.json({limit: '1mb'}));
-
+/*
 app.get('/api', (request, response) => {
     database.find({},(err, data) => {
         if(err) {
@@ -21,6 +22,16 @@ app.get('/api', (request, response) => {
         response.json(data);
     });
     
+});*/
+//Posting data
+/*
+app.post('/api', (request, response) => {
+    const data = request.body;;
+    const timestamp = Date.now();
+    data.timestamp = timestamp;
+    //console.log(timestamp.toLocaleDateString());
+    database.insert(data);
+    response.json(data);
 });
 */
 
