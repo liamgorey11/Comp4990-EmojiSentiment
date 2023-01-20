@@ -4,6 +4,7 @@
     "description": "",
     "main": "twitter_api.js",
     "scripts": {
+        "start": "node twitter_api.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Liam",
@@ -18,6 +19,7 @@
         "node-fetch": "^2.6.7",
         "node-notifier": "^10.0.1",
         "open": "^7.0.3",
+        "p5js": "^1.2.18",
         "raw.js": "^0.1.8",
         "rereddit": "^1.0.0",
         "sentiment": "^5.0.2",

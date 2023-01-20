@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>tweets
+        </title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    </head>
+<body>
+    <p>client side</p>
+    <body>
+        <h1>Twitter</h1>
+    
+        <p>This page pulls data from Twitter.  Authentication is happening in node on the server. </p>
+        <form>
+            <input id='searchInput' type='JavaScript'  placeholder="Enter Hashtag"></input>
+            <button id= 'searchButton'>Search!</button>
+        </form>
+      </body>
+  
+    <script>
+        //loadJSON('/all',gotData);
+        //function gotData(data){
+            //console.log(data);
+        //}
+        function setup() {
+            noCanvas();
+            var searchInput = select('#searchInput');
+            var button1 = select('#searchButton');
+            button1.mousePressed(getTweets);
+        }
+      
+
+        function getTweets() {
+            loadJSON(/tweets/ + searchInput.value(), gotTweets);
+        }
+        getTweets();
+        // We got the tweets
+        function gotTweets(tweets) {
+            // Just stick them in the window
+            for (var i = 0; i < tweets.length; i++) {
+                var par = createP(tweets[i].text);
+                par.class('text');
+            }
+        }
+        /*
+        const getBtn = document.getElementById('getTweets');
+        const postBtn = document.getElementById('post');
+        const input = document.querySelector('input');
+
+            const response = 'http://localhost:3000/tweets'
+
+            getBtn.addEventListener('click', getTweets)
+            async function getTweets(e) {
+                e.preventDefault();
+                const res = await fetch(response,
+                {
+                    method: 'GET'
+                })
+                
+                const data = await res.json();
+                console.log(data);
+                input.value = data.info;
+                console.log(data.info);
+            };
+            
+*/
+console.log("running");
+    </script>
+</body>
+</html>
