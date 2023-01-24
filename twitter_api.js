@@ -1,13 +1,14 @@
 //you can use twit library in js to get acess to tweets. 
 const Twit = require('twit');
 //sentiment library
-//const Sentiment = require('sentiment');
+const Sentiment = require('sentiment');
 const express = require('express');
 const app = express();
 const fetch = require('node-fetch');
 require('dotenv').config();
 //start listening on port 3000\
-
+const fs = require('fs')
+var emoji = require('node-emoji');
 
 const port = process.env.PORT || 3000;
 
@@ -39,25 +40,51 @@ var T = new Twit({
     access_token_secret:  accessTokenSecret,
 });
 
-/*
+
 app.get('tweets/:query', getData);
 var params = {
-    q: 'salt papi since:2020-04-15',
-    count: 3,
+    q: 'meep since:2019-04-15',
+    count: 110,
 }
 function getData(err, data, response) {
     const tweets = data.statuses;
     var index = 0;
+    var sentiment = new Sentiment();
+    var totalScore = 0;
     for (var i = 0; i < tweets.length; i++){
         index++;
-        console.log(index," ",tweets[i].text);
-        //response.json(tweets[i].text);
+        console.log("\n",index," ",tweets[i].text);
+        const result = sentiment.analyze(tweets[i].text);
+        totalScore += result.score;
+        console.log("Postive: {" +result.positive, "}","Negative: {", result.negative,"}")
+        console.log("score: ",result.score);
+        //fs.appendFile("tweets.txt", JSON.stringify([tweets[i].text]));
     }
-    response = data.statuses; //LOOK AT THIS I THINK
-    response.send(tweets);
+    const averageSentiment = totalScore/tweets.length;
+    var emoji;
+    if (averageSentiment > 1){
+        emoji = "😁";
+    }else if( averageSentiment < -1 ){
+        emoji = "😡";
+    }
+    else if (averageSentiment < 0){
+        emoji = "😔";
+    
+    }else if( averageSentiment > 0){
+        emoji = "🙂";
+    }else{
+        emoji = "😐";
+    }
+
+    console.log("-------------------------------------");
+    console.log("\ntotal: ", totalScore)
+    console.log("Avg Score: ",averageSentiment," ",emoji );
+    console.log("Search Query: ",params.q);
+    console.log("-------------------------------------");
 }
 T.get('search/tweets', params , getData);
-*/
+
+/*
 app.get('tweets/:query', getTweets);
 function getTweets(req, res) {
     // Here's the string we are seraching for
@@ -74,14 +101,12 @@ function getTweets(req, res) {
       res.send(tweets);
     };
   }
-
+*/
 app.get('/tweets', (req,res) =>{
         const{dynamic} = req.params
         console.log(dynamic)
         res.status(200).json({info: 'PUT SCORE OF THE SENTIEMTN IN HERE THEN SEDN IT TO THE CLIENT'})
 })
-/*
-var sentiment = new Sentiment();
-var result = sentiment.analyze('hey thats pretty neat, happy, love, masterpiece, wonderful, happy');
-console.dir(result); 
-*/
+
+
+

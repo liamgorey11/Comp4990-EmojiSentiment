@@ -35,7 +35,7 @@
         function getTweets() {
             loadJSON(/tweets/ + searchInput.value(), gotTweets);
         }
-        getTweets();
+        
         // We got the tweets
         function gotTweets(tweets) {
             // Just stick them in the window

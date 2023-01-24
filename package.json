@@ -16,6 +16,7 @@
         "fb-sdk-wrapper": "^1.1.0",
         "franc": "^6.0.0",
         "fs": "^0.0.1-security",
+        "node-emoji": "^1.11.0",
         "node-fetch": "^2.6.7",
         "node-notifier": "^10.0.1",
         "open": "^7.0.3",
