@@ -1,10 +1,10 @@
 
-getData();
+//getData();
 
 async function getData(){
-    const response = await fetch('/search/tweets');
-    const data = await response.json();
-    console.log(data);
+    //const response = await fetch('/search/tweets');
+    //const data = await response.json();
+    //console.log(data);
     /*
     for (item of data){
         L.marker([item.lat,item.lon]).addTo(mymap);
