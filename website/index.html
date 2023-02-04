@@ -102,7 +102,7 @@
                //data.statuses.forEach(function(tweet) {
                     //$('#tweets').append(`<p>${tweet.text}</p>`);
                 //});
-            $('#AvgSentiment').append(`<p>Average Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
+            $('#AvgSentiment').append(`<p>Average Sentiment Twitter: ${data}, SearchTerm: ${searchInput} </p>`);
            });           
        });
     console.log("running");
@@ -112,8 +112,7 @@
         var customSentiment = $('#custom-Sentiment').val();
         console.log(customSentiment);
         $.get('/customSentiment',{term:customSentiment},function(data){
-            $('#AvgSentiment').empty();
-            $('#AvgSentiment').append(`<p>Average Sentiment: ${data}, SearchTerm: ${customSentiment} </p>`);
+            $('#AvgSentiment').append(`<p>Average Sentiment General Text: ${data}, SearchTerm: ${customSentiment} </p>`);
         });
     });
     </script>

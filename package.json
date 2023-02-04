@@ -17,6 +17,7 @@
         "franc": "^6.0.0",
         "fs": "^0.0.1-security",
         "http-server": "^14.1.1",
+        "ibm-watson": "^7.1.2",
         "mongoose": "^6.8.4",
         "node-emoji": "^1.11.0",
         "node-fetch": "^2.6.7",
@@ -26,6 +27,7 @@
         "raw.js": "^0.1.8",
         "rereddit": "^1.0.0",
         "sentiment": "^5.0.2",
+        "snooshift": "^1.0.2",
         "snoowrap": "^1.23.0",
         "twit": "^2.2.11"
     }

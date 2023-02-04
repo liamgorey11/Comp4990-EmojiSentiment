@@ -4,6 +4,10 @@ const Sentiment = require('sentiment');
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const {SnooShift} = require('snooshift');   
+const fs = require('fs');
+const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 
 //Twit Setup
@@ -39,6 +43,105 @@ const start = async () => {
 };
 start();
 
+
+function test() {
+  const snoo = new SnooShift({ // get proper values here 
+    userAgent:  process.env.Reddit_userAgent,
+    clientId: process.env.Reddit_clientId,
+    clientSecret: process.env.Reddit_clientSecret,
+    //refreshToken: process.env.Reddit_refreshToken,
+    username: process.env.Reddit_username,
+    password: process.env.Reddit_password 
+  }); 
+  const searchParams = {
+    q: "\"Obama\"",
+    size: 100,
+    order: 'asc',
+    sort: 'created_utc'
+    };
+   snoo.searchComments(searchParams)
+    .then((comments) => {
+      let commentBody = comments.map(comment => comment.body + "\n");
+      let bodyText = commentBody.join("");
+      let he = require('he');
+      let fixedText = he.decode(bodyText);
+      fs.writeFileSync('reddit.txt', fixedText);
+      //console.log(fixedText);
+      const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
+        version: '2022-04-07',
+        authenticator: new IamAuthenticator({
+          apikey: process.env.Watson_apikey,
+        }),
+        serviceUrl: process.env.Watson_serviceUrl,
+      });
+
+      const analyzeParams = {
+        'text': fixedText,
+        'features': {
+          'entities': {
+            'emotion': true,
+            'sentiment': true,
+          },
+          'keywords': {
+            'emotion': true,
+            'sentiment': true,
+          },
+        },
+      };
+      naturalLanguageUnderstanding.analyze(analyzeParams)
+        .then(analysisResults => {
+          //console.log(JSON.stringify(analysisResults, null, 2));
+          const outputString = JSON.stringify(analysisResults, null, 2);
+          fs.writeFileSync('results.json', outputString);
+          let sentimentResults = analysisResults.result.keywords;
+          var sadness=0;var joy=0;var fear=0;var disgust=0;var anger=0;
+          //sadness
+          for(let i = 0; i < sentimentResults.length; i++) {
+            sadness+=sentimentResults[i].emotion.sadness;
+          }
+          sadness/=sentimentResults.length;
+          sadness = sadness.toFixed(2);
+          //joy
+          for(let i = 0; i < sentimentResults.length; i++) {
+            joy+=sentimentResults[i].emotion.joy;
+          }
+          joy/=sentimentResults.length;
+          joy = joy.toFixed(2);
+          //fear
+          for(let i = 0; i < sentimentResults.length; i++) {
+            fear+=sentimentResults[i].emotion.fear;
+          }
+          fear/=sentimentResults.length;
+          fear = fear.toFixed(2);
+          //disgust
+          for(let i = 0; i < sentimentResults.length; i++) {
+            disgust+=sentimentResults[i].emotion.disgust;
+          }
+          disgust/=sentimentResults.length;
+          disgust = disgust.toFixed(2);
+          //anger
+          for(let i = 0; i < sentimentResults.length; i++) {
+            anger+=sentimentResults[i].emotion.anger;
+          }
+          anger/=sentimentResults.length;
+          anger = anger.toFixed(2);
+          var neutral = 1 
+          neutral = neutral - sadness - joy - fear - disgust - anger;
+          console.log("RESULTS");
+          console.log("sadness: "+sadness);
+          console.log("joy: "+joy);
+          console.log("fear: "+fear);
+          console.log("disgust: "+disgust);
+          console.log("anger: "+anger);
+          console.log("neutral: "+neutral);
+        })
+        .catch(err => {
+          console.log('error:', err);
+        });
+    });
+}  
+test();
+
 //Posting data
 /*
 app.post('/api', (request, response) => {
@@ -50,7 +153,6 @@ app.post('/api', (request, response) => {
     response.json(data);
 });
 */
-
 
 
 app.get('/search', (req, res) => {
