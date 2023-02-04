@@ -78,10 +78,19 @@ app.get('/search', (req, res) => {
       
     });
 });
-app.get('/sentiment', (req, res) => {
 
+//reccieves text from the client textarea then returns the sentiment of the text to the client page
+
+    
+app.get('/customSentiment', (req, res) => {
+    //analzes the textarea text from the client after the user clicks the button
+    const text = req.query.term;
+    console.log(text);
+    var sentiment = new Sentiment();
+    const result = sentiment.analyze(text);
+    console.log(result);
+    res.json(result.score);
 });
-
 
 
 /*

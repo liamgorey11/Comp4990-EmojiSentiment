@@ -16,6 +16,7 @@
         "fb-sdk-wrapper": "^1.1.0",
         "franc": "^6.0.0",
         "fs": "^0.0.1-security",
+        "http-server": "^14.1.1",
         "mongoose": "^6.8.4",
         "node-emoji": "^1.11.0",
         "node-fetch": "^2.6.7",

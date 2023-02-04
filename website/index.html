@@ -1,24 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>tweets
-        </title>
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>tweets
+    </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f1f1f1;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+    input[type=text]:focus, input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+    #AvgSentiment {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #46856e27;
+    }
+    .textarea {
+        width: 200%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+
+    }
+    .button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+    .container {
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 30px;
+        background-color: #46856e7c;
+        margin-bottom: 30px;
+    }
+
+    /*container that extends other container with a diffretn background color*/
+    .container2 {
+        background-color: rgba(104, 160, 92, 0.5);
+        border-radius: 10px;
+        padding: 10px;
+        margin-left: 50px;
+        margin-right: 50px;
+        background-color: #17735a81;
+    }
+
+</style>
 <body>
-    <body>
+    <div class ="container">
         <h1>Search for Tweets</h1>
         <p>This page pulls data from Twitter.  Authentication is happening in node on the server. </p>
         <form>
             <input id="searchInput" type="text" placeholder="Enter Search"></input>
-            <button type="button" id= "searchButton">Search</button>
+            <button class='button' type="button" id= "searchButton">Search</button>
         </form>
         <div id="tweets"></div>
-
-        <div id="AvgSentiment"></div>
-      </body>
+        
+        <div class='container2' id="AvgSentiment">
+            <h4>Average Sentiment</h4>
+        </div>
+    
+        <textarea id="custom-Sentiment"></textarea>
+        <button class='button' type="button" id= "custom-Sentiment-Button">Custom Sentiment</button>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
        $('#searchButton').click(function(){
@@ -34,6 +106,16 @@
            });           
        });
     console.log("running");
+
+    //sends the all the text to the server to be analyzed 
+    $('#custom-Sentiment-Button').click(function(){
+        var customSentiment = $('#custom-Sentiment').val();
+        console.log(customSentiment);
+        $.get('/customSentiment',{term:customSentiment},function(data){
+            $('#AvgSentiment').empty();
+            $('#AvgSentiment').append(`<p>Average Sentiment: ${data}, SearchTerm: ${customSentiment} </p>`);
+        });
+    });
     </script>
 </body>
 </html>
