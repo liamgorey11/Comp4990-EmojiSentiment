@@ -3,945 +3,1103 @@
   "statusText": "OK",
   "headers": {
     "server": "watson-gateway",
-    "content-length": "40116",
+    "content-length": "23522",
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-cache, no-store",
-    "x-dp-watson-tran-id": "179f2fc8-8338-4657-99f8-b3956cd4b694, 179f2fc8-8338-4657-99f8-b3956cd4b694",
+    "x-dp-watson-tran-id": "066203df-7615-4f52-b0c3-3c0000147016, 066203df-7615-4f52-b0c3-3c0000147016",
     "content-security-policy": "default-src 'none'",
     "pragma": "no-cache",
     "x-content-type-options": "nosniff",
     "x-frame-options": "DENY",
     "x-xss-protection": "1; mode=block",
     "strict-transport-security": "max-age=31536000; includeSubDomains;",
-    "x-request-id": "179f2fc8-8338-4657-99f8-b3956cd4b694",
-    "x-global-transaction-id": "179f2fc8-8338-4657-99f8-b3956cd4b694",
+    "x-request-id": "066203df-7615-4f52-b0c3-3c0000147016",
+    "x-global-transaction-id": "066203df-7615-4f52-b0c3-3c0000147016",
     "x-edgeconnect-midmile-rtt": "10",
-    "x-edgeconnect-origin-mex-latency": "11460",
-    "date": "Sat, 04 Feb 2023 19:10:01 GMT",
+    "x-edgeconnect-origin-mex-latency": "1050",
+    "date": "Mon, 06 Feb 2023 21:50:57 GMT",
     "connection": "close"
   },
   "result": {
     "usage": {
-      "text_units": 5,
-      "text_characters": 47563,
+      "text_units": 1,
+      "text_characters": 2832,
       "features": 2
     },
     "language": "en",
     "keywords": [
       {
-        "text": "least say McCain",
+        "text": "White House",
         "sentiment": {
-          "score": -0.870017,
+          "score": -0.94907,
           "label": "negative"
         },
-        "relevance": 0.573217,
+        "relevance": 0.676345,
         "emotion": {
-          "sadness": 0.067796,
-          "joy": 0.012118,
-          "fear": 0.064766,
-          "disgust": 0.161455,
-          "anger": 0.729008
+          "sadness": 0.183292,
+          "joy": 0.004558,
+          "fear": 0.047816,
+          "disgust": 0.153887,
+          "anger": 0.155615
         },
         "count": 1
       },
       {
-        "text": "Barack Obama",
-        "sentiment": {
-          "score": 0.549098,
-          "mixed": "1",
-          "label": "positive"
-        },
-        "relevance": 0.555066,
-        "emotion": {
-          "sadness": 0.271033,
-          "joy": 0.313715,
-          "fear": 0.095527,
-          "disgust": 0.045288,
-          "anger": 0.096861
-        },
-        "count": 10
-      },
-      {
-        "text": "black intellectuals",
-        "sentiment": {
-          "score": -0.751226,
-          "label": "negative"
-        },
-        "relevance": 0.553851,
-        "emotion": {
-          "sadness": 0.642258,
-          "joy": 0.111804,
-          "fear": 0.037582,
-          "disgust": 0.035882,
-          "anger": 0.02285
-        },
-        "count": 1
-      },
-      {
-        "text": "America's people",
+        "text": "new breeed of sites",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.548845,
+        "relevance": 0.632019,
         "emotion": {
-          "sadness": 0.180537,
-          "joy": 0.091946,
-          "fear": 0.091048,
-          "disgust": 0.043159,
-          "anger": 0.022877
+          "sadness": 0.327663,
+          "joy": 0.087891,
+          "fear": 0.046889,
+          "disgust": 0.083387,
+          "anger": 0.084766
         },
         "count": 1
       },
       {
-        "text": "Obama",
+        "text": "lot of people",
         "sentiment": {
-          "score": -0.524398,
-          "mixed": "1",
+          "score": -0.70056,
           "label": "negative"
         },
-        "relevance": 0.546786,
+        "relevance": 0.616067,
         "emotion": {
-          "sadness": 0.239351,
-          "joy": 0.196271,
-          "fear": 0.075344,
-          "disgust": 0.17002,
-          "anger": 0.12763
-        },
-        "count": 90
-      },
-      {
-        "text": "Heh heh heh",
-        "sentiment": {
-          "score": 0.987011,
-          "label": "positive"
-        },
-        "relevance": 0.545522,
-        "emotion": {
-          "sadness": 0.013312,
-          "joy": 0.814088,
-          "fear": 0.040719,
-          "disgust": 0.010344,
-          "anger": 0.474444
+          "sadness": 0.803557,
+          "joy": 0.004483,
+          "fear": 0.056636,
+          "disgust": 0.056642,
+          "anger": 0.102808
         },
         "count": 1
       },
       {
-        "text": "advantage-do",
+        "text": "good useful site",
+        "sentiment": {
+          "score": 0.642091,
+          "label": "positive"
+        },
+        "relevance": 0.614239,
+        "emotion": {
+          "sadness": 0.11602,
+          "joy": 0.428582,
+          "fear": 0.09873,
+          "disgust": 0.02172,
+          "anger": 0.102809
+        },
+        "count": 1
+      },
+      {
+        "text": "reddit wrtten",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.545058,
+        "relevance": 0.581574,
         "emotion": {
-          "sadness": 0.081709,
-          "joy": 0.157924,
-          "fear": 0.060603,
-          "disgust": 0.129213,
-          "anger": 0.031599
+          "sadness": 0.170647,
+          "joy": 0.511857,
+          "fear": 0.036959,
+          "disgust": 0.013402,
+          "anger": 0.049685
         },
         "count": 1
       },
       {
-        "text": "more libertarian component of their constituencies",
+        "text": "web site operators fom accessing",
+        "sentiment": {
+          "score": -0.837433,
+          "label": "negative"
+        },
+        "relevance": 0.580686,
+        "emotion": {
+          "sadness": 0.14434,
+          "joy": 0.07355,
+          "fear": 0.149779,
+          "disgust": 0.014831,
+          "anger": 0.102741
+        },
+        "count": 1
+      },
+      {
+        "text": "best thing",
+        "sentiment": {
+          "score": -0.648189,
+          "label": "negative"
+        },
+        "relevance": 0.566704,
+        "emotion": {
+          "sadness": 0.317661,
+          "joy": 0.016585,
+          "fear": 0.122744,
+          "disgust": 0.049338,
+          "anger": 0.302992
+        },
+        "count": 1
+      },
+      {
+        "text": "New York Times editorial",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.535321,
+        "relevance": 0.560808,
         "emotion": {
-          "sadness": 0.276548,
-          "joy": 0.240114,
-          "fear": 0.036575,
-          "disgust": 0.178866,
-          "anger": 0.021246
+          "sadness": 0.607636,
+          "joy": 0.114128,
+          "fear": 0.049374,
+          "disgust": 0.083033,
+          "anger": 0.050703
         },
         "count": 1
       },
       {
-        "text": "Obama's vision",
+        "text": "technical specs",
         "sentiment": {
-          "score": -0.915954,
+          "score": -0.837433,
           "label": "negative"
         },
-        "relevance": 0.535123,
+        "relevance": 0.558592,
         "emotion": {
-          "sadness": 0.663501,
-          "joy": 0.007526,
-          "fear": 0.071358,
-          "disgust": 0.201222,
-          "anger": 0.08436
-        },
-        "count": 1
-      },
-      {
-        "text": "Republican party",
-        "sentiment": {
-          "score": -0.725358,
-          "label": "negative"
-        },
-        "relevance": 0.53495,
-        "emotion": {
-          "sadness": 0.566682,
-          "joy": 0.086918,
-          "fear": 0.0336,
-          "disgust": 0.047648,
-          "anger": 0.134383
-        },
-        "count": 1
-      },
-      {
-        "text": "Hillary Clinton",
-        "sentiment": {
-          "score": -0.73734,
-          "label": "negative"
-        },
-        "relevance": 0.534623,
-        "emotion": {
-          "sadness": 0.246182,
-          "joy": 0.125433,
-          "fear": 0.060875,
-          "disgust": 0.398214,
-          "anger": 0.054257
-        },
-        "count": 3
-      },
-      {
-        "text": "pretty good hunch",
-        "sentiment": {
-          "score": 0.783109,
-          "label": "positive"
-        },
-        "relevance": 0.534281,
-        "emotion": {
-          "sadness": 0.142582,
-          "joy": 0.114598,
-          "fear": 0.051374,
-          "disgust": 0.059823,
-          "anger": 0.097268
-        },
-        "count": 1
-      },
-      {
-        "text": "white person",
-        "sentiment": {
-          "score": -0.786427,
-          "label": "negative"
-        },
-        "relevance": 0.533695,
-        "emotion": {
-          "sadness": 0.172316,
-          "joy": 0.417792,
-          "fear": 0.100151,
-          "disgust": 0.154742,
-          "anger": 0.040902
-        },
-        "count": 1
-      },
-      {
-        "text": "same-sex marraige laws",
-        "sentiment": {
-          "score": -0.996737,
-          "label": "negative"
-        },
-        "relevance": 0.533556,
-        "emotion": {
-          "sadness": 0.0853,
-          "joy": 0.006337,
-          "fear": 0.028605,
-          "disgust": 0.096713,
-          "anger": 0.702173
-        },
-        "count": 1
-      },
-      {
-        "text": "American dream",
-        "sentiment": {
-          "score": -0.708649,
-          "label": "negative"
-        },
-        "relevance": 0.533303,
-        "emotion": {
-          "sadness": 0.227861,
-          "joy": 0.324842,
-          "fear": 0.047662,
-          "disgust": 0.053451,
-          "anger": 0.046229
+          "sadness": 0.168776,
+          "joy": 0.108394,
+          "fear": 0.122993,
+          "disgust": 0.01563,
+          "anger": 0.067778
         },
         "count": 2
       },
       {
-        "text": "See Armed Force Day",
+        "text": "bright side",
         "sentiment": {
-          "score": 0,
-          "label": "neutral"
+          "score": -0.954299,
+          "label": "negative"
         },
-        "relevance": 0.532908,
+        "relevance": 0.556887,
         "emotion": {
-          "sadness": 0.109201,
-          "joy": 0.373546,
-          "fear": 0.14834,
-          "disgust": 0.006866,
-          "anger": 0.218689
+          "sadness": 0.143818,
+          "joy": 0.037632,
+          "fear": 0.100298,
+          "disgust": 0.042315,
+          "anger": 0.06234
         },
         "count": 1
       },
       {
-        "text": "black community",
+        "text": "military background",
         "sentiment": {
-          "score": 0.74809,
+          "score": -0.641269,
+          "label": "negative"
+        },
+        "relevance": 0.555128,
+        "emotion": {
+          "sadness": 0.056788,
+          "joy": 0.054898,
+          "fear": 0.087011,
+          "disgust": 0.099297,
+          "anger": 0.544318
+        },
+        "count": 1
+      },
+      {
+        "text": "Qube Web Search Client",
+        "sentiment": {
+          "score": 0.350876,
           "label": "positive"
         },
-        "relevance": 0.529066,
+        "relevance": 0.547663,
         "emotion": {
-          "sadness": 0.074044,
-          "joy": 0.7646,
-          "fear": 0.029532,
-          "disgust": 0.113867,
-          "anger": 0.028667
+          "sadness": 0.071375,
+          "joy": 0.840829,
+          "fear": 0.026194,
+          "disgust": 0.013391,
+          "anger": 0.039517
         },
         "count": 1
       },
       {
-        "text": "American people",
+        "text": "Sign-up sheets",
         "sentiment": {
-          "score": -0.817125,
+          "score": -0.837433,
           "label": "negative"
         },
-        "relevance": 0.528569,
+        "relevance": 0.546023,
         "emotion": {
-          "sadness": 0.306128,
-          "joy": 0.056821,
-          "fear": 0.073503,
-          "disgust": 0.105028,
-          "anger": 0.183357
-        },
-        "count": 3
-      },
-      {
-        "text": "Republicans - want",
-        "sentiment": {
-          "score": -0.600898,
-          "label": "negative"
-        },
-        "relevance": 0.526526,
-        "emotion": {
-          "sadness": 0.146898,
-          "joy": 0.008449,
-          "fear": 0.023696,
-          "disgust": 0.222584,
-          "anger": 0.380525
-        },
-        "count": 1
-      },
-      {
-        "text": "likes of Jesse Jackson",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.522884,
-        "emotion": {
-          "sadness": 0.68975,
-          "joy": 0.042399,
-          "fear": 0.064846,
-          "disgust": 0.053246,
-          "anger": 0.04606
-        },
-        "count": 1
-      },
-      {
-        "text": "President Bush",
-        "sentiment": {
-          "score": 0.373813,
-          "label": "positive"
-        },
-        "relevance": 0.522032,
-        "emotion": {
-          "sadness": 0.099214,
-          "joy": 0.234971,
-          "fear": 0.032903,
-          "disgust": 0.028651,
-          "anger": 0.099392
-        },
-        "count": 1
-      },
-      {
-        "text": "role of government",
-        "sentiment": {
-          "score": -0.73577,
-          "label": "negative"
-        },
-        "relevance": 0.521681,
-        "emotion": {
-          "sadness": 0.146519,
-          "joy": 0.110653,
-          "fear": 0.081512,
-          "disgust": 0.218606,
-          "anger": 0.081592
+          "sadness": 0.168776,
+          "joy": 0.108394,
+          "fear": 0.122993,
+          "disgust": 0.01563,
+          "anger": 0.067778
         },
         "count": 2
       },
       {
-        "text": "better vote democrat",
+        "text": "levels of security",
         "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.520112,
-        "emotion": {
-          "sadness": 0.034373,
-          "joy": 0.14515,
-          "fear": 0.037003,
-          "disgust": 0.314104,
-          "anger": 0.544346
-        },
-        "count": 1
-      },
-      {
-        "text": "better choice",
-        "sentiment": {
-          "score": -0.904518,
+          "score": -0.837433,
           "label": "negative"
         },
-        "relevance": 0.519246,
+        "relevance": 0.544762,
         "emotion": {
-          "sadness": 0.023345,
-          "joy": 0.050946,
-          "fear": 0.335704,
-          "disgust": 0.143734,
-          "anger": 0.021128
+          "sadness": 0.14434,
+          "joy": 0.07355,
+          "fear": 0.149779,
+          "disgust": 0.014831,
+          "anger": 0.102741
         },
         "count": 1
       },
       {
-        "text": "religious reasons",
+        "text": "best extension",
         "sentiment": {
-          "score": -0.533209,
+          "score": -0.542078,
           "label": "negative"
         },
-        "relevance": 0.518961,
+        "relevance": 0.542159,
         "emotion": {
-          "sadness": 0.163032,
-          "joy": 0.324964,
-          "fear": 0.042746,
-          "disgust": 0.087862,
-          "anger": 0.111656
+          "sadness": 0.508295,
+          "joy": 0.441755,
+          "fear": 0.017554,
+          "disgust": 0.033658,
+          "anger": 0.07503
         },
         "count": 1
       },
       {
-        "text": "vision of nation building",
+        "text": "sexual relations",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.518863,
+        "relevance": 0.533436,
         "emotion": {
-          "sadness": 0.169823,
-          "joy": 0.167179,
-          "fear": 0.128692,
-          "disgust": 0.044678,
-          "anger": 0.022021
+          "sadness": 0.059429,
+          "joy": 0.076858,
+          "fear": 0.0239,
+          "disgust": 0.409107,
+          "anger": 0.380405
         },
         "count": 1
       },
       {
-        "text": "Public Works",
+        "text": "Meeting notes",
         "sentiment": {
-          "score": -0.501826,
+          "score": -0.837433,
           "label": "negative"
         },
-        "relevance": 0.518214,
+        "relevance": 0.533072,
         "emotion": {
-          "sadness": 0.078138,
-          "joy": 0.658999,
-          "fear": 0.051096,
-          "disgust": 0.041933,
-          "anger": 0.022253
+          "sadness": 0.168776,
+          "joy": 0.108394,
+          "fear": 0.122993,
+          "disgust": 0.01563,
+          "anger": 0.067778
         },
         "count": 1
       },
       {
-        "text": "last election",
+        "text": "site",
         "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.517755,
-        "emotion": {
-          "sadness": 0.279709,
-          "joy": 0.149959,
-          "fear": 0.028952,
-          "disgust": 0.064525,
-          "anger": 0.116714
-        },
-        "count": 1
-      },
-      {
-        "text": "new iPod",
-        "sentiment": {
-          "score": 0.480168,
-          "label": "positive"
-        },
-        "relevance": 0.517521,
-        "emotion": {
-          "sadness": 0.076605,
-          "joy": 0.381403,
-          "fear": 0.02068,
-          "disgust": 0.219131,
-          "anger": 0.021062
-        },
-        "count": 1
-      },
-      {
-        "text": "others lifestyles",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.517518,
-        "emotion": {
-          "sadness": 0.543012,
-          "joy": 0.043428,
-          "fear": 0.033684,
-          "disgust": 0.252683,
-          "anger": 0.067417
-        },
-        "count": 1
-      },
-      {
-        "text": "white people",
-        "sentiment": {
-          "score": -0.514354,
+          "score": -0.432966,
           "mixed": "1",
           "label": "negative"
         },
-        "relevance": 0.517357,
+        "relevance": 0.529126,
         "emotion": {
-          "sadness": 0.12228,
-          "joy": 0.25318,
-          "fear": 0.059385,
-          "disgust": 0.154796,
-          "anger": 0.094245
+          "sadness": 0.379958,
+          "joy": 0.134472,
+          "fear": 0.179302,
+          "disgust": 0.024574,
+          "anger": 0.088671
         },
         "count": 2
       },
       {
-        "text": "big government Republicans",
+        "text": "potential users",
         "sentiment": {
-          "score": -0.881086,
-          "label": "negative"
+          "score": 0.800438,
+          "label": "positive"
         },
-        "relevance": 0.515829,
+        "relevance": 0.528532,
         "emotion": {
-          "sadness": 0.55095,
-          "joy": 0.043181,
-          "fear": 0.065504,
-          "disgust": 0.155434,
-          "anger": 0.1422
+          "sadness": 0.18404,
+          "joy": 0.309558,
+          "fear": 0.099574,
+          "disgust": 0.021358,
+          "anger": 0.031743
         },
         "count": 1
       },
       {
-        "text": "junior Senator",
+        "text": "cool concept",
+        "sentiment": {
+          "score": 0.980926,
+          "label": "positive"
+        },
+        "relevance": 0.527075,
+        "emotion": {
+          "sadness": 0.029492,
+          "joy": 0.991504,
+          "fear": 0.017629,
+          "disgust": 0.00579,
+          "anger": 0.018139
+        },
+        "count": 1
+      },
+      {
+        "text": "official line",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.515679,
+        "relevance": 0.52607,
         "emotion": {
-          "sadness": 0.198792,
-          "joy": 0.166815,
-          "fear": 0.091834,
-          "disgust": 0.098824,
-          "anger": 0.033526
+          "sadness": 0.462441,
+          "joy": 0.016284,
+          "fear": 0.093426,
+          "disgust": 0.224799,
+          "anger": 0.113023
+        },
+        "count": 1
+      },
+      {
+        "text": "torture",
+        "sentiment": {
+          "score": -0.857427,
+          "label": "negative"
+        },
+        "relevance": 0.516549,
+        "emotion": {
+          "sadness": 0.36676,
+          "joy": 0.010854,
+          "fear": 0.090282,
+          "disgust": 0.136623,
+          "anger": 0.202124
         },
         "count": 4
       },
       {
-        "text": "soverign state",
+        "text": "notes",
         "sentiment": {
-          "score": -0.967256,
+          "score": -0.837433,
           "label": "negative"
         },
-        "relevance": 0.515672,
+        "relevance": 0.51496,
         "emotion": {
-          "sadness": 0.113248,
-          "joy": 0.002716,
-          "fear": 0.051246,
-          "disgust": 0.185518,
-          "anger": 0.400058
+          "sadness": 0.168776,
+          "joy": 0.108394,
+          "fear": 0.122993,
+          "disgust": 0.01563,
+          "anger": 0.067778
         },
         "count": 1
       },
       {
-        "text": "much difference",
+        "text": "lot",
         "sentiment": {
-          "score": -0.852356,
+          "score": -0.766488,
           "label": "negative"
         },
-        "relevance": 0.515633,
+        "relevance": 0.513708,
         "emotion": {
-          "sadness": 0.558957,
-          "joy": 0.065905,
-          "fear": 0.039372,
-          "disgust": 0.045632,
-          "anger": 0.058926
-        },
-        "count": 1
-      },
-      {
-        "text": "least educated people",
-        "sentiment": {
-          "score": -0.829695,
-          "label": "negative"
-        },
-        "relevance": 0.51541,
-        "emotion": {
-          "sadness": 0.19891,
-          "joy": 0.006523,
-          "fear": 0.082613,
-          "disgust": 0.086837,
-          "anger": 0.126693
-        },
-        "count": 1
-      },
-      {
-        "text": "black superstar",
-        "sentiment": {
-          "score": 0.924677,
-          "label": "positive"
-        },
-        "relevance": 0.515191,
-        "emotion": {
-          "sadness": 0.31042,
-          "joy": 0.629153,
-          "fear": 0.017697,
-          "disgust": 0.039121,
-          "anger": 0.032404
-        },
-        "count": 1
-      },
-      {
-        "text": "American way of life",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.515189,
-        "emotion": {
-          "sadness": 0.057441,
-          "joy": 0.792383,
-          "fear": 0.026906,
-          "disgust": 0.016501,
-          "anger": 0.042103
-        },
-        "count": 1
-      },
-      {
-        "text": "good start",
-        "sentiment": {
-          "score": 0.799879,
-          "label": "positive"
-        },
-        "relevance": 0.514277,
-        "emotion": {
-          "sadness": 0.052641,
-          "joy": 0.963109,
-          "fear": 0.034818,
-          "disgust": 0.005102,
-          "anger": 0.015904
-        },
-        "count": 1
-      },
-      {
-        "text": "Democratic Senators",
-        "sentiment": {
-          "score": -0.577003,
-          "label": "negative"
-        },
-        "relevance": 0.513808,
-        "emotion": {
-          "sadness": 0.125025,
-          "joy": 0.091818,
-          "fear": 0.093478,
-          "disgust": 0.103802,
-          "anger": 0.054999
-        },
-        "count": 1
-      },
-      {
-        "text": "libertarian standpoint",
-        "sentiment": {
-          "score": -0.813851,
-          "label": "negative"
-        },
-        "relevance": 0.513782,
-        "emotion": {
-          "sadness": 0.333601,
-          "joy": 0.063007,
-          "fear": 0.068649,
-          "disgust": 0.070636,
-          "anger": 0.264727
+          "sadness": 0.359365,
+          "joy": 0.045766,
+          "fear": 0.12182,
+          "disgust": 0.060322,
+          "anger": 0.227706
         },
         "count": 2
       },
       {
-        "text": "Mikhail Nikolaevitch Baryshnikov",
+        "text": "Reports",
+        "sentiment": {
+          "score": -0.837433,
+          "label": "negative"
+        },
+        "relevance": 0.513335,
+        "emotion": {
+          "sadness": 0.168776,
+          "joy": 0.108394,
+          "fear": 0.122993,
+          "disgust": 0.01563,
+          "anger": 0.067778
+        },
+        "count": 2
+      },
+      {
+        "text": "way",
+        "sentiment": {
+          "score": -0.692449,
+          "label": "negative"
+        },
+        "relevance": 0.512497,
+        "emotion": {
+          "sadness": 0.16646,
+          "joy": 0.149781,
+          "fear": 0.132699,
+          "disgust": 0.040889,
+          "anger": 0.144248
+        },
+        "count": 1
+      },
+      {
+        "text": "web",
+        "sentiment": {
+          "score": -0.603115,
+          "mixed": "1",
+          "label": "negative"
+        },
+        "relevance": 0.512142,
+        "emotion": {
+          "sadness": 0.181126,
+          "joy": 0.33409,
+          "fear": 0.074287,
+          "disgust": 0.037203,
+          "anger": 0.075675
+        },
+        "count": 1
+      },
+      {
+        "text": "Vietnam",
+        "sentiment": {
+          "score": -0.631779,
+          "mixed": "1",
+          "label": "negative"
+        },
+        "relevance": 0.512022,
+        "emotion": {
+          "sadness": 0.223256,
+          "joy": 0.054176,
+          "fear": 0.051751,
+          "disgust": 0.101732,
+          "anger": 0.10748
+        },
+        "count": 2
+      },
+      {
+        "text": "Marc",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.51318,
+        "relevance": 0.511675,
         "emotion": {
-          "sadness": 0.243436,
-          "joy": 0.746986,
-          "fear": 0.035699,
-          "disgust": 0.002601,
-          "anger": 0.057838
+          "sadness": 0.170647,
+          "joy": 0.511857,
+          "fear": 0.036959,
+          "disgust": 0.013402,
+          "anger": 0.049685
         },
         "count": 1
       },
       {
-        "text": "Republicans today",
+        "text": "Cheney",
         "sentiment": {
-          "score": -0.881086,
+          "score": -0.94907,
           "label": "negative"
         },
-        "relevance": 0.513165,
+        "relevance": 0.51151,
         "emotion": {
-          "sadness": 0.55095,
-          "joy": 0.043181,
-          "fear": 0.065504,
-          "disgust": 0.155434,
-          "anger": 0.1422
+          "sadness": 0.183292,
+          "joy": 0.004558,
+          "fear": 0.047816,
+          "disgust": 0.153887,
+          "anger": 0.155615
         },
         "count": 1
       },
       {
-        "text": "good fight",
+        "text": "reddit",
         "sentiment": {
-          "score": -0.297199,
+          "score": -0.648189,
           "label": "negative"
         },
-        "relevance": 0.513038,
+        "relevance": 0.511136,
         "emotion": {
-          "sadness": 0.08331,
-          "joy": 0.333741,
-          "fear": 0.046657,
-          "disgust": 0.031557,
-          "anger": 0.107977
+          "sadness": 0.359489,
+          "joy": 0.312782,
+          "fear": 0.074587,
+          "disgust": 0.032164,
+          "anger": 0.134423
         },
-        "count": 1
+        "count": 2
       },
       {
-        "text": "first time",
+        "text": "lot of the moronicism of slashdot",
         "sentiment": {
-          "score": -0.935508,
+          "score": -0.692449,
           "label": "negative"
         },
-        "relevance": 0.512902,
+        "relevance": 0.511051,
         "emotion": {
-          "sadness": 0.344027,
-          "joy": 0.02291,
-          "fear": 0.289864,
-          "disgust": 0.155565,
-          "anger": 0.052409
+          "sadness": 0.16646,
+          "joy": 0.149781,
+          "fear": 0.132699,
+          "disgust": 0.040889,
+          "anger": 0.144248
         },
         "count": 1
       },
       {
-        "text": "libertarian point of view",
+        "text": "encryption",
         "sentiment": {
-          "score": 0.373813,
+          "score": -0.837433,
+          "label": "negative"
+        },
+        "relevance": 0.510399,
+        "emotion": {
+          "sadness": 0.14434,
+          "joy": 0.07355,
+          "fear": 0.149779,
+          "disgust": 0.014831,
+          "anger": 0.102741
+        },
+        "count": 1
+      },
+      {
+        "text": "use of open space",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.509651,
+        "emotion": {
+          "sadness": 0.026433,
+          "joy": 0.879696,
+          "fear": 0.078864,
+          "disgust": 0.010625,
+          "anger": 0.030816
+        },
+        "count": 1
+      },
+      {
+        "text": "stuff",
+        "sentiment": {
+          "score": 0.350876,
           "label": "positive"
         },
-        "relevance": 0.512317,
+        "relevance": 0.509568,
         "emotion": {
-          "sadness": 0.099214,
-          "joy": 0.234971,
-          "fear": 0.032903,
-          "disgust": 0.028651,
-          "anger": 0.099392
+          "sadness": 0.071375,
+          "joy": 0.840829,
+          "fear": 0.026194,
+          "disgust": 0.013391,
+          "anger": 0.039517
         },
         "count": 1
       },
       {
-        "text": "Christian nation",
+        "text": "McCain",
         "sentiment": {
-          "score": 0.638422,
+          "score": -0.842469,
+          "label": "negative"
+        },
+        "relevance": 0.509391,
+        "emotion": {
+          "sadness": 0.153679,
+          "joy": 0.008694,
+          "fear": 0.072247,
+          "disgust": 0.110974,
+          "anger": 0.365406
+        },
+        "count": 2
+      },
+      {
+        "text": "websites",
+        "sentiment": {
+          "score": 0.800438,
           "label": "positive"
         },
-        "relevance": 0.512026,
+        "relevance": 0.509134,
         "emotion": {
-          "sadness": 0.369918,
-          "joy": 0.160056,
-          "fear": 0.0567,
-          "disgust": 0.085468,
-          "anger": 0.093047
+          "sadness": 0.18404,
+          "joy": 0.309558,
+          "fear": 0.099574,
+          "disgust": 0.021358,
+          "anger": 0.031743
         },
         "count": 1
       },
       {
-        "text": "white house",
+        "text": "definition",
         "sentiment": {
-          "score": -0.648532,
+          "score": -0.748021,
           "label": "negative"
         },
-        "relevance": 0.511758,
+        "relevance": 0.508932,
         "emotion": {
-          "sadness": 0.126873,
-          "joy": 0.086175,
-          "fear": 0.126499,
-          "disgust": 0.235641,
-          "anger": 0.09137
-        },
-        "count": 3
-      },
-      {
-        "text": "front of her name",
-        "sentiment": {
-          "score": -0.941627,
-          "label": "negative"
-        },
-        "relevance": 0.511694,
-        "emotion": {
-          "sadness": 0.375919,
-          "joy": 0.021771,
-          "fear": 0.125816,
-          "disgust": 0.074185,
-          "anger": 0.206685
+          "sadness": 0.471961,
+          "joy": 0.012649,
+          "fear": 0.018178,
+          "disgust": 0.171532,
+          "anger": 0.11146
         },
         "count": 1
       },
       {
-        "text": "campaign rally",
+        "text": "proposals",
         "sentiment": {
-          "score": -0.941627,
+          "score": -0.837433,
           "label": "negative"
         },
-        "relevance": 0.511649,
+        "relevance": 0.508883,
         "emotion": {
-          "sadness": 0.375919,
-          "joy": 0.021771,
-          "fear": 0.125816,
-          "disgust": 0.074185,
-          "anger": 0.206685
+          "sadness": 0.168776,
+          "joy": 0.108394,
+          "fear": 0.122993,
+          "disgust": 0.01563,
+          "anger": 0.067778
+        },
+        "count": 2
+      },
+      {
+        "text": "Peer Production News",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.508569,
+        "emotion": {
+          "sadness": 0.590157,
+          "joy": 0.409905,
+          "fear": 0.064059,
+          "disgust": 0.033754,
+          "anger": 0.050593
+        },
+        "count": 1
+      },
+      {
+        "text": "service",
+        "sentiment": {
+          "score": -0.94907,
+          "label": "negative"
+        },
+        "relevance": 0.508168,
+        "emotion": {
+          "sadness": 0.183292,
+          "joy": 0.004558,
+          "fear": 0.047816,
+          "disgust": 0.153887,
+          "anger": 0.155615
+        },
+        "count": 1
+      },
+      {
+        "text": "copy",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.508118,
+        "emotion": {
+          "sadness": 0.318644,
+          "joy": 0.770488,
+          "fear": 0.030419,
+          "disgust": 0.028259,
+          "anger": 0.037126
+        },
+        "count": 1
+      },
+      {
+        "text": "runner",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.507677,
+        "emotion": {
+          "sadness": 0.590157,
+          "joy": 0.409905,
+          "fear": 0.064059,
+          "disgust": 0.033754,
+          "anger": 0.050593
+        },
+        "count": 1
+      },
+      {
+        "text": "good font",
+        "sentiment": {
+          "score": 0.991274,
+          "label": "positive"
+        },
+        "relevance": 0.507057,
+        "emotion": {
+          "sadness": 0.024047,
+          "joy": 0.993734,
+          "fear": 0.008898,
+          "disgust": 0.003104,
+          "anger": 0.005892
+        },
+        "count": 1
+      },
+      {
+        "text": "article",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.506857,
+        "emotion": {
+          "sadness": 0.026433,
+          "joy": 0.879696,
+          "fear": 0.078864,
+          "disgust": 0.010625,
+          "anger": 0.030816
+        },
+        "count": 1
+      },
+      {
+        "text": "citation",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.506479,
+        "emotion": {
+          "sadness": 0.590157,
+          "joy": 0.409905,
+          "fear": 0.064059,
+          "disgust": 0.033754,
+          "anger": 0.050593
+        },
+        "count": 1
+      },
+      {
+        "text": "Mexico",
+        "sentiment": {
+          "score": 0.36189,
+          "label": "positive"
+        },
+        "relevance": 0.506362,
+        "emotion": {
+          "sadness": 0.26322,
+          "joy": 0.103793,
+          "fear": 0.055687,
+          "disgust": 0.049576,
+          "anger": 0.059344
+        },
+        "count": 1
+      },
+      {
+        "text": "kidnapping",
+        "sentiment": {
+          "score": -0.954299,
+          "label": "negative"
+        },
+        "relevance": 0.506124,
+        "emotion": {
+          "sadness": 0.143818,
+          "joy": 0.037632,
+          "fear": 0.100298,
+          "disgust": 0.042315,
+          "anger": 0.06234
+        },
+        "count": 1
+      },
+      {
+        "text": "harsh realities of war",
+        "sentiment": {
+          "score": -0.70056,
+          "label": "negative"
+        },
+        "relevance": 0.504493,
+        "emotion": {
+          "sadness": 0.803557,
+          "joy": 0.004483,
+          "fear": 0.056636,
+          "disgust": 0.056642,
+          "anger": 0.102808
+        },
+        "count": 1
+      },
+      {
+        "text": "words",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.503635,
+        "emotion": {
+          "sadness": 0.494874,
+          "joy": 0.24358,
+          "fear": 0.024055,
+          "disgust": 0.016081,
+          "anger": 0.620071
         },
         "count": 1
       }
     ],
     "entities": [
       {
+        "type": "Location",
+        "text": "Vietnam",
+        "sentiment": {
+          "score": -0.631779,
+          "mixed": "1",
+          "label": "negative"
+        },
+        "relevance": 0.952007,
+        "emotion": {
+          "sadness": 0.223256,
+          "joy": 0.054176,
+          "fear": 0.051751,
+          "disgust": 0.101732,
+          "anger": 0.10748
+        },
+        "count": 2,
+        "confidence": 0.999955
+      },
+      {
+        "type": "Location",
+        "text": "Mexico",
+        "sentiment": {
+          "score": 0.36189,
+          "label": "positive"
+        },
+        "relevance": 0.677656,
+        "emotion": {
+          "sadness": 0.26322,
+          "joy": 0.103793,
+          "fear": 0.055687,
+          "disgust": 0.049576,
+          "anger": 0.059344
+        },
+        "count": 1,
+        "confidence": 0.913277
+      },
+      {
         "type": "Person",
-        "text": "Obama",
+        "text": "McCain",
         "sentiment": {
-          "score": -0.524398,
-          "mixed": "1",
+          "score": -0.842469,
           "label": "negative"
         },
-        "relevance": 0.958394,
+        "relevance": 0.67688,
         "emotion": {
-          "sadness": 0.239351,
-          "joy": 0.196271,
-          "fear": 0.075344,
-          "disgust": 0.17002,
-          "anger": 0.12763
+          "sadness": 0.153679,
+          "joy": 0.008694,
+          "fear": 0.072247,
+          "disgust": 0.110974,
+          "anger": 0.365406
         },
-        "disambiguation": {
-          "subtype": [
-            "Politician",
-            "President",
-            "Appointer",
-            "AwardWinner",
-            "Celebrity",
-            "PoliticalAppointer",
-            "U.S.Congressperson",
-            "USPresident",
-            "TVActor"
-          ],
-          "name": "Barack_Obama",
-          "dbpedia_resource": "http://dbpedia.org/resource/Barack_Obama"
-        },
-        "count": 118,
-        "confidence": 1
+        "count": 2,
+        "confidence": 0.999812
       },
       {
-        "type": "Organization",
-        "text": "Republicans",
-        "sentiment": {
-          "score": -0.743446,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.38245,
-        "emotion": {
-          "sadness": 0.399082,
-          "joy": 0.083026,
-          "fear": 0.056584,
-          "disgust": 0.180097,
-          "anger": 0.12365
-        },
-        "count": 18,
-        "confidence": 1
-      },
-      {
-        "type": "Organization",
-        "text": "Democrats",
-        "sentiment": {
-          "score": -0.743238,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.195374,
-        "emotion": {
-          "sadness": 0.213951,
-          "joy": 0.134766,
-          "fear": 0.04072,
-          "disgust": 0.190297,
-          "anger": 0.209885
-        },
-        "disambiguation": {
-          "name": "Democrats_in_Norway",
-          "dbpedia_resource": "http://dbpedia.org/resource/Democrats_in_Norway"
-        },
-        "count": 15,
-        "confidence": 1
-      },
-      {
-        "type": "JobTitle",
-        "text": "junior Senator",
+        "type": "Person",
+        "text": "Marc",
         "sentiment": {
           "score": 0,
           "label": "neutral"
         },
-        "relevance": 0.177575,
+        "relevance": 0.542658,
         "emotion": {
-          "sadness": 0.198792,
-          "joy": 0.166815,
-          "fear": 0.091834,
-          "disgust": 0.098824,
-          "anger": 0.033526
+          "sadness": 0.170647,
+          "joy": 0.511857,
+          "fear": 0.036959,
+          "disgust": 0.013402,
+          "anger": 0.049685
         },
-        "count": 3,
-        "confidence": 0.913036
+        "count": 1,
+        "confidence": 0.956375
+      },
+      {
+        "type": "URL",
+        "text": "http://www.nytimes.com/2005/12/10/opinion/10sat1.html?ex=1291870800&en=d3e174110265b5be&ei=5090&partner=rssuserland&emc=rss",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.456705,
+        "emotion": {
+          "sadness": 0.318644,
+          "joy": 0.770488,
+          "fear": 0.030419,
+          "disgust": 0.028259,
+          "anger": 0.037126
+        },
+        "count": 1,
+        "confidence": 0.8
+      },
+      {
+        "type": "Person",
+        "text": "Cheney",
+        "sentiment": {
+          "score": -0.94907,
+          "label": "negative"
+        },
+        "relevance": 0.393234,
+        "emotion": {
+          "sadness": 0.183292,
+          "joy": 0.004558,
+          "fear": 0.047816,
+          "disgust": 0.153887,
+          "anger": 0.155615
+        },
+        "count": 1,
+        "confidence": 0.989075
+      },
+      {
+        "type": "Facility",
+        "text": "White House",
+        "sentiment": {
+          "score": -0.94907,
+          "label": "negative"
+        },
+        "relevance": 0.364087,
+        "emotion": {
+          "sadness": 0.183292,
+          "joy": 0.004558,
+          "fear": 0.047816,
+          "disgust": 0.153887,
+          "anger": 0.155615
+        },
+        "count": 1,
+        "confidence": 0.705833
+      },
+      {
+        "type": "Organization",
+        "text": "PR",
+        "sentiment": {
+          "score": -0.94907,
+          "label": "negative"
+        },
+        "relevance": 0.340887,
+        "emotion": {
+          "sadness": 0.183292,
+          "joy": 0.004558,
+          "fear": 0.047816,
+          "disgust": 0.153887,
+          "anger": 0.155615
+        },
+        "count": 1,
+        "confidence": 0.814139
       },
       {
         "type": "Location",
-        "text": "America",
+        "text": "Washington",
         "sentiment": {
-          "score": -0.377767,
-          "mixed": "1",
+          "score": -0.692953,
           "label": "negative"
         },
-        "relevance": 0.166289,
+        "relevance": 0.337513,
         "emotion": {
-          "sadness": 0.238644,
-          "joy": 0.230189,
-          "fear": 0.05754,
-          "disgust": 0.148241,
-          "anger": 0.105548
+          "sadness": 0.124067,
+          "joy": 0.012831,
+          "fear": 0.096679,
+          "disgust": 0.068061,
+          "anger": 0.575196
+        },
+        "count": 1,
+        "confidence": 0.927301
+      },
+      {
+        "type": "Organization",
+        "text": "New York Times",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.244427,
+        "emotion": {
+          "sadness": 0.607636,
+          "joy": 0.114128,
+          "fear": 0.049374,
+          "disgust": 0.083033,
+          "anger": 0.050703
+        },
+        "count": 1,
+        "confidence": 0.505952
+      },
+      {
+        "type": "Hashtag",
+        "text": "#1",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.232889,
+        "emotion": {
+          "sadness": 0.297994,
+          "joy": 0.187448,
+          "fear": 0.060602,
+          "disgust": 0.03722,
+          "anger": 0.257261
+        },
+        "count": 1,
+        "confidence": 0.8
+      },
+      {
+        "type": "Organization",
+        "text": "imo",
+        "sentiment": {
+          "score": -0.648189,
+          "label": "negative"
+        },
+        "relevance": 0.188485,
+        "emotion": {
+          "sadness": 0.317661,
+          "joy": 0.016585,
+          "fear": 0.122744,
+          "disgust": 0.049338,
+          "anger": 0.302992
+        },
+        "count": 1,
+        "confidence": 0.516553
+      },
+      {
+        "type": "Number",
+        "text": "one",
+        "sentiment": {
+          "score": -0.692953,
+          "label": "negative"
+        },
+        "relevance": 0.176941,
+        "emotion": {
+          "sadness": 0.124067,
+          "joy": 0.012831,
+          "fear": 0.096679,
+          "disgust": 0.068061,
+          "anger": 0.575196
+        },
+        "count": 1,
+        "confidence": 0.8
+      },
+      {
+        "type": "Organization",
+        "text": "Peer Production News",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.141038,
+        "emotion": {
+          "sadness": 0.590157,
+          "joy": 0.409905,
+          "fear": 0.064059,
+          "disgust": 0.033754,
+          "anger": 0.050593
+        },
+        "count": 1,
+        "confidence": 0.562044
+      },
+      {
+        "type": "Location",
+        "text": "USA",
+        "sentiment": {
+          "score": 0,
+          "label": "neutral"
+        },
+        "relevance": 0.077003,
+        "emotion": {
+          "sadness": 0.297994,
+          "joy": 0.187448,
+          "fear": 0.060602,
+          "disgust": 0.03722,
+          "anger": 0.257261
         },
         "disambiguation": {
           "subtype": [
@@ -954,905 +1112,26 @@
           "name": "United_States",
           "dbpedia_resource": "http://dbpedia.org/resource/United_States"
         },
-        "count": 20,
-        "confidence": 1
+        "count": 1,
+        "confidence": 0.644432
       },
       {
-        "type": "Number",
-        "text": "one",
+        "type": "Duration",
+        "text": "a few months",
         "sentiment": {
-          "score": -0.583158,
-          "mixed": "1",
+          "score": -0.44617,
           "label": "negative"
         },
-        "relevance": 0.107465,
+        "relevance": 0.075009,
         "emotion": {
-          "sadness": 0.233561,
-          "joy": 0.180755,
-          "fear": 0.077925,
-          "disgust": 0.115879,
-          "anger": 0.207106
-        },
-        "count": 22,
-        "confidence": 1
-      },
-      {
-        "type": "Person",
-        "text": "Condoleezza Rice",
-        "sentiment": {
-          "score": 0.74809,
-          "label": "positive"
-        },
-        "relevance": 0.099019,
-        "emotion": {
-          "sadness": 0.074044,
-          "joy": 0.7646,
-          "fear": 0.029532,
-          "disgust": 0.113867,
-          "anger": 0.028667
-        },
-        "disambiguation": {
-          "subtype": [
-            "FilmCharacter",
-            "MusicalArtist",
-            "Politician",
-            "AwardNominee",
-            "AwardWinner",
-            "BoardMember",
-            "OfficeHolder",
-            "PoliticalAppointer",
-            "FilmActor",
-            "TVActor"
-          ],
-          "name": "Condoleezza_Rice",
-          "dbpedia_resource": "http://dbpedia.org/resource/Condoleezza_Rice"
-        },
-        "count": 3,
-        "confidence": 0.930279
-      },
-      {
-        "type": "Person",
-        "text": "Bush",
-        "sentiment": {
-          "score": -0.73519,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.096763,
-        "emotion": {
-          "sadness": 0.294486,
-          "joy": 0.051389,
-          "fear": 0.094566,
-          "disgust": 0.179575,
-          "anger": 0.18594
-        },
-        "count": 8,
-        "confidence": 1
-      },
-      {
-        "type": "Location",
-        "text": "Iraq",
-        "sentiment": {
-          "score": -0.846474,
-          "label": "negative"
-        },
-        "relevance": 0.095828,
-        "emotion": {
-          "sadness": 0.140703,
-          "joy": 0.049015,
-          "fear": 0.161442,
-          "disgust": 0.230232,
-          "anger": 0.26971
-        },
-        "disambiguation": {
-          "name": "Iraq_under_U.S._Military_Occupation",
-          "dbpedia_resource": "http://dbpedia.org/resource/Iraq_under_U.S._Military_Occupation"
-        },
-        "count": 8,
-        "confidence": 1
-      },
-      {
-        "type": "Location",
-        "text": "Illinois",
-        "sentiment": {
-          "score": -0.727662,
-          "label": "negative"
-        },
-        "relevance": 0.094151,
-        "emotion": {
-          "sadness": 0.266738,
-          "joy": 0.210044,
-          "fear": 0.094491,
-          "disgust": 0.172259,
-          "anger": 0.038839
-        },
-        "count": 6,
-        "confidence": 0.999758
-      },
-      {
-        "type": "Person",
-        "text": "Colin Powell",
-        "sentiment": {
-          "score": 0.864494,
-          "label": "positive"
-        },
-        "relevance": 0.090369,
-        "emotion": {
-          "sadness": 0.053343,
-          "joy": 0.851848,
-          "fear": 0.028113,
-          "disgust": 0.086912,
-          "anger": 0.021481
-        },
-        "disambiguation": {
-          "subtype": [
-            "FilmCharacter",
-            "Politician",
-            "AwardWinner",
-            "BoardMember",
-            "ChivalricOrderMember",
-            "CompanyFounder",
-            "MilitaryPerson",
-            "OfficeHolder",
-            "PoliticalAppointer",
-            "TVActor"
-          ],
-          "name": "Colin_Powell",
-          "dbpedia_resource": "http://dbpedia.org/resource/Colin_Powell"
-        },
-        "count": 3,
-        "confidence": 0.999908
-      },
-      {
-        "type": "Number",
-        "text": "300,000,000",
-        "sentiment": {
-          "score": -0.699164,
-          "label": "negative"
-        },
-        "relevance": 0.084455,
-        "emotion": {
-          "sadness": 0.130235,
-          "joy": 0.19126,
-          "fear": 0.235797,
-          "disgust": 0.018338,
-          "anger": 0.063305
-        },
-        "count": 2,
-        "confidence": 0.96
-      },
-      {
-        "type": "Person",
-        "text": "Hillary",
-        "sentiment": {
-          "score": -0.639976,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.08331,
-        "emotion": {
-          "sadness": 0.116734,
-          "joy": 0.074463,
-          "fear": 0.093652,
-          "disgust": 0.419927,
-          "anger": 0.078701
-        },
-        "count": 9,
-        "confidence": 1
-      },
-      {
-        "type": "Organization",
-        "text": "Klan",
-        "sentiment": {
-          "score": -0.323174,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.080659,
-        "emotion": {
-          "sadness": 0.060132,
-          "joy": 0.098859,
-          "fear": 0.058304,
-          "disgust": 0.191073,
-          "anger": 0.077638
-        },
-        "disambiguation": {
-          "name": "Ku_Klux_Klan",
-          "dbpedia_resource": "http://dbpedia.org/resource/Ku_Klux_Klan"
-        },
-        "count": 3,
-        "confidence": 0.983513
-      },
-      {
-        "type": "Person",
-        "text": "Clinton",
-        "sentiment": {
-          "score": 0.320866,
-          "mixed": "1",
-          "label": "positive"
-        },
-        "relevance": 0.080374,
-        "emotion": {
-          "sadness": 0.265192,
-          "joy": 0.196878,
-          "fear": 0.043291,
-          "disgust": 0.279988,
-          "anger": 0.103669
-        },
-        "count": 6,
-        "confidence": 1
-      },
-      {
-        "type": "Person",
-        "text": "Mr. Obama",
-        "sentiment": {
-          "score": 0.392691,
-          "mixed": "1",
-          "label": "positive"
-        },
-        "relevance": 0.076294,
-        "emotion": {
-          "sadness": 0.393729,
-          "joy": 0.336814,
-          "fear": 0.046052,
-          "disgust": 0.070254,
-          "anger": 0.069954
-        },
-        "count": 2,
-        "confidence": 0.998044
-      },
-      {
-        "type": "JobTitle",
-        "text": "current president",
-        "sentiment": {
-          "score": 0.651144,
-          "label": "positive"
-        },
-        "relevance": 0.074929,
-        "emotion": {
-          "sadness": 0.36529,
-          "joy": 0.057235,
-          "fear": 0.232077,
-          "disgust": 0.133316,
-          "anger": 0.072608
-        },
-        "count": 2,
-        "confidence": 0.891733
-      },
-      {
-        "type": "JobTitle",
-        "text": "president",
-        "sentiment": {
-          "score": -0.366976,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.072391,
-        "emotion": {
-          "sadness": 0.182884,
-          "joy": 0.276498,
-          "fear": 0.072889,
-          "disgust": 0.094962,
-          "anger": 0.114476
-        },
-        "count": 7,
-        "confidence": 0.999995
-      },
-      {
-        "type": "Organization",
-        "text": "Obaama",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.07037,
-        "emotion": {
-          "sadness": 0.174682,
-          "joy": 0.265558,
-          "fear": 0.121567,
-          "disgust": 0.023885,
-          "anger": 0.118873
+          "sadness": 0.744886,
+          "joy": 0.007565,
+          "fear": 0.326844,
+          "disgust": 0.038805,
+          "anger": 0.097645
         },
         "count": 1,
-        "confidence": 0.78508
-      },
-      {
-        "type": "Organization",
-        "text": "Republicans of government",
-        "sentiment": {
-          "score": -0.937555,
-          "label": "negative"
-        },
-        "relevance": 0.06779,
-        "emotion": {
-          "sadness": 0.236204,
-          "joy": 0.009248,
-          "fear": 0.05152,
-          "disgust": 0.255443,
-          "anger": 0.17831
-        },
-        "count": 1,
-        "confidence": 0.571486
-      },
-      {
-        "type": "Location",
-        "text": "Washington",
-        "sentiment": {
-          "score": -0.662174,
-          "label": "negative"
-        },
-        "relevance": 0.067297,
-        "emotion": {
-          "sadness": 0.130179,
-          "joy": 0.344955,
-          "fear": 0.118518,
-          "disgust": 0.083182,
-          "anger": 0.165221
-        },
-        "count": 4,
-        "confidence": 0.999997
-      },
-      {
-        "type": "JobTitle",
-        "text": "President",
-        "sentiment": {
-          "score": -0.366976,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.064993,
-        "emotion": {
-          "sadness": 0.182884,
-          "joy": 0.276498,
-          "fear": 0.072889,
-          "disgust": 0.094962,
-          "anger": 0.114476
-        },
-        "count": 5,
-        "confidence": 0.999995
-      },
-      {
-        "type": "Person",
-        "text": "Marguerite Lewis",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.064138,
-        "emotion": {
-          "sadness": 0.453713,
-          "joy": 0.030079,
-          "fear": 0.025531,
-          "disgust": 0.118174,
-          "anger": 0.045284
-        },
-        "count": 1,
-        "confidence": 0.933211
-      },
-      {
-        "type": "URL",
-        "text": "http://www.huffingtonpost.com/bob-burnett/nation-building-obama-st_b_20923.html",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.063073,
-        "emotion": {
-          "sadness": 0.164995,
-          "joy": 0.433725,
-          "fear": 0.092288,
-          "disgust": 0.04188,
-          "anger": 0.050747
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "Organization",
-        "text": "Judeo-Christian",
-        "sentiment": {
-          "score": 0.32086,
-          "label": "positive"
-        },
-        "relevance": 0.062674,
-        "emotion": {
-          "sadness": 0.303266,
-          "joy": 0.014164,
-          "fear": 0.025771,
-          "disgust": 0.014647,
-          "anger": 0.173266
-        },
-        "count": 2,
-        "confidence": 0.440345
-      },
-      {
-        "type": "Location",
-        "text": "Muslim nation",
-        "sentiment": {
-          "score": 0.442543,
-          "label": "positive"
-        },
-        "relevance": 0.060462,
-        "emotion": {
-          "sadness": 0.295973,
-          "joy": 0.070424,
-          "fear": 0.03273,
-          "disgust": 0.145007,
-          "anger": 0.244312
-        },
-        "count": 1,
-        "confidence": 0.275309
-      },
-      {
-        "type": "Organization",
-        "text": "Democratic Senators",
-        "sentiment": {
-          "score": -0.577003,
-          "label": "negative"
-        },
-        "relevance": 0.059651,
-        "emotion": {
-          "sadness": 0.125025,
-          "joy": 0.091818,
-          "fear": 0.093478,
-          "disgust": 0.103802,
-          "anger": 0.054999
-        },
-        "count": 1,
-        "confidence": 0.630433
-      },
-      {
-        "type": "Location",
-        "text": "mainstream America",
-        "sentiment": {
-          "score": -0.577003,
-          "label": "negative"
-        },
-        "relevance": 0.059606,
-        "emotion": {
-          "sadness": 0.125025,
-          "joy": 0.091818,
-          "fear": 0.093478,
-          "disgust": 0.103802,
-          "anger": 0.054999
-        },
-        "count": 1,
-        "confidence": 0.418833
-      },
-      {
-        "type": "Organization",
-        "text": "Dems",
-        "sentiment": {
-          "score": -0.86618,
-          "label": "negative"
-        },
-        "relevance": 0.058006,
-        "emotion": {
-          "sadness": 0.143379,
-          "joy": 0.070279,
-          "fear": 0.226386,
-          "disgust": 0.157493,
-          "anger": 0.109133
-        },
-        "count": 4,
-        "confidence": 0.99886
-      },
-      {
-        "type": "Person",
-        "text": "McCain",
-        "sentiment": {
-          "score": -0.549791,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.05553,
-        "emotion": {
-          "sadness": 0.05775,
-          "joy": 0.121013,
-          "fear": 0.05273,
-          "disgust": 0.12722,
-          "anger": 0.429032
-        },
-        "count": 5,
-        "confidence": 1
-      },
-      {
-        "type": "Organization",
-        "text": "Senate",
-        "sentiment": {
-          "score": -0.838987,
-          "label": "negative"
-        },
-        "relevance": 0.055524,
-        "emotion": {
-          "sadness": 0.133528,
-          "joy": 0.075675,
-          "fear": 0.067803,
-          "disgust": 0.278366,
-          "anger": 0.168794
-        },
-        "disambiguation": {
-          "subtype": [
-            "GovernmentalBody",
-            "Legislature"
-          ],
-          "name": "United_States_Senate",
-          "dbpedia_resource": "http://dbpedia.org/resource/United_States_Senate"
-        },
-        "count": 5,
-        "confidence": 0.996731
-      },
-      {
-        "type": "TwitterHandle",
-        "text": "@FIELD",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.054904,
-        "emotion": {
-          "sadness": 0.143307,
-          "joy": 0.504875,
-          "fear": 0.107967,
-          "disgust": 0.035419,
-          "anger": 0.057303
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "TwitterHandle",
-        "text": "@4",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.054887,
-        "emotion": {
-          "sadness": 0.143307,
-          "joy": 0.504875,
-          "fear": 0.107967,
-          "disgust": 0.035419,
-          "anger": 0.057303
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "TwitterHandle",
-        "text": "@1",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.054881,
-        "emotion": {
-          "sadness": 0.143307,
-          "joy": 0.504875,
-          "fear": 0.107967,
-          "disgust": 0.035419,
-          "anger": 0.057303
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "Number",
-        "text": "01763",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.054844,
-        "emotion": {
-          "sadness": 0.143307,
-          "joy": 0.504875,
-          "fear": 0.107967,
-          "disgust": 0.035419,
-          "anger": 0.057303
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "Organization",
-        "text": "DNC convention",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.054716,
-        "emotion": {
-          "sadness": 0.082432,
-          "joy": 0.095341,
-          "fear": 0.047701,
-          "disgust": 0.673838,
-          "anger": 0.021477
-        },
-        "count": 1,
-        "confidence": 0.478139
-      },
-      {
-        "type": "Person",
-        "text": "nickb",
-        "sentiment": {
-          "score": -0.759903,
-          "label": "negative"
-        },
-        "relevance": 0.054458,
-        "emotion": {
-          "sadness": 0.46733,
-          "joy": 0.013963,
-          "fear": 0.149623,
-          "disgust": 0.030935,
-          "anger": 0.100247
-        },
-        "count": 1,
-        "confidence": 0.907372
-      },
-      {
-        "type": "Person",
-        "text": "Sharpton",
-        "sentiment": {
-          "score": -0.439408,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.054148,
-        "emotion": {
-          "sadness": 0.290114,
-          "joy": 0.266428,
-          "fear": 0.018835,
-          "disgust": 0.329186,
-          "anger": 0.058481
-        },
-        "count": 2,
-        "confidence": 0.99419
-      },
-      {
-        "type": "Person",
-        "text": "Jerry Farwell",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.053904,
-        "emotion": {
-          "sadness": 0.082925,
-          "joy": 0.10896,
-          "fear": 0.025466,
-          "disgust": 0.096175,
-          "anger": 0.545858
-        },
-        "disambiguation": {
-          "subtype": [
-            "TVPersonality",
-            "FilmActor"
-          ],
-          "name": "Jerry_Falwell",
-          "dbpedia_resource": "http://dbpedia.org/resource/Jerry_Falwell"
-        },
-        "count": 1,
-        "confidence": 0.95652
-      },
-      {
-        "type": "Person",
-        "text": "Pat Roberson",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.053884,
-        "emotion": {
-          "sadness": 0.082925,
-          "joy": 0.10896,
-          "fear": 0.025466,
-          "disgust": 0.096175,
-          "anger": 0.545858
-        },
-        "count": 1,
-        "confidence": 0.909564
-      },
-      {
-        "type": "URL",
-        "text": "http://reddit.com/info/9bfe/comments",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.053085,
-        "emotion": {
-          "sadness": 0.153433,
-          "joy": 0.599563,
-          "fear": 0.11984,
-          "disgust": 0.028771,
-          "anger": 0.040545
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "Organization",
-        "text": "college grads",
-        "sentiment": {
-          "score": -0.853799,
-          "label": "negative"
-        },
-        "relevance": 0.052213,
-        "emotion": {
-          "sadness": 0.222918,
-          "joy": 0.496565,
-          "fear": 0.021579,
-          "disgust": 0.063691,
-          "anger": 0.076059
-        },
-        "count": 2,
-        "confidence": 0.61799
-      },
-      {
-        "type": "Organization",
-        "text": "Google",
-        "sentiment": {
-          "score": -0.784838,
-          "label": "negative"
-        },
-        "relevance": 0.051933,
-        "emotion": {
-          "sadness": 0.205027,
-          "joy": 0.232213,
-          "fear": 0.050203,
-          "disgust": 0.193837,
-          "anger": 0.155961
-        },
-        "disambiguation": {
-          "subtype": [
-            "AcademicInstitution",
-            "AwardPresentingOrganization",
-            "Company",
-            "OperatingSystemDeveloper",
-            "ProgrammingLanguageDeveloper",
-            "SoftwareDeveloper",
-            "VentureFundedCompany"
-          ],
-          "name": "Google",
-          "dbpedia_resource": "http://dbpedia.org/resource/Google"
-        },
-        "count": 4,
-        "confidence": 0.999998
-      },
-      {
-        "type": "Organization",
-        "text": "Reddit.com",
-        "sentiment": {
-          "score": -0.819924,
-          "label": "negative"
-        },
-        "relevance": 0.05153,
-        "emotion": {
-          "sadness": 0.221466,
-          "joy": 0.1672,
-          "fear": 0.063506,
-          "disgust": 0.080333,
-          "anger": 0.305062
-        },
-        "disambiguation": {
-          "subtype": [
-            "Website"
-          ],
-          "name": "Reddit",
-          "dbpedia_resource": "http://dbpedia.org/resource/Reddit"
-        },
-        "count": 3,
-        "confidence": 0.998754
-      },
-      {
-        "type": "Organization",
-        "text": "Republican",
-        "sentiment": {
-          "score": -0.698278,
-          "mixed": "1",
-          "label": "negative"
-        },
-        "relevance": 0.051384,
-        "emotion": {
-          "sadness": 0.224414,
-          "joy": 0.081522,
-          "fear": 0.085503,
-          "disgust": 0.16155,
-          "anger": 0.330825
-        },
-        "count": 4,
-        "confidence": 0.983365
-      },
-      {
-        "type": "URL",
-        "text": "http://www.memritv.org/search.asp?ACT=S9&P1=941",
-        "sentiment": {
-          "score": 0,
-          "label": "neutral"
-        },
-        "relevance": 0.050963,
-        "emotion": {
-          "sadness": 0.15585,
-          "joy": 0.476806,
-          "fear": 0.102616,
-          "disgust": 0.038499,
-          "anger": 0.048743
-        },
-        "count": 1,
-        "confidence": 0.8
-      },
-      {
-        "type": "Ordinal",
-        "text": "first",
-        "sentiment": {
-          "score": -0.761421,
-          "label": "negative"
-        },
-        "relevance": 0.050403,
-        "emotion": {
-          "sadness": 0.330055,
-          "joy": 0.123342,
-          "fear": 0.109454,
-          "disgust": 0.173383,
-          "anger": 0.078325
-        },
-        "count": 9,
-        "confidence": 1
-      },
-      {
-        "type": "Facility",
-        "text": "WTC collapse",
-        "sentiment": {
-          "score": -0.707623,
-          "label": "negative"
-        },
-        "relevance": 0.049778,
-        "emotion": {
-          "sadness": 0.148182,
-          "joy": 0.01302,
-          "fear": 0.181232,
-          "disgust": 0.343958,
-          "anger": 0.066539
-        },
-        "count": 1,
-        "confidence": 0.303913
-      },
-      {
-        "type": "Organization",
-        "text": "American Conservative magazine",
-        "sentiment": {
-          "score": -0.673191,
-          "label": "negative"
-        },
-        "relevance": 0.048109,
-        "emotion": {
-          "sadness": 0.188559,
-          "joy": 0.095345,
-          "fear": 0.032926,
-          "disgust": 0.130049,
-          "anger": 0.041487
-        },
-        "count": 1,
-        "confidence": 0.447008
-      },
-      {
-        "type": "URL",
-        "text": "http://www.msnbc.msn.com/id/12612211/",
-        "sentiment": {
-          "score": -0.934811,
-          "label": "negative"
-        },
-        "relevance": 0.047531,
-        "emotion": {
-          "sadness": 0.088072,
-          "joy": 0.103719,
-          "fear": 0.039343,
-          "disgust": 0.155531,
-          "anger": 0.110937
-        },
-        "count": 1,
-        "confidence": 0.8
+        "confidence": 0.29759
       }
     ]
   }

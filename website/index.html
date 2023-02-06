@@ -28,22 +28,15 @@
         background-color: #ddd;
         outline: none;
     }
-    #AvgSentiment {
-        width: 100%;
+    textarea {
+        width: 80%;
+        height: 200px;
         padding: 15px;
-        margin: 5px 0 22px 0;
+        margin: 5px 0 5px 0;
         display: inline-block;
         border: none;
-        background: #46856e27;
-    }
-    .textarea {
-        width: 200%;
-        padding: 15px;
-        margin: 5px 0 22px 0;
-        display: inline-block;
-        border: none;
-        background: #f1f1f1;
-
+        background: #f1f1f1;    
+        border-radius: 4px;
     }
     .button {
         background-color: #4CAF50;
@@ -57,20 +50,20 @@
     }
     .container {
         border-radius: 10px;
-        padding: 10px;
+        padding: 20px;
         margin-top: 30px;
         background-color: #46856e7c;
         margin-bottom: 30px;
     }
-
     /*container that extends other container with a diffretn background color*/
     .container2 {
         background-color: rgba(104, 160, 92, 0.5);
         border-radius: 10px;
         padding: 10px;
-        margin-left: 50px;
-        margin-right: 50px;
-        background-color: #17735a81;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 
 </style>
@@ -82,37 +75,47 @@
             <input id="searchInput" type="text" placeholder="Enter Search"></input>
             <button class='button' type="button" id= "searchButton">Search</button>
         </form>
-        <div id="tweets"></div>
-        
         <div class='container2' id="AvgSentiment">
-            <h4>Average Sentiment</h4>
+            Average Sentiment Twitter:
+        </div>
+        <div class='container2' id="AvgSentiment2">
+            Average Sentiment Reddit: 
+        </div>
+        <div class='container2' id="AvgSentiment3">
+            Average Sentiment Custom text:
         </div>
     
-        <textarea id="custom-Sentiment"></textarea>
+        <textarea id="custom-Sentiment">Enter sample Text To get its Sentiment. </textarea>
         <button class='button' type="button" id= "custom-Sentiment-Button">Custom Sentiment</button>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
        $('#searchButton').click(function(){
            var searchInput = $('#searchInput').val();
-           console.log(searchInput);
-           $.get('/search',{term:searchInput},function(data){
-                $('#tweets').empty();
-               //console.log(data);
-               //data.statuses.forEach(function(tweet) {
-                    //$('#tweets').append(`<p>${tweet.text}</p>`);
-                //});
-            $('#AvgSentiment').append(`<p>Average Sentiment Twitter: ${data}, SearchTerm: ${searchInput} </p>`);
-           });           
-       });
-    console.log("running");
+           console.log("twitter", searchInput);
+           $.get('/searchTwitter',{term:searchInput},function(data){
+               
+            $('#AvgSentiment').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
+           });  
 
+        });
+        $('#searchButton').click(function(){
+            var searchInput = $('#searchInput').val();
+            console.log("reddit", searchInput);
+            $.get('/searchReddit', { searchTerm:searchInput},function(data){
+            $('#AvgSentiment2').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
+            });
+        });
+        
+
+    console.log("running");
+ 
     //sends the all the text to the server to be analyzed 
     $('#custom-Sentiment-Button').click(function(){
         var customSentiment = $('#custom-Sentiment').val();
         console.log(customSentiment);
         $.get('/customSentiment',{term:customSentiment},function(data){
-            $('#AvgSentiment').append(`<p>Average Sentiment General Text: ${data}, SearchTerm: ${customSentiment} </p>`);
+            $('#AvgSentiment3').append(`<p>Average Sentiment General Text: ${data}, SearchTerm: ${customSentiment} </p>`);
         });
     });
     </script>
