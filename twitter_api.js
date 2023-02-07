@@ -60,8 +60,6 @@ app.get('/searchReddit', async (req, res) => {
     let bodyText = commentBody.join("");
     let he = require('he');
     let fixedText = he.decode(bodyText);
-    //fs.writeFileSync('reddit.txt', fixedText);
-    //console.log(fixedText);
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
       version: '2022-04-07',
       authenticator: new IamAuthenticator({
@@ -84,9 +82,6 @@ app.get('/searchReddit', async (req, res) => {
       },
     };
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
-    //console.log(JSON.stringify(analysisResults, null, 2));
-    //const outputString = JSON.stringify(analysisResults, null, 2);
-    //fs.writeFileSync('results.json', outputString);
      let sentimentResults = analysisResults.result.keywords;
     // var sadness=0;
      var joy=0;
@@ -139,24 +134,10 @@ app.get('/searchReddit', async (req, res) => {
   }
 });
 
-//Posting data
-/*
-app.post('/api', (request, response) => {
-    const data = request.body;;
-    const timestamp = Date.now();
-    data.timestamp = timestamp;
-    //console.log(timestamp.toLocaleDateString());
-    database.insert(data);
-    response.json(data);
-});
-*/
-
-
 app.get('/searchTwitter', (req, res) => {
     const searchTerm = req.query.term;
     T.get('search/tweets', { q: searchTerm,count: 100}, function(err, data, response) {
       if(err) return res.status(500).json({ error: err });
-      //res.json(data);
       const tweets = data.statuses;
       var sentiment = new Sentiment();
       var totalScore = 0;
@@ -191,13 +172,11 @@ app.get('/searchTwitter', (req, res) => {
             emoji = "😐";
         }
         res.json(averageSentiment + emoji);
-        //res.json({tweets, averageSentiment});
-      
+        //res.json({tweets, averageSentiment});     
     });
 });
 
 //reccieves text from the client textarea then returns the sentiment of the text to the client page
-
 app.get('/customSentiment', (req, res) => {
     //analzes the textarea text from the client after the user clicks the button
     const text = req.query.term;
@@ -207,79 +186,3 @@ app.get('/customSentiment', (req, res) => {
     console.log(result);
     res.json(result.score);
 });
-
-
-/*
-app.get('search', getData);
-var params = {
-    q: 'amongus since:2019-04-15',
-    count: 10,
-}
-
-function getData(err, data, response) {
-    const tweets = data.statuses;
-    var index = 0;
-    var sentiment = new Sentiment();
-    var totalScore = 0;
-    for (var i = 0; i < tweets.length; i++){
-        index++;
-        console.log("\n",index," ",tweets[i].text);
-        const result = sentiment.analyze(tweets[i].text);
-        totalScore += result.score;
-        console.log("Postive: {" ,result.positive, "}","Negative: {", result.negative,"}")
-        console.log("score: ",result.score);
-    }
-    //app.post('/tweets', (req,res) => {
-        //res.send(tweets);
-   // });
-    const averageSentiment = totalScore/tweets.length;
-    var emoji;
-    if (averageSentiment > 1){
-        emoji = "😁";
-    }else if( averageSentiment < -1 ){
-        emoji = "😡";
-    }
-    else if (averageSentiment < 0){
-        emoji = "😔";
-    
-    }else if( averageSentiment > 0){
-        emoji = "🙂";
-    }else{
-        emoji = "😐";
-    }
-    console.log("-------------------------------------");
-    console.log("\ntotal: ", totalScore)
-    console.log("Avg Score: ",averageSentiment," ",emoji );
-    console.log("Search Query: ",params.q);
-    console.log("-------------------------------------");
-}
-T.get('search/tweets', params , getData);
-*/
-
-/*
-app.get('tweets/:query', getTweets);
-function getTweets(req, res) {
-    // Here's the string we are seraching for
-    var query = req.params.query;
-  
-    // Execute a Twitter API call
-    T.get('search/tweets', { q: query, count: 10 }, gotData);
-  
-    // Callback
-    function gotData(err, data) {
-      // Get the tweets
-      var tweets = data.statuses;
-      // Spit it back out so that p5 can load it!
-      res.send(tweets);
-    };
-  }
-*/
-
-app.get('/tweets', (req,res) =>{
-        const{dynamic} = req.params
-        console.log(dynamic)
-        res.status(200).json({info: 'PUT SCORE OF THE SENTIEMTN IN HERE THEN SEDN IT TO THE CLIENT'})
-})
-
-
-
