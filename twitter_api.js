@@ -50,7 +50,7 @@ app.get('/searchReddit', async (req, res) => {
   const snoo = new SnooShift(); 
   const searchParams = {
     q: searchTerm,
-    size: 30,
+    size: 55,
     order: 'asc',
     sort: 'created_utc'
   };
@@ -82,53 +82,96 @@ app.get('/searchReddit', async (req, res) => {
       },
     };
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
-     let sentimentResults = analysisResults.result.keywords;
-    // var sadness=0;
+  
+    
+    let sentimentResults = analysisResults.result.keywords;
+     var sadness=0;
      var joy=0;
-    // var fear=0;S
-    // var disgust=0;
-    // var anger=0;
-    // //sadnessS
-    // for(let i = 0; i < sentimentResults.length; i++) {
-    //   sadness+=sentimentResults[i].emotion.sadness;
-    // }
-    // sadness/=sentimentResults.length;
-    // sadness = sadness.toFixed(2);
+     var fear=0;
+     var disgust=0;
+     var anger=0;
+     //sadness
+     for(let i = 0; i < sentimentResults.length; i++) {
+       sadness+=sentimentResults[i].emotion.sadness;
+     }
+     sadness/=sentimentResults.length;
+     sadness = sadness.toFixed(2);
      //joy
      for(let i = 0; i < sentimentResults.length; i++) {
        joy+=sentimentResults[i].emotion.joy;
      }
      joy/=sentimentResults.length;
      joy = joy.toFixed(2);
-    // //fear
-    // for(let i = 0; i < sentimentResults.length; i++) {
-    //   fear+=sentimentResults[i].emotion.fear;
-    // }
-    // fear/=sentimentResults.length;
-    // fear = fear.toFixed(2);
-    // //disgust
-    // for(let i = 0; i < sentimentResults.length; i++) {
-    //   disgust+=sentimentResults[i].emotion.disgust;
-    // }
-    // disgust/=sentimentResults.length;
-    // disgust = disgust.toFixed(2);
-    // //anger
-    // for(let i = 0; i < sentimentResults.length; i++) {
-    //   anger+=sentimentResults[i].emotion.anger;
-    // }
-    // anger/=sentimentResults.length;
-    // anger = anger.toFixed(2);
-    // var neutral = 1 
-    // neutral = neutral - sadness - joy - fear - disgust - anger;
+    //fear
+    for(let i = 0; i < sentimentResults.length; i++) {
+      fear+=sentimentResults[i].emotion.fear;
+    }
+    fear/=sentimentResults.length;
+    fear = fear.toFixed(2);
+    //disgust
+    for(let i = 0; i < sentimentResults.length; i++) {
+      disgust+=sentimentResults[i].emotion.disgust;
+    }
+    disgust/=sentimentResults.length;
+    disgust = disgust.toFixed(2);
+    //anger
+    for(let i = 0; i < sentimentResults.length; i++) {
+      anger+=sentimentResults[i].emotion.anger;
+    }
+    anger/=sentimentResults.length;
+    anger = anger.toFixed(2);
+    var neutral = 1 
+    neutral = neutral - sadness - joy - fear - disgust - anger;
 
     console.log("RESULTS");
-    // console.log("sadness: "+sadness);
+    console.log("sadness: "+sadness);
     console.log("joy: "+joy);
-    // console.log("fear: "+fear);
-    // console.log("disgust: "+disgust);
-    // console.log("anger: "+anger);
-    // console.log("neutral: "+neutral);    
-    res.json(joy);  
+    console.log("fear: "+fear);
+    console.log("disgust: "+disgust);
+    console.log("anger: "+anger);
+    console.log("neutral: "+neutral.toFixed(2));   
+    
+    let maxEmotion = 'sadness';
+    let maxScore=sadness;
+    if (joy > maxScore) {
+      maxEmotion = 'joy';
+      maxScore = joy;
+    }
+    else if (fear > maxScore) {
+      maxEmotion = 'fear';
+      maxScore = fear;
+    }
+    else if (disgust > maxScore) {
+      maxEmotion = 'disgust';
+      maxScore = disgust;
+    }
+    else if (anger > maxScore) {
+      maxEmotion = 'anger';
+      maxScore = anger;
+    }
+    let emoji;
+    switch (maxEmotion) {
+      case 'joy':
+        emoji = '😊';
+        break;
+      case 'fear':
+        emoji = '😱';
+        break;
+      case 'disgust':
+        emoji = '🤢';
+        break;
+      case 'anger':
+        emoji = '😠';
+        break;
+      case 'sadness':
+        emoji = '😢';
+        break;
+      default:
+        emoji = '🤔';
+        break;
+    }
+    console.log(emoji);
+    res.json(emoji);  
   }catch(error){
     console.error(error);
   }
@@ -136,7 +179,7 @@ app.get('/searchReddit', async (req, res) => {
 
 app.get('/searchTwitter', (req, res) => {
     const searchTerm = req.query.term;
-    T.get('search/tweets', { q: searchTerm,count: 100}, function(err, data, response) {
+    T.get('search/tweets', { q: searchTerm,count: 50}, function(err, data, response) {
       if(err) return res.status(500).json({ error: err });
       const tweets = data.statuses;
       var sentiment = new Sentiment();
@@ -171,7 +214,7 @@ app.get('/searchTwitter', (req, res) => {
         {
             emoji = "😐";
         }
-        res.json(averageSentiment + emoji);
+        res.json({averageSentiment, emoji});
         //res.json({tweets, averageSentiment});     
     });
 });

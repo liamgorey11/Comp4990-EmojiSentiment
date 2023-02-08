@@ -70,8 +70,8 @@
 <body>
     <div class ="container">
         <h1>Search for Tweets</h1>
-        <p>This page pulls data from Twitter.  Authentication is happening in node on the server. </p>
-        <form>
+        <p>This page pulls data from Twitter. </p>
+        <form onsubmit="return submitForm()">
             <input id="searchInput" type="text" placeholder="Enter Search"></input>
             <button class='button' type="button" id= "searchButton">Search</button>
         </form>
@@ -90,34 +90,30 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
-       $('#searchButton').click(function(){
-           var searchInput = $('#searchInput').val();
-           console.log("twitter", searchInput);
-           $.get('/searchTwitter',{term:searchInput},function(data){
-               
-            $('#AvgSentiment').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
-           });  
 
-        });
-        $('#searchButton').click(function(){
+        function submitForm(){
             var searchInput = $('#searchInput').val();
-            console.log("reddit", searchInput);
-            $.get('/searchReddit', { searchTerm:searchInput},function(data){
-            $('#AvgSentiment2').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
+            $.get('/searchTwitter',{term:searchInput},function(data){  
+                $('#AvgSentiment').append(`<p>Sentiment: ${data.averageSentiment},${data.emoji}, SearchTerm: ${searchInput} </p>`);
+            });  
+            $.get('/searchReddit', {searchTerm:searchInput},function(data){
+                $('#AvgSentiment2').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
+            });
+            return false;
+        }
+
+        $(function(){
+            $('#searchButton').click(submitForm);
+        })
+       
+        //sends the all the text to the server to be analyzed 
+        $('#custom-Sentiment-Button').click(function(){
+            var customSentiment = $('#custom-Sentiment').val();
+            console.log(customSentiment);
+            $.get('/customSentiment',{term:customSentiment},function(data){
+                $('#AvgSentiment3').append(`<p>Average Sentiment General Text: ${data}, SearchTerm: ${customSentiment} </p>`);
             });
         });
-        
-
-    console.log("running");
- 
-    //sends the all the text to the server to be analyzed 
-    $('#custom-Sentiment-Button').click(function(){
-        var customSentiment = $('#custom-Sentiment').val();
-        console.log(customSentiment);
-        $.get('/customSentiment',{term:customSentiment},function(data){
-            $('#AvgSentiment3').append(`<p>Average Sentiment General Text: ${data}, SearchTerm: ${customSentiment} </p>`);
-        });
-    });
     </script>
 </body>
 </html>
