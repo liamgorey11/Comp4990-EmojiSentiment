@@ -1,2 +1,6 @@
 .env
 node_modules/
+test.txt
+results.json
+reddit.txt
+results.json

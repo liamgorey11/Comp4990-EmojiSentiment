@@ -55,7 +55,7 @@ app.get('/searchReddit', async (req, res) => {
     sort: 'created_utc'
   };
   try{
-    const comments = await snoo.searchComments("\""+searchParams+"\"");
+    const comments = await snoo.searchComments(searchParams);
     let commentBody = comments.map(comment => comment.body + "\n");
     let bodyText = commentBody.join("");
     let he = require('he');
