@@ -34,7 +34,7 @@ app.use(express.json({limit: '1mb'}));
 mongoose.set('strictQuery', false);
 const start = async () => {
     try{
-        await mongoose.connect(`mongodb+srv://liamgorey11:${process.env.MONGODB_password}@cluster0.ktp9aod.mongodb.net/?retryWrites=true&w=majority`);
+        //await mongoose.connect(`mongodb+srv://liamgorey11:${process.env.MONGODB_password}@cluster0.ktp9aod.mongodb.net/?retryWrites=true&w=majority`);
         console.log("MongoDB Connected");
         app.listen(port, () => console.log(`Starting server at ${port}`));
     }catch(e){
@@ -50,12 +50,12 @@ app.get('/searchReddit', async (req, res) => {
   const snoo = new SnooShift(); 
   const searchParams = {
     q: searchTerm,
-    size: 55,
+    size: 100,
     order: 'asc',
     sort: 'created_utc'
   };
   try{
-    const comments = await snoo.searchComments(searchParams);
+    const comments = await snoo.searchComments("\""+searchParams+"\"");
     let commentBody = comments.map(comment => comment.body + "\n");
     let bodyText = commentBody.join("");
     let he = require('he');
@@ -71,57 +71,48 @@ app.get('/searchReddit', async (req, res) => {
     const analyzeParams = {
       'text': fixedText,
       'features': {
-        'entities': {
-          'emotion': true,
-          'sentiment': true,
-        },
-        'keywords': {
-          'emotion': true,
-          'sentiment': true,
-        },
+        'emotion': {
+          'document': {
+              'emotion':true,
+          },
+          'entities': {
+            'emotion': true,
+            'sentiment': true,
+          },
+          'keywords': {
+            'emotion': true,
+            'sentiment': true,
+          },
+        }
       },
     };
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
   
+    // TODO: check for language is english
+    // if lang is english (program wil give bad request if language is not english)
     
-    let sentimentResults = analysisResults.result.keywords;
-     var sadness=0;
-     var joy=0;
-     var fear=0;
-     var disgust=0;
-     var anger=0;
-     //sadness
-     for(let i = 0; i < sentimentResults.length; i++) {
-       sadness+=sentimentResults[i].emotion.sadness;
-     }
-     sadness/=sentimentResults.length;
-     sadness = sadness.toFixed(2);
-     //joy
-     for(let i = 0; i < sentimentResults.length; i++) {
-       joy+=sentimentResults[i].emotion.joy;
-     }
-     joy/=sentimentResults.length;
-     joy = joy.toFixed(2);
-    //fear
-    for(let i = 0; i < sentimentResults.length; i++) {
-      fear+=sentimentResults[i].emotion.fear;
-    }
-    fear/=sentimentResults.length;
+    let sentimentResults = analysisResults.result.emotion.document.emotion;
+          
+
+    //sadness
+    var sadness = sentimentResults.sadness;
+    sadness = sadness.toFixed(2);
+
+    var joy = sentimentResults.joy;
+    joy = joy.toFixed(2);
+
+    var fear = sentimentResults.fear;
     fear = fear.toFixed(2);
-    //disgust
-    for(let i = 0; i < sentimentResults.length; i++) {
-      disgust+=sentimentResults[i].emotion.disgust;
-    }
-    disgust/=sentimentResults.length;
+    
+    var disgust = sentimentResults.disgust;
     disgust = disgust.toFixed(2);
-    //anger
-    for(let i = 0; i < sentimentResults.length; i++) {
-      anger+=sentimentResults[i].emotion.anger;
-    }
-    anger/=sentimentResults.length;
+
+    var anger = sentimentResults.anger;
     anger = anger.toFixed(2);
-    var neutral = 1 
-    neutral = neutral - sadness - joy - fear - disgust - anger;
+
+    var neutral = 1 - sadness - joy - fear - disgust - anger;
+    neutral = neutral.toFixed(2);
+
 
     console.log("RESULTS");
     console.log("sadness: "+sadness);
@@ -129,7 +120,7 @@ app.get('/searchReddit', async (req, res) => {
     console.log("fear: "+fear);
     console.log("disgust: "+disgust);
     console.log("anger: "+anger);
-    console.log("neutral: "+neutral.toFixed(2));   
+    console.log("neutral: "+neutral);
     
     let maxEmotion = 'sadness';
     let maxScore=sadness;
