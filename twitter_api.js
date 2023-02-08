@@ -50,7 +50,7 @@ app.get('/searchReddit', async (req, res) => {
   const snoo = new SnooShift(); 
   const searchParams = {
     q: searchTerm,
-    size: 100,
+    size: 500,
     order: 'asc',
     sort: 'created_utc'
   };
@@ -60,6 +60,10 @@ app.get('/searchReddit', async (req, res) => {
     let bodyText = commentBody.join("");
     let he = require('he');
     let fixedText = he.decode(bodyText);
+
+    fs.writeFileSync('test.txt', fixedText);
+
+
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
       version: '2022-04-07',
       authenticator: new IamAuthenticator({
@@ -75,18 +79,13 @@ app.get('/searchReddit', async (req, res) => {
           'document': {
               'emotion':true,
           },
-          'entities': {
-            'emotion': true,
-            'sentiment': true,
-          },
-          'keywords': {
-            'emotion': true,
-            'sentiment': true,
-          },
         }
       },
     };
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
+
+    const outputString = JSON.stringify(analysisResults, null, 2);
+    fs.writeFileSync('results.json', outputString);
   
     // TODO: check for language is english
     // if lang is english (program wil give bad request if language is not english)
