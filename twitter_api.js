@@ -50,7 +50,7 @@ app.get('/searchReddit', async (req, res) => {
   const snoo = new SnooShift(); 
   const searchParams = {
     q: searchTerm,
-    size: 500,
+    size: 100,
     order: 'asc',
     sort: 'created_utc'
   };
@@ -61,7 +61,7 @@ app.get('/searchReddit', async (req, res) => {
     let he = require('he');
     let fixedText = he.decode(bodyText);
 
-    fs.writeFileSync('test.txt', fixedText);
+    fs.writeFileSync('redditComments.txt', fixedText);
 
 
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
@@ -79,9 +79,15 @@ app.get('/searchReddit', async (req, res) => {
           'document': {
               'emotion':true,
           },
-        }
+        },
+        'sentiment': {
+          'document': {
+            'score':true,
+          }
+        },
       },
     };
+
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
 
     const outputString = JSON.stringify(analysisResults, null, 2);
@@ -90,27 +96,29 @@ app.get('/searchReddit', async (req, res) => {
     // TODO: check for language is english
     // if lang is english (program wil give bad request if language is not english)
     
-    let sentimentResults = analysisResults.result.emotion.document.emotion;
+    let emotionResults = analysisResults.result.emotion.document.emotion;
+    let sentimentResults = analysisResults.result.sentiment.document.score
           
 
     //sadness
-    var sadness = sentimentResults.sadness;
+    var sadness = emotionResults.sadness;
     sadness = sadness.toFixed(2);
 
-    var joy = sentimentResults.joy;
+    var joy = emotionResults.joy;
     joy = joy.toFixed(2);
 
-    var fear = sentimentResults.fear;
+    var fear = emotionResults.fear;
     fear = fear.toFixed(2);
     
-    var disgust = sentimentResults.disgust;
+    var disgust = emotionResults.disgust;
     disgust = disgust.toFixed(2);
 
-    var anger = sentimentResults.anger;
+    var anger = emotionResults.anger;
     anger = anger.toFixed(2);
 
     var neutral = 1 - sadness - joy - fear - disgust - anger;
     neutral = neutral.toFixed(2);
+
 
 
     console.log("RESULTS");
@@ -120,6 +128,7 @@ app.get('/searchReddit', async (req, res) => {
     console.log("disgust: "+disgust);
     console.log("anger: "+anger);
     console.log("neutral: "+neutral);
+    console.log("sentiment: "+sentimentResults);
     
     let maxEmotion = 'sadness';
     let maxScore=sadness;
