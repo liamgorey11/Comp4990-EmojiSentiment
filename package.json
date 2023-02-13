@@ -20,7 +20,7 @@
         "ibm-watson": "^7.1.2",
         "mongoose": "^6.8.4",
         "node-emoji": "^1.11.0",
-        "node-fetch": "^2.6.7",
+        "node-fetch": "^2.6.9",
         "node-notifier": "^10.0.1",
         "open": "^7.0.3",
         "p5js": "^1.2.18",

@@ -42,11 +42,33 @@ const start = async () => {
     }
 };
 start();
+//trying to get posts from facebook TEST
 
+//const accessToken = process.env.facebook_acessToken;
 
+app.get('/searchFacebook', async function(req, res) {
+  const query = req.query.term;
+  //search querys were deprecated in v16.0 of the facebook graph api so this endpoint is not working and we will no longer be using the graph api 
+  const endpoint = `https://graph.facebook.com/v16.0/search?q=${query}&type=post&access_token=${process.env.facebook_acessToken}`;
+  //endpoint to query facebook posts diffrent from the last endpoint
+  console.log("Facebook QUERY", query)  
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.log("data test", data);
+    let posts = [];
+    for (let i = 0; i < data.data.length; i++) {
+      posts.push(data.data[i].message);
+    }
+    res.json("meep");
+  } catch (error) {
+    console.error(error);
+  }
+});
+//searches reddit comments using snooshift and ibmwatson 
 app.get('/searchReddit', async (req, res) => {
-  const searchTerm = req.query.searchTerm;
-  console.log(req.query.searchTerm);
+  const searchTerm = req.query.term;
+  console.log("meep",req.query.term);
   const snoo = new SnooShift(); 
   const searchParams = {
     q: searchTerm,
@@ -60,10 +82,7 @@ app.get('/searchReddit', async (req, res) => {
     let bodyText = commentBody.join("");
     let he = require('he');
     let fixedText = he.decode(bodyText);
-
     fs.writeFileSync('redditComments.txt', fixedText);
-
-
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
       version: '2022-04-07',
       authenticator: new IamAuthenticator({
@@ -89,17 +108,13 @@ app.get('/searchReddit', async (req, res) => {
     };
 
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
-
     const outputString = JSON.stringify(analysisResults, null, 2);
     fs.writeFileSync('results.json', outputString);
-  
     // TODO: check for language is english
     // if lang is english (program wil give bad request if language is not english)
     
     let emotionResults = analysisResults.result.emotion.document.emotion;
     let sentimentResults = analysisResults.result.sentiment.document.score
-          
-
     //sadness
     var sadness = emotionResults.sadness;
     sadness = sadness.toFixed(2);
@@ -118,8 +133,6 @@ app.get('/searchReddit', async (req, res) => {
 
     var neutral = 1 - sadness - joy - fear - disgust - anger;
     neutral = neutral.toFixed(2);
-
-
 
     console.log("RESULTS");
     console.log("sadness: "+sadness);
@@ -176,6 +189,54 @@ app.get('/searchReddit', async (req, res) => {
   }
 });
 
+//search reddit comments using snoowrap and sentiment libraries
+app.get('/searchReddit1', async (req, res) => {
+  const searchTerm = req.query.term;
+  const snoo = new SnooShift();
+  const searchParams = {
+    q: searchTerm,
+    size: 100,
+    order: 'asc',
+    sort: 'created_utc'
+  }
+  try {
+      const comments = await snoo.search({searchParams});
+      var sentiment = new Sentiment();
+      var totalScore = 0;
+      for (var i = 0; i < comments.length; i++){
+          const result = sentiment.analyze(comments[i].body);
+          totalScore += result.score;
+      }
+      const averageSentiment = totalScore/comments.length;
+      console.log("AVGS SCORE COMMENTS: "+ averageSentiment);
+      let emoji;
+      if (averageSentiment > 1) 
+      {
+          emoji = "😁";
+      } 
+      else if (averageSentiment < -1) 
+      {
+          emoji = "😡";
+      } 
+      else if (averageSentiment < 0) 
+      {
+          emoji = "😔";
+      } 
+      else if (averageSentiment > 0) 
+      {
+          emoji = "🙂"; 
+      } 
+      else 
+      {
+          emoji = "😐";
+      }
+      res.json({averageSentiment, emoji});
+  } catch (err) {
+      return res.status(500).json({ error: err });
+  }
+});
+
+//search twitter tweets uses twit and sentiment libraries
 app.get('/searchTwitter', (req, res) => {
     const searchTerm = req.query.term;
     T.get('search/tweets', { q: searchTerm,count: 50}, function(err, data, response) {
