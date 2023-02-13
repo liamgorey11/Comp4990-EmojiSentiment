@@ -22,9 +22,6 @@
         <div class='container2' id="AvgSentiment2">
             Average Sentiment Reddit: 
         </div>
-        <div class='container2' id="AvgSentiment4">
-            Average Sentiment Facebook: 
-        </div>
         <div class='container2' id="AvgSentiment3">
             Average Sentiment Custom text:
         </div>
@@ -42,16 +39,11 @@
             $.get('/searchReddit', {term:searchInput},function(data){
                 $('#AvgSentiment2').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
             });
-            $.get('/searchFacebook', {term:searchInput }, function(data) {
-                $('#AvgSentiment4').append(`<p>Sentiment: ${data}, SearchTerm: ${query} </p>`);
-            });
             return false;
         }
-
         $(function(){
             $('#searchButton').click(submitForm);
         })
-       
         //sends the all the text to the server to be analyzed 
         $('#custom-Sentiment-Button').click(function(){
             var customSentiment = $('#custom-Sentiment').val();

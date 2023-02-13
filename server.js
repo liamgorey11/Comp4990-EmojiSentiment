@@ -42,29 +42,7 @@ const start = async () => {
     }
 };
 start();
-//trying to get posts from facebook TEST
 
-//const accessToken = process.env.facebook_acessToken;
-
-app.get('/searchFacebook', async function(req, res) {
-  const query = req.query.term;
-  //search querys were deprecated in v16.0 of the facebook graph api so this endpoint is not working and we will no longer be using the graph api 
-  const endpoint = `https://graph.facebook.com/v16.0/search?q=${query}&type=post&access_token=${process.env.facebook_acessToken}`;
-  //endpoint to query facebook posts diffrent from the last endpoint
-  console.log("Facebook QUERY", query)  
-  try {
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    console.log("data test", data);
-    let posts = [];
-    for (let i = 0; i < data.data.length; i++) {
-      posts.push(data.data[i].message);
-    }
-    res.json("meep");
-  } catch (error) {
-    console.error(error);
-  }
-});
 //searches reddit comments using snooshift and ibmwatson 
 app.get('/searchReddit', async (req, res) => {
   const searchTerm = req.query.term;
