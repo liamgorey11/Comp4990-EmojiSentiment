@@ -22,6 +22,9 @@
         <div class='container2' id="AvgSentiment2">
             Average Sentiment Reddit: 
         </div>
+        <div class='container2' id="AvgSentiment4">
+            Average Sentiment Github(topics/repos/etc):
+        </div>
         <div class='container2' id="AvgSentiment3">
             Average Sentiment Custom text:
         </div>
@@ -33,11 +36,14 @@
     <script>
         function submitForm(){
             var searchInput = $('#searchInput').val();
-            $.get('/searchTwitter',{term:searchInput},function(data){  
-                $('#AvgSentiment').append(`<p>Sentiment: ${data.averageSentiment},${data.emoji}, SearchTerm: ${searchInput} </p>`);
-            });  
             $.get('/searchReddit', {term:searchInput},function(data){
                 $('#AvgSentiment2').append(`<p>Sentiment: ${data}, SearchTerm: ${searchInput} </p>`);
+            });
+            $.get('/searchTwitter',{term:searchInput},function(data){  
+                $('#AvgSentiment').append(`<p>Sentiment: ${data.averageSentiment}, ${data.emoji}, SearchTerm: ${searchInput} </p>`);
+            });  
+            $.get('/searchGithub', {term:searchInput},function(data){
+                $('#AvgSentiment4').append(`<p>Sentiment: ${data.averageSentiment}, ${data.emoji}, SearchTerm: ${searchInput} </p>`);
             });
             return false;
         }

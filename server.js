@@ -42,11 +42,14 @@ const start = async () => {
     }
 };
 start();
+//search topics on reddit 
+const fetch = require('node-fetch');
+const GITHUB_API_URL = 'https://api.github.com';
+
 
 //searches reddit comments using snooshift and ibmwatson 
 app.get('/searchReddit', async (req, res) => {
   const searchTerm = req.query.term;
-  console.log("meep",req.query.term);
   const snoo = new SnooShift(); 
   const searchParams = {
     q: searchTerm,
@@ -167,53 +170,6 @@ app.get('/searchReddit', async (req, res) => {
   }
 });
 
-//search reddit comments using snoowrap and sentiment libraries
-app.get('/searchReddit1', async (req, res) => {
-  const searchTerm = req.query.term;
-  const snoo = new SnooShift();
-  const searchParams = {
-    q: searchTerm,
-    size: 100,
-    order: 'asc',
-    sort: 'created_utc'
-  }
-  try {
-      const comments = await snoo.search({searchParams});
-      var sentiment = new Sentiment();
-      var totalScore = 0;
-      for (var i = 0; i < comments.length; i++){
-          const result = sentiment.analyze(comments[i].body);
-          totalScore += result.score;
-      }
-      const averageSentiment = totalScore/comments.length;
-      console.log("AVGS SCORE COMMENTS: "+ averageSentiment);
-      let emoji;
-      if (averageSentiment > 1) 
-      {
-          emoji = "😁";
-      } 
-      else if (averageSentiment < -1) 
-      {
-          emoji = "😡";
-      } 
-      else if (averageSentiment < 0) 
-      {
-          emoji = "😔";
-      } 
-      else if (averageSentiment > 0) 
-      {
-          emoji = "🙂"; 
-      } 
-      else 
-      {
-          emoji = "😐";
-      }
-      res.json({averageSentiment, emoji});
-  } catch (err) {
-      return res.status(500).json({ error: err });
-  }
-});
-
 //search twitter tweets uses twit and sentiment libraries
 app.get('/searchTwitter', (req, res) => {
     const searchTerm = req.query.term;
@@ -225,9 +181,6 @@ app.get('/searchTwitter', (req, res) => {
       for (var i = 0; i < tweets.length; i++){
           const result = sentiment.analyze(tweets[i].text);
           totalScore += result.score;
-          //console.log("\n",i," ",tweets[i].text);
-          //console.log("Postive: {" ,result.positive, "}","Negative: {", result.negative,"}")
-          //console.log("score: ",result.score);
       }
       //send back the data from the tweets aswell as average sentiment
         const averageSentiment = totalScore/tweets.length;
@@ -253,8 +206,59 @@ app.get('/searchTwitter', (req, res) => {
             emoji = "😐";
         }
         res.json({averageSentiment, emoji});
-        //res.json({tweets, averageSentiment});     
     });
+});
+app.get('/searchGitHub', async (req, res) => {
+  const searchTerm = req.query.term;
+  const url = `${GITHUB_API_URL}/search/repositories?q=${searchTerm}`;
+  const headers = {
+    'Authorization': `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+    'User-Agent': 'MyApp'
+  };
+  try {
+    const response = await fetch(url, { headers });
+    const data = await response.json();
+    const repositories = data.items;
+    const sentiment = new Sentiment();
+    var totalSentiment = 0;
+    for (const repo of repositories) {
+      var totalScore = 0;
+      const commitUrl = `${repo.url}/commits`;
+      const commitResponse = await fetch(commitUrl, { headers });
+      const commitData = await commitResponse.json();
+      const commits = commitData.map(commit => commit.commit.message);//handle repo with no commit error 
+      for (const commit of commits) {
+        const result = sentiment.analyze(commit);
+        totalScore += result.score/(commits.length);
+      }
+      const commentUrl = `${repo.url}/issues/comments`;
+      const commentResponse = await fetch(commentUrl, { headers });
+      const commentData = await commentResponse.json();
+      const comments = commentData.map(comment => comment.body);
+      for (const comment of comments) {
+        const result = sentiment.analyze(comment);
+        totalScore += result.score/(comments.length);
+      }
+      totalSentiment += totalScore / 2;
+    }
+    const averageSentiment = totalSentiment / repositories.length;
+    let emoji;
+    if (averageSentiment > 1) {
+      emoji = "😁";
+    } else if (averageSentiment < -1) {
+      emoji = "😡";
+    } else if (averageSentiment < 0) {
+      emoji = "😔";
+    } else if (averageSentiment > 0) {
+      emoji = "🙂";
+    } else {
+      emoji = "😐";
+    }
+    res.json({meep:{averageSentiment,emoji},twitter:{averageSentiment, emoji}});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 //reccieves text from the client textarea then returns the sentiment of the text to the client page

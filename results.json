@@ -3,32 +3,32 @@
   "statusText": "OK",
   "headers": {
     "server": "watson-gateway",
-    "content-length": "431",
+    "content-length": "544",
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-cache, no-store",
-    "x-dp-watson-tran-id": "886cd181-a88b-4899-9422-a5216b42790c, 886cd181-a88b-4899-9422-a5216b42790c",
+    "x-dp-watson-tran-id": "e6e7c184-3384-4d88-88aa-a7bee746f5cc, e6e7c184-3384-4d88-88aa-a7bee746f5cc",
     "content-security-policy": "default-src 'none'",
     "pragma": "no-cache",
     "x-content-type-options": "nosniff",
     "x-frame-options": "DENY",
     "x-xss-protection": "1; mode=block",
     "strict-transport-security": "max-age=31536000; includeSubDomains;",
-    "x-request-id": "886cd181-a88b-4899-9422-a5216b42790c",
-    "x-global-transaction-id": "886cd181-a88b-4899-9422-a5216b42790c",
-    "x-edgeconnect-midmile-rtt": "20",
-    "x-edgeconnect-origin-mex-latency": "2662",
-    "date": "Mon, 13 Feb 2023 19:30:40 GMT",
+    "x-request-id": "e6e7c184-3384-4d88-88aa-a7bee746f5cc",
+    "x-global-transaction-id": "e6e7c184-3384-4d88-88aa-a7bee746f5cc",
+    "x-edgeconnect-midmile-rtt": "13",
+    "x-edgeconnect-origin-mex-latency": "4242",
+    "date": "Wed, 15 Feb 2023 18:01:48 GMT",
     "connection": "close"
   },
   "result": {
     "usage": {
-      "text_units": 3,
-      "text_characters": 26659,
+      "text_units": 5,
+      "text_characters": 50000,
       "features": 2
     },
     "sentiment": {
       "document": {
-        "score": -0.268958,
+        "score": -0.63766,
         "mixed": "1",
         "label": "negative"
       }
@@ -37,13 +37,16 @@
     "emotion": {
       "document": {
         "emotion": {
-          "sadness": 0.231183,
-          "joy": 0.359258,
-          "fear": 0.11242,
-          "disgust": 0.056973,
-          "anger": 0.09344
+          "sadness": 0.293112,
+          "joy": 0.175042,
+          "fear": 0.107091,
+          "disgust": 0.090583,
+          "anger": 0.165516
         }
       }
-    }
+    },
+    "warnings": [
+      "Text content exceeds 50000 character limit. Only first 50000 characters processed..."
+    ]
   }
 }
