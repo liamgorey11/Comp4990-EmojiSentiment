@@ -9,7 +9,6 @@ const fs = require('fs');
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
-
 //Twit Setup
 api_key = process.env.TWITTER_API_KEY;
 api_key_secret = process.env.TWITTER_API_SECRET;
@@ -34,8 +33,6 @@ app.use(express.json({limit: '1mb'}));
 mongoose.set('strictQuery', false);
 const start = async () => {
     try{
-        //await mongoose.connect(`mongodb+srv://liamgorey11:${process.env.MONGODB_password}@cluster0.ktp9aod.mongodb.net/?retryWrites=true&w=majority`);
-        console.log("MongoDB Connected");
         app.listen(port, () => console.log(`Starting server at ${port}`));
     }catch(e){
         console.log(e.message);
@@ -45,7 +42,6 @@ start();
 //search topics on reddit 
 const fetch = require('node-fetch');
 const GITHUB_API_URL = 'https://api.github.com';
-
 
 //searches reddit comments using snooshift and ibmwatson 
 app.get('/searchReddit', async (req, res) => {
@@ -114,15 +110,6 @@ app.get('/searchReddit', async (req, res) => {
 
     var neutral = 1 - sadness - joy - fear - disgust - anger;
     neutral = neutral.toFixed(2);
-
-    console.log("RESULTS");
-    console.log("sadness: "+sadness);
-    console.log("joy: "+joy);
-    console.log("fear: "+fear);
-    console.log("disgust: "+disgust);
-    console.log("anger: "+anger);
-    console.log("neutral: "+neutral);
-    console.log("sentiment: "+sentimentResults);
     
     let maxEmotion = 'sadness';
     let maxScore=sadness;
@@ -163,7 +150,6 @@ app.get('/searchReddit', async (req, res) => {
         emoji = '🤔';
         break;
     }
-    console.log(emoji);
     res.json(emoji);  
   }catch(error){
     console.error(error);
@@ -184,7 +170,6 @@ app.get('/searchTwitter', (req, res) => {
       }
       //send back the data from the tweets aswell as average sentiment
         const averageSentiment = totalScore/tweets.length;
-        console.log("AVGS SCORE TWEETS: "+ averageSentiment);
         if (averageSentiment > 1) 
         {
           emoji = "😁";
@@ -254,7 +239,7 @@ app.get('/searchGitHub', async (req, res) => {
     } else {
       emoji = "😐";
     }
-    res.json({meep:{averageSentiment,emoji},twitter:{averageSentiment, emoji}});
+    res.json({averageSentiment,emoji});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -263,11 +248,8 @@ app.get('/searchGitHub', async (req, res) => {
 
 //reccieves text from the client textarea then returns the sentiment of the text to the client page
 app.get('/customSentiment', (req, res) => {
-    //analzes the textarea text from the client after the user clicks the button
     const text = req.query.term;
-    console.log(text);
     var sentiment = new Sentiment();
     const result = sentiment.analyze(text);
-    console.log(result);
     res.json(result.score);
 });

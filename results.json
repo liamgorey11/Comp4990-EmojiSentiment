@@ -3,32 +3,32 @@
   "statusText": "OK",
   "headers": {
     "server": "watson-gateway",
-    "content-length": "544",
+    "content-length": "432",
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-cache, no-store",
-    "x-dp-watson-tran-id": "e6e7c184-3384-4d88-88aa-a7bee746f5cc, e6e7c184-3384-4d88-88aa-a7bee746f5cc",
+    "x-dp-watson-tran-id": "c0b50955-f873-4f36-b8d0-e93592f68608, c0b50955-f873-4f36-b8d0-e93592f68608",
     "content-security-policy": "default-src 'none'",
     "pragma": "no-cache",
     "x-content-type-options": "nosniff",
     "x-frame-options": "DENY",
     "x-xss-protection": "1; mode=block",
     "strict-transport-security": "max-age=31536000; includeSubDomains;",
-    "x-request-id": "e6e7c184-3384-4d88-88aa-a7bee746f5cc",
-    "x-global-transaction-id": "e6e7c184-3384-4d88-88aa-a7bee746f5cc",
-    "x-edgeconnect-midmile-rtt": "13",
-    "x-edgeconnect-origin-mex-latency": "4242",
-    "date": "Wed, 15 Feb 2023 18:01:48 GMT",
+    "x-request-id": "c0b50955-f873-4f36-b8d0-e93592f68608",
+    "x-global-transaction-id": "c0b50955-f873-4f36-b8d0-e93592f68608",
+    "x-edgeconnect-midmile-rtt": "10",
+    "x-edgeconnect-origin-mex-latency": "3957",
+    "date": "Thu, 16 Feb 2023 22:11:38 GMT",
     "connection": "close"
   },
   "result": {
     "usage": {
       "text_units": 5,
-      "text_characters": 50000,
+      "text_characters": 44166,
       "features": 2
     },
     "sentiment": {
       "document": {
-        "score": -0.63766,
+        "score": -0.615178,
         "mixed": "1",
         "label": "negative"
       }
@@ -37,16 +37,13 @@
     "emotion": {
       "document": {
         "emotion": {
-          "sadness": 0.293112,
-          "joy": 0.175042,
-          "fear": 0.107091,
-          "disgust": 0.090583,
-          "anger": 0.165516
+          "sadness": 0.291011,
+          "joy": 0.200063,
+          "fear": 0.11898,
+          "disgust": 0.079375,
+          "anger": 0.161332
         }
       }
-    },
-    "warnings": [
-      "Text content exceeds 50000 character limit. Only first 50000 characters processed..."
-    ]
+    }
   }
 }
