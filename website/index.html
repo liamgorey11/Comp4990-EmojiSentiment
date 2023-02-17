@@ -55,7 +55,7 @@
             var customSentiment = $('#custom-Sentiment').val();
             console.log(customSentiment);
             $.get('/customSentiment',{term:customSentiment},function(data){
-                $('#AvgSentiment3').append(`<p>Average Sentiment General Text: ${data}, SearchTerm: ${customSentiment} </p>`);
+                $('#AvgSentiment3').append(`<p>Average Sentiment General Text: ${data.sentiment}, ${data.emoji}, SearchTerm: ${customSentiment} </p>`);
             });
         });
     </script>

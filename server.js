@@ -43,6 +43,7 @@ start();
 const fetch = require('node-fetch');
 const GITHUB_API_URL = 'https://api.github.com';
 
+
 //searches reddit comments using snooshift and ibmwatson 
 app.get('/searchReddit', async (req, res) => {
   const searchTerm = req.query.term;
@@ -110,7 +111,7 @@ app.get('/searchReddit', async (req, res) => {
 
     var neutral = 1 - sadness - joy - fear - disgust - anger;
     neutral = neutral.toFixed(2);
-    
+
     let maxEmotion = 'sadness';
     let maxScore=sadness;
     if (joy > maxScore) {
@@ -170,29 +171,34 @@ app.get('/searchTwitter', (req, res) => {
       }
       //send back the data from the tweets aswell as average sentiment
         const averageSentiment = totalScore/tweets.length;
-        if (averageSentiment > 1) 
-        {
-          emoji = "😁";
-        } 
-        else if (averageSentiment < -1) 
-        {
-            emoji = "😡";
-        } 
-        else if (averageSentiment < 0) 
-        {
-            emoji = "😔";
-        } 
-        else if (averageSentiment > 0) 
-        {
-            emoji = "🙂"; 
-        } 
-        else 
-        {
-            emoji = "😐";
-        }
+        emoji = GetEmojiForSentiment(averageSentiment);
         res.json({averageSentiment, emoji});
     });
 });
+
+function GetEmojiForSentiment(averageSentiment) {
+  if (averageSentiment > 1) 
+  {
+    emoji = "😁";
+  } 
+  else if (averageSentiment < -1) 
+  {
+      emoji = "😡";
+  } 
+  else if (averageSentiment < 0) {
+      emoji = "😔";
+  } 
+  else if (averageSentiment > 0) 
+  {
+      emoji = "🙂"; 
+  } 
+  else 
+  {
+      emoji = "😐";
+  }
+  return emoji;
+}
+
 app.get('/searchGitHub', async (req, res) => {
   const searchTerm = req.query.term;
   const url = `${GITHUB_API_URL}/search/repositories?q=${searchTerm}`;
@@ -228,17 +234,7 @@ app.get('/searchGitHub', async (req, res) => {
     }
     const averageSentiment = totalSentiment / repositories.length;
     let emoji;
-    if (averageSentiment > 1) {
-      emoji = "😁";
-    } else if (averageSentiment < -1) {
-      emoji = "😡";
-    } else if (averageSentiment < 0) {
-      emoji = "😔";
-    } else if (averageSentiment > 0) {
-      emoji = "🙂";
-    } else {
-      emoji = "😐";
-    }
+    emoji = GetEmojiForSentiment(averageSentiment);
     res.json({averageSentiment,emoji});
   } catch (error) {
     console.error(error);
@@ -247,9 +243,12 @@ app.get('/searchGitHub', async (req, res) => {
 });
 
 //reccieves text from the client textarea then returns the sentiment of the text to the client page
-app.get('/customSentiment', (req, res) => {
+app.get('/customSentiment', async (req, res) => {
     const text = req.query.term;
     var sentiment = new Sentiment();
     const result = sentiment.analyze(text);
-    res.json(result.score);
+    sentiment = result.score;
+    console.log(text.length);
+    emoji = GetEmojiForSentiment(sentiment);
+    res.json({sentiment,emoji});
 });
