@@ -45,12 +45,11 @@ const GITHUB_API_URL = 'https://api.github.com';
 
 
 //searches reddit comments using snooshift and ibmwatson 
-app.get('/searchReddit', async (req, res) => {
-  const searchTerm = req.query.term;
+async function getReddit(query, limit){
   const snoo = new SnooShift(); 
   const searchParams = {
-    q: searchTerm,
-    size: 100,
+    q: query,
+    size: limit,
     order: 'asc',
     sort: 'created_utc'
   };
@@ -68,7 +67,6 @@ app.get('/searchReddit', async (req, res) => {
       }),
       serviceUrl: process.env.Watson_serviceUrl,
     });
-    
     const analyzeParams = {
       'text': fixedText,
       'features': {
@@ -84,7 +82,6 @@ app.get('/searchReddit', async (req, res) => {
         },
       },
     };
-
     const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
     const outputString = JSON.stringify(analysisResults, null, 2);
     fs.writeFileSync('results.json', outputString);
@@ -151,29 +148,50 @@ app.get('/searchReddit', async (req, res) => {
         emoji = '🤔';
         break;
     }
-    res.json(emoji);  
+    return emoji;  
   }catch(error){
     console.error(error);
   }
+};
+app.get('/searchReddit', async(req, res )=> {
+  try{
+    const searchTerm = req.query.term;
+    const emojiReddit = await getReddit(searchTerm, 100);
+    res.json(emojiReddit);
+  }catch(error){
+    res.status(500).send(error);
+  }
 });
 
-//search twitter tweets uses twit and sentiment libraries
-app.get('/searchTwitter', (req, res) => {
-    const searchTerm = req.query.term;
-    T.get('search/tweets', { q: searchTerm,count: 50}, function(err, data, response) {
-      if(err) return res.status(500).json({ error: err });
-      const tweets = data.statuses;
-      var sentiment = new Sentiment();
-      var totalScore = 0;
-      for (var i = 0; i < tweets.length; i++){
+function getTwitter(query, count){
+  return new Promise((resolve, reject) => {
+    T.get('search/tweets', { q: query, count }, function (err, data, response) {
+      if (err) {
+        reject(err);
+      } else {
+        const tweets = data.statuses;
+        const sentiment = new Sentiment();
+        let totalScore = 0;
+        for (let i = 0; i < tweets.length; i++) {
           const result = sentiment.analyze(tweets[i].text);
           totalScore += result.score;
+        }
+        const averageSentiment = totalScore / tweets.length;
+        const emoji = GetEmojiForSentiment(averageSentiment);
+        resolve({averageSentiemnentTwitter: averageSentiment, emojiTwitter:emoji });
       }
-      //send back the data from the tweets aswell as average sentiment
-        const averageSentiment = totalScore/tweets.length;
-        emoji = GetEmojiForSentiment(averageSentiment);
-        res.json({averageSentiment, emoji});
     });
+  });
+}
+app.get('/searchTwitter', async (req, res) => {
+  try{
+    const searchTerm = req.query.term;
+    const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, 40);
+    const results = {averageSentiemnentTwitter, emojiTwitter,}
+    res.json(results);
+  }catch(error){
+    res.status(500).send(error);
+  }
 });
 
 function GetEmojiForSentiment(averageSentiment) {
@@ -199,9 +217,8 @@ function GetEmojiForSentiment(averageSentiment) {
   return emoji;
 }
 
-app.get('/searchGitHub', async (req, res) => {
-  const searchTerm = req.query.term;
-  const url = `${GITHUB_API_URL}/search/repositories?q=${searchTerm}`;
+async function getGithub(query, limit){
+  const url = `${GITHUB_API_URL}/search/repositories?q=${query}&per_page=${limit}`;
   const headers = {
     'Authorization': `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
     'User-Agent': 'MyApp'
@@ -235,10 +252,21 @@ app.get('/searchGitHub', async (req, res) => {
     const averageSentiment = totalSentiment / repositories.length;
     let emoji;
     emoji = GetEmojiForSentiment(averageSentiment);
-    res.json({averageSentiment,emoji});
+    return {averageSentiemnentGithub:averageSentiment,emojiGithub:emoji};
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
+  }
+}
+
+app.get('/searchGithub', async (req, res) => {
+  try{
+    const searchTerm = req.query.term;
+    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,40);
+    const results = {averageSentiemnentGithub, emojiGithub}
+    res.json(results);
+  }catch(error){
+    res.status(500).send(error);
   }
 });
 
