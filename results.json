@@ -3,32 +3,32 @@
   "statusText": "OK",
   "headers": {
     "server": "watson-gateway",
-    "content-length": "431",
+    "content-length": "545",
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-cache, no-store",
-    "x-dp-watson-tran-id": "07411b41-3b42-49ff-9487-919f717180ea, 07411b41-3b42-49ff-9487-919f717180ea",
+    "x-dp-watson-tran-id": "79c63b45-d4b0-466b-bddb-7f63a7045a3f, 79c63b45-d4b0-466b-bddb-7f63a7045a3f",
     "content-security-policy": "default-src 'none'",
     "pragma": "no-cache",
     "x-content-type-options": "nosniff",
     "x-frame-options": "DENY",
     "x-xss-protection": "1; mode=block",
     "strict-transport-security": "max-age=31536000; includeSubDomains;",
-    "x-request-id": "07411b41-3b42-49ff-9487-919f717180ea",
-    "x-global-transaction-id": "07411b41-3b42-49ff-9487-919f717180ea",
+    "x-request-id": "79c63b45-d4b0-466b-bddb-7f63a7045a3f",
+    "x-global-transaction-id": "79c63b45-d4b0-466b-bddb-7f63a7045a3f",
     "x-edgeconnect-midmile-rtt": "10",
-    "x-edgeconnect-origin-mex-latency": "2414",
-    "date": "Sat, 18 Feb 2023 02:12:15 GMT",
+    "x-edgeconnect-origin-mex-latency": "4414",
+    "date": "Sat, 18 Feb 2023 19:07:52 GMT",
     "connection": "close"
   },
   "result": {
     "usage": {
-      "text_units": 3,
-      "text_characters": 26659,
+      "text_units": 5,
+      "text_characters": 50000,
       "features": 2
     },
     "sentiment": {
       "document": {
-        "score": -0.268958,
+        "score": -0.633403,
         "mixed": "1",
         "label": "negative"
       }
@@ -37,13 +37,16 @@
     "emotion": {
       "document": {
         "emotion": {
-          "sadness": 0.231183,
-          "joy": 0.359258,
-          "fear": 0.11242,
-          "disgust": 0.056973,
-          "anger": 0.09344
+          "sadness": 0.254058,
+          "joy": 0.320049,
+          "fear": 0.094622,
+          "disgust": 0.050059,
+          "anger": 0.102699
         }
       }
-    }
+    },
+    "warnings": [
+      "Text content exceeds 50000 character limit. Only first 50000 characters processed..."
+    ]
   }
 }

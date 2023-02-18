@@ -43,7 +43,6 @@ start();
 const fetch = require('node-fetch');
 const GITHUB_API_URL = 'https://api.github.com';
 
-
 //searches reddit comments using snooshift and ibmwatson 
 async function getReddit(query, limit){
   const snoo = new SnooShift(); 
@@ -174,6 +173,7 @@ function getTwitter(query, count){
     });
   });
 }
+
 app.get('/search', async (req, res) => {
   try{
     const searchTerm = req.query.term;
@@ -258,7 +258,6 @@ app.get('/customSentiment', async (req, res) => {
     var sentiment = new Sentiment();
     const result = sentiment.analyze(text);
     sentiment = result.score;
-    console.log(text.length);
     emoji = GetEmojiForSentiment(sentiment);
     res.json({sentiment,emoji});
 });
