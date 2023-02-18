@@ -153,15 +153,6 @@ async function getReddit(query, limit){
     console.error(error);
   }
 };
-app.get('/searchReddit', async(req, res )=> {
-  try{
-    const searchTerm = req.query.term;
-    const emojiReddit = await getReddit(searchTerm, 100);
-    res.json(emojiReddit);
-  }catch(error){
-    res.status(500).send(error);
-  }
-});
 
 function getTwitter(query, count){
   return new Promise((resolve, reject) => {
@@ -183,11 +174,13 @@ function getTwitter(query, count){
     });
   });
 }
-app.get('/searchTwitter', async (req, res) => {
+app.get('/search', async (req, res) => {
   try{
     const searchTerm = req.query.term;
     const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, 40);
-    const results = {averageSentiemnentTwitter, emojiTwitter,}
+    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,40);
+    const emojiReddit = await getReddit(searchTerm, 100);
+    const results = {averageSentiemnentTwitter, emojiTwitter, averageSentiemnentGithub, emojiGithub, emojiReddit}
     res.json(results);
   }catch(error){
     res.status(500).send(error);
@@ -258,17 +251,6 @@ async function getGithub(query, limit){
     res.status(500).json({ error: error.message });
   }
 }
-
-app.get('/searchGithub', async (req, res) => {
-  try{
-    const searchTerm = req.query.term;
-    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,40);
-    const results = {averageSentiemnentGithub, emojiGithub}
-    res.json(results);
-  }catch(error){
-    res.status(500).send(error);
-  }
-});
 
 //reccieves text from the client textarea then returns the sentiment of the text to the client page
 app.get('/customSentiment', async (req, res) => {
