@@ -29,6 +29,7 @@
         "sentiment": "^5.0.2",
         "snooshift": "^1.0.2",
         "snoowrap": "^1.23.0",
-        "twit": "^2.2.11"
+        "twit": "^2.2.11",
+        "underscore": "^1.13.6"
     }
 }

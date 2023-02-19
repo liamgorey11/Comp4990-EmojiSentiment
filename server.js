@@ -44,13 +44,12 @@ const fetch = require('node-fetch');
 const GITHUB_API_URL = 'https://api.github.com';
 
 //searches reddit comments using snooshift and ibmwatson 
-async function getReddit(query, limit){
+async function getReddit(query, limit, startDate){
   const snoo = new SnooShift(); 
   const searchParams = {
     q: query,
     size: limit,
-    order: 'asc',
-    sort: 'created_utc'
+    after:  startDate
   };
   try{
     const comments = await snoo.searchComments(searchParams);
@@ -153,9 +152,10 @@ async function getReddit(query, limit){
   }
 };
 
-function getTwitter(query, count){
+function getTwitter(query, startDate, count){
   return new Promise((resolve, reject) => {
-    T.get('search/tweets', { q: query, count }, function (err, data, response) {
+    T.get('search/tweets', { q: `${query} since:${startDate}`, count }, function (err, data, response) {
+      console.log(`${query} since:${startDate}`);
       if (err) {
         reject(err);
       } else {
@@ -177,9 +177,14 @@ function getTwitter(query, count){
 app.get('/search', async (req, res) => {
   try{
     const searchTerm = req.query.term;
-    const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, 40);
-    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,40);
-    const emojiReddit = await getReddit(searchTerm, 100);
+    const startDate = req.query.startD;
+    const newDate = new Date(startDate);
+    const startTimeSecs = newDate.getTime() / 1000;
+    console.log(startTimeSecs);
+
+    const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, startDate, 100);
+    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,5,startDate);
+    const emojiReddit = await getReddit(searchTerm, 5, startTimeSecs);
     const results = {averageSentiemnentTwitter, emojiTwitter, averageSentiemnentGithub, emojiGithub, emojiReddit}
     res.json(results);
   }catch(error){
@@ -188,30 +193,26 @@ app.get('/search', async (req, res) => {
 });
 
 function GetEmojiForSentiment(averageSentiment) {
-  if (averageSentiment > 1) 
-  {
+  if (averageSentiment > 1) {
     emoji = "😁";
   } 
-  else if (averageSentiment < -1) 
-  {
+  else if (averageSentiment < -1) {
       emoji = "😡";
   } 
   else if (averageSentiment < 0) {
       emoji = "😔";
   } 
-  else if (averageSentiment > 0) 
-  {
+  else if (averageSentiment > 0) {
       emoji = "🙂"; 
   } 
-  else 
-  {
+  else {
       emoji = "😐";
   }
   return emoji;
 }
 
-async function getGithub(query, limit){
-  const url = `${GITHUB_API_URL}/search/repositories?q=${query}&per_page=${limit}`;
+async function getGithub(query, limit, date){
+  const url = `${GITHUB_API_URL}/search/repositories?q=${query}&per_page=${limit}&date=${date}`;
   const headers = {
     'Authorization': `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
     'User-Agent': 'MyApp'

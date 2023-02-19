@@ -14,6 +14,11 @@
         <p>This page pulls data from Twitter. </p>
         <form id="serch-form" onsubmit="return submitForm()">
             <input id="searchInput" type="text" placeholder="Enter Search"></input>
+            <label for="start">Start date:</label>
+
+            <input type="date" id="start" name="trip-start"
+                    value="2018-07-22"
+                    min="2010-01-01" max="2023-2-18">
             <button class='button' type="submit" id= "searchButton">Search</button>
         </form>
         <div class='container2' id="AvgSentiment">
@@ -33,29 +38,6 @@
         <button class='button' type="submit" id= "custom-Sentiment-Button">Custom Sentiment</button>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        function appendData(data){
-            var searchInput = $('#searchInput').val();
-            $('#AvgSentiment2').append(`<p>Sentiment: ${data.emojiReddit}, SearchTerm: ${searchInput} </p>`);
-            $('#AvgSentiment').append(`<p>Sentiment: ${data.averageSentiemnentTwitter}, ${data.emojiTwitter}, SearchTerm: ${searchInput} </p>`);
-            $('#AvgSentiment4').append(`<p>Sentiment: ${data.averageSentiemnentGithub}, ${data.emojiGithub}, SearchTerm: ${searchInput} </p>`);
-        }
-        function submitForm(){
-            var searchInput = $('#searchInput').val();
-            $.get('/search', {term:searchInput}, appendData);
-            return false;
-        }
-        $(function(){
-            $('#searchButton').click(submitForm);
-        });
-        function appendCustomData(data){
-            var customSentiment = $('#custom-Sentiment').val();
-            $('#AvgSentiment3').append(`<p>Average Sentiment General Text: ${data.sentiment}, ${data.emoji}, SearchTerm: ${customSentiment} </p>`);
-        }
-        $('#custom-Sentiment-Button').click(function(){
-            var customSentiment = $('#custom-Sentiment').val();
-            $.get('/customSentiment',{term:customSentiment},appendCustomData);
-        });
-    </script>
+    <script src="client.js"></script>
 </body>
 </html>
