@@ -3,32 +3,32 @@
   "statusText": "OK",
   "headers": {
     "server": "watson-gateway",
-    "content-length": "430",
+    "content-length": "432",
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-cache, no-store",
-    "x-dp-watson-tran-id": "b5bd07ff-4b0c-4e71-abe5-95bcd838065a, b5bd07ff-4b0c-4e71-abe5-95bcd838065a",
+    "x-dp-watson-tran-id": "022c882f-1282-4137-93c5-5c3de8a35514, 022c882f-1282-4137-93c5-5c3de8a35514",
     "content-security-policy": "default-src 'none'",
     "pragma": "no-cache",
     "x-content-type-options": "nosniff",
     "x-frame-options": "DENY",
     "x-xss-protection": "1; mode=block",
     "strict-transport-security": "max-age=31536000; includeSubDomains;",
-    "x-request-id": "b5bd07ff-4b0c-4e71-abe5-95bcd838065a",
-    "x-global-transaction-id": "b5bd07ff-4b0c-4e71-abe5-95bcd838065a",
+    "x-request-id": "022c882f-1282-4137-93c5-5c3de8a35514",
+    "x-global-transaction-id": "022c882f-1282-4137-93c5-5c3de8a35514",
     "x-edgeconnect-midmile-rtt": "10",
-    "x-edgeconnect-origin-mex-latency": "558",
-    "date": "Sun, 19 Feb 2023 03:19:55 GMT",
+    "x-edgeconnect-origin-mex-latency": "802",
+    "date": "Tue, 21 Feb 2023 18:20:48 GMT",
     "connection": "close"
   },
   "result": {
     "usage": {
       "text_units": 1,
-      "text_characters": 295,
+      "text_characters": 7915,
       "features": 2
     },
     "sentiment": {
       "document": {
-        "score": -0.75885,
+        "score": -0.735726,
         "mixed": "1",
         "label": "negative"
       }
@@ -37,11 +37,11 @@
     "emotion": {
       "document": {
         "emotion": {
-          "sadness": 0.281434,
-          "joy": 0.202586,
-          "fear": 0.234785,
-          "disgust": 0.024234,
-          "anger": 0.081871
+          "sadness": 0.291858,
+          "joy": 0.192322,
+          "fear": 0.117118,
+          "disgust": 0.097652,
+          "anger": 0.199816
         }
       }
     }

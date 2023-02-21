@@ -41,6 +41,7 @@ const start = async () => {
 start();
 //search topics on reddit 
 const fetch = require('node-fetch');
+const { response } = require('express');
 const GITHUB_API_URL = 'https://api.github.com';
 
 //searches reddit comments using snooshift and ibmwatson 
@@ -181,6 +182,7 @@ app.get('/search', async (req, res) => {
     const newDate = new Date(startDate);
     const startTimeSecs = newDate.getTime() / 1000;
     console.log(startTimeSecs);
+    console.log(startDate);
 
     const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, startDate, 100);
     const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,5,startDate);
@@ -191,6 +193,50 @@ app.get('/search', async (req, res) => {
     res.status(500).send(error);
   }
 });
+app.get('/getTrendingTopics', async(req, res) => {
+  //calls the getTwitter, getGithub and getReddit functions with the trending topics on twitter maybe 4-10 of them.
+  // will need a new function to grab the trending hashtags ,then put that in as the query term for the functions. 
+  // this will be called from the client every hour. (maybe find a way to make the functions faster)
+  //right here will just be getting the trending topics(from canada)
+  try{
+    T.get('trends/place', {id:'23424775'}, async (err, data, response) => {
+      if(err) {
+        console.log(err);
+      }else{
+        const newDate = new Date('2022-02-20');
+        const date = '2022-02-20';
+        const startTimeSecs = newDate.getTime() / 1000;
+        let trendingTopics = [];
+
+        const trends = data[0].trends.slice(0,3);
+        for(const trend of trends) {
+          console.log(newDate);
+          const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(trend.name, date, 20);
+          const {averageSentiemnentGithub, emojiGithub} = await getGithub(trend.name,10,date);
+          const emojiReddit = await getReddit(trend.name, 20, startTimeSecs);
+          trendingTopics.push({
+            name: trend.name,
+            sentiment: {
+              twitter: averageSentiemnentTwitter,
+              github: averageSentiemnentGithub
+            },
+            emojis: {
+              twitter: emojiTwitter,
+              reddit: emojiReddit,
+              github: emojiGithub
+            }
+          });
+        };
+        res.json(trendingTopics);
+      } 
+    });
+  }catch (error) {
+    console.log(error);
+    res.status(500).send('Error fetching trending topics');
+  }
+});
+
+
 
 function GetEmojiForSentiment(averageSentiment) {
   if (averageSentiment > 1) {
@@ -212,7 +258,7 @@ function GetEmojiForSentiment(averageSentiment) {
 }
 
 async function getGithub(query, limit, date){
-  const url = `${GITHUB_API_URL}/search/repositories?q=${query}&per_page=${limit}&date=${date}`;
+  const url = `${GITHUB_API_URL}/search/repositories?q=${query}+created:>${date}&per_page=${limit}`;
   const headers = {
     'Authorization': `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
     'User-Agent': 'MyApp'
@@ -228,20 +274,30 @@ async function getGithub(query, limit, date){
       const commitUrl = `${repo.url}/commits`;
       const commitResponse = await fetch(commitUrl, { headers });
       const commitData = await commitResponse.json();
-      const commits = commitData.map(commit => commit.commit.message);//handle repo with no commit error 
-      for (const commit of commits) {
-        const result = sentiment.analyze(commit);
-        totalScore += result.score/(commits.length);
+
+      //check commitData here 
+      if (Array.isArray(commitData) && commitData.length > 0) {
+        const commits = commitData.map(commit => commit.commit.message);//handle repo with no commit error 
+        for (const commit of commits) {
+          const result = sentiment.analyze(commit);
+          totalScore += result.score/(commits.length);
+        }
       }
       const commentUrl = `${repo.url}/issues/comments`;
       const commentResponse = await fetch(commentUrl, { headers });
       const commentData = await commentResponse.json();
-      const comments = commentData.map(comment => comment.body);
-      for (const comment of comments) {
-        const result = sentiment.analyze(comment);
-        totalScore += result.score/(comments.length);
+
+      //chech commentData here
+      if (Array.isArray(commentData) && commentData.length > 0) { 
+        const comments = commentData.map(comment => comment.body);
+        for (const comment of comments) {
+          const result = sentiment.analyze(comment);
+          totalScore += result.score/(comments.length);
+        }
       }
-      totalSentiment += totalScore / 2;
+      if(totalScore > 0 ){
+        totalSentiment += totalScore / 2;
+      }
     }
     const averageSentiment = totalSentiment / repositories.length;
     let emoji;
@@ -249,7 +305,7 @@ async function getGithub(query, limit, date){
     return {averageSentiemnentGithub:averageSentiment,emojiGithub:emoji};
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
+    //res.status(500).json({ error: error.message });
   }
 }
 
