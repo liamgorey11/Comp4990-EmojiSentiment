@@ -211,9 +211,9 @@ app.get('/getTrendingTopics', async(req, res) => {
         const trends = data[0].trends.slice(0,3);
         for(const trend of trends) {
           console.log(newDate);
-          const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(trend.name, date, 20);
-          const {averageSentiemnentGithub, emojiGithub} = await getGithub(trend.name,10,date);
-          const emojiReddit = await getReddit(trend.name, 20, startTimeSecs);
+          const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(trend.name, date, 5);
+          const {averageSentiemnentGithub, emojiGithub} = await getGithub('if',5,date);
+          const emojiReddit = await getReddit(trend.name, 5, startTimeSecs);
           trendingTopics.push({
             name: trend.name,
             sentiment: {
