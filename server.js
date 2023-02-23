@@ -39,6 +39,7 @@ const start = async () => {
     }
 };
 start();
+
 //search topics on reddit 
 const fetch = require('node-fetch');
 const { response } = require('express');
@@ -86,9 +87,9 @@ async function getReddit(query, limit, startDate){
     fs.writeFileSync('results.json', outputString);
     // TODO: check for language is english
     // if lang is english (program wil give bad request if language is not english)
-    
+
     let emotionResults = analysisResults.result.emotion.document.emotion;
-    let sentimentResults = analysisResults.result.sentiment.document.score
+
     //sadness
     var sadness = emotionResults.sadness;
     sadness = sadness.toFixed(2);
