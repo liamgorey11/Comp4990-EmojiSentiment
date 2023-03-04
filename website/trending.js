@@ -16,15 +16,15 @@ function startLoader() {
 function stopLoader() {
   document.getElementById('loader').style.visibility = 'hidden';
 }
+document.addEventListener("load", function(){
+  stopLoader();
+});
+
 //will get getTrendingTopics every hour
 function getTrending() {
     //gets cookie data
     startLoader();
     const cookieData = Cookies.get('sentData');
-    $('#refresh').click(function () {
-      console.log("refreshed");
-      timeElapsed = 3600000;
-    });
     //if cookie data was set under an hour ago it resets the current cookie data to the html element trendbox or if the cookie data doesnt exist.
     if (cookieData) {
       const timeElapsed = Date.now() - Cookies.get('sentDataTime');
@@ -46,6 +46,10 @@ function getTrending() {
       console.log("Trending updated ");
     }, 3600000);
   }
-  
+  $('#refresh').click(function () {
+    startLoader();
+    console.log("refreshed");
+    $.get('/getTrendingTopics', appendTrendData);
+  });
   
   getTrending();
