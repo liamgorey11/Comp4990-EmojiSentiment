@@ -57,9 +57,6 @@ async function getReddit(query, limit, startDate){
     const comments = await snoo.searchComments(searchParams);
     let commentBody = comments.map(comment => comment.body + "\n");
     let bodyText = commentBody.join("");
-    let he = require('he');
-    let fixedText = he.decode(bodyText);
-    fs.writeFileSync('redditComments.txt', fixedText);
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
       version: '2022-04-07',
       authenticator: new IamAuthenticator({
@@ -68,7 +65,7 @@ async function getReddit(query, limit, startDate){
       serviceUrl: process.env.Watson_serviceUrl,
     });
     const analyzeParams = {
-      'text': fixedText,
+      'text': bodyText,
       'features': {
         'emotion': {
           'document': {
@@ -82,77 +79,70 @@ async function getReddit(query, limit, startDate){
         },
       },
     };
-    const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
-    const outputString = JSON.stringify(analysisResults, null, 2);
-    fs.writeFileSync('results.json', outputString);
-    // TODO: check for language is english
-    // if lang is english (program wil give bad request if language is not english)
-
-    let emotionResults = analysisResults.result.emotion.document.emotion;
-
-    //sadness
-    var sadness = emotionResults.sadness;
-    sadness = sadness.toFixed(2);
-
-    var joy = emotionResults.joy;
-    joy = joy.toFixed(2);
-
-    var fear = emotionResults.fear;
-    fear = fear.toFixed(2);
+  const analysisResults = await naturalLanguageUnderstanding.analyze(analyzeParams);
+  let emotionResults = analysisResults.result.emotion.document.emotion;
+  const emoji = getEmojisIBMTING(emotionResults);
+  const sentiment = analysisResults.result.sentiment.document.score;
+  console.log("SENTIMENT: " + sentiment);
+  return {averageSentiemnentReddit: sentiment, emojiReddit:emoji }; //fix this
     
-    var disgust = emotionResults.disgust;
-    disgust = disgust.toFixed(2);
-
-    var anger = emotionResults.anger;
-    anger = anger.toFixed(2);
-
-    var neutral = 1 - sadness - joy - fear - disgust - anger;
-    neutral = neutral.toFixed(2);
-
-    let maxEmotion = 'sadness';
-    let maxScore=sadness;
-    if (joy > maxScore) {
-      maxEmotion = 'joy';
-      maxScore = joy;
-    }
-    else if (fear > maxScore) {
-      maxEmotion = 'fear';
-      maxScore = fear;
-    }
-    else if (disgust > maxScore) {
-      maxEmotion = 'disgust';
-      maxScore = disgust;
-    }
-    else if (anger > maxScore) {
-      maxEmotion = 'anger';
-      maxScore = anger;
-    }
-    let emoji;
-    switch (maxEmotion) {
-      case 'joy':
-        emoji = '😊';
-        break;
-      case 'fear':
-        emoji = '😱';
-        break;
-      case 'disgust':
-        emoji = '🤢';
-        break;
-      case 'anger':
-        emoji = '😠';
-        break;
-      case 'sadness':
-        emoji = '😢';
-        break;
-      default:
-        emoji = '🤔';
-        break;
-    }
-    return emoji;  
   }catch(error){
     console.error(error);
   }
 };
+
+function getEmojisIBMTING(emotionResults){
+  const joy = emotionResults.joy;
+  const sadness = emotionResults.sadness;
+  const fear = emotionResults.fear;
+  const disgust = emotionResults.disgust;
+  const anger = emotionResults.anger;
+//ADD TO A LIST
+//dont do params like that
+  const emojis = [];
+  let total = joy + sadness + fear + disgust + anger;
+  console.log("TOTAL: " + total);
+  let joyPercent = Math.round(joy / total * 100);
+  let sadnessPercent = Math.round(sadness / total * 100);
+  let fearPercent = Math.round(fear / total * 100);
+  let disgustPercent = Math.round(disgust / total * 100);
+  let angerPercent = Math.round(anger / total * 100);
+  console.log("JOY: " + joyPercent);
+  console.log("SADNESS: " + sadnessPercent);
+  console.log("FEAR: " + fearPercent);
+  console.log("DISGUST: " + disgustPercent);
+  console.log("ANGER: " + angerPercent);
+  if (joyPercent >= 30) {
+    emojis.push(`😀:${joyPercent}%`);
+  } else if (joyPercent >= 20) {
+    emojis.push(`😊:${joyPercent}%`);
+  }
+  if (sadnessPercent >= 30) {
+    emojis.push(`😢:${sadnessPercent}%`);
+  } else if (sadnessPercent >= 20) {
+    emojis.push(`😔:${sadnessPercent}%`);
+  }
+  if (fearPercent >= 20) {
+    emojis.push(`😱:${fearPercent}%`);
+  } else if (fearPercent >= 15) {
+    emojis.push(`😨:${fearPercent}%`);
+  }
+  if (disgustPercent >= 20) {
+    emojis.push(`🤢:${disgustPercent}%`);
+  } else if (disgustPercent >= 15) {
+    emojis.push(`🤮:${disgustPercent}%`);
+  }
+  if (angerPercent >= 20) {
+    emojis.push(`🤬:${angerPercent}%`);
+  } else if (angerPercent >= 15) {
+    emojis.push(`😠:${angerPercent}%`);
+  }
+  if (emojis.length === 0) {
+    emojis.push('😐:ERROR');
+  }
+  console.log(emojis);
+  return emojis;
+}
 
 function getTwitter(query, startDate, count){
   return new Promise((resolve, reject) => {
@@ -171,7 +161,7 @@ function getTwitter(query, startDate, count){
         const averageSentiment = totalScore / tweets.length;
         const emoji = GetEmojiForSentiment(averageSentiment);
         resolve({averageSentiemnentTwitter: averageSentiment, emojiTwitter:emoji });
-      }
+      }//convert to IBM ONE 
     });
   });
 }
@@ -185,10 +175,10 @@ app.get('/search', async (req, res) => {
     console.log(startTimeSecs);
     console.log(startDate);
 
-    const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, startDate, 100);
-    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,5,startDate);
-    const emojiReddit = await getReddit(searchTerm, 5, startTimeSecs);
-    const results = {averageSentiemnentTwitter, emojiTwitter, averageSentiemnentGithub, emojiGithub, emojiReddit}
+    const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(searchTerm, startDate, 10);
+    const {averageSentiemnentGithub, emojiGithub} = await getGithub(searchTerm,10,startDate);
+    const {averageSentiemnentReddit, emojiReddit} = await getReddit(searchTerm, 10, startTimeSecs);
+    const results = {averageSentiemnentTwitter, emojiTwitter, averageSentiemnentGithub, emojiGithub, averageSentiemnentReddit, emojiReddit}
     res.json(results);
   }catch(error){
     res.status(500).send(error);
@@ -200,7 +190,7 @@ app.get('/getTrendingTopics', async(req, res) => {
   // this will be called from the client every hour. (maybe find a way to make the functions faster)
   //right here will just be getting the trending topics(from canada)
   try{
-    T.get('trends/place', {id:'23424775'}, async (err, data, response) => {
+    T.get('trends/place', {id:'23424775'}, async (err, data, response) => {//gets from canadian trending in canada top 3
       if(err) {
         console.log(err);
       }else{
@@ -214,11 +204,12 @@ app.get('/getTrendingTopics', async(req, res) => {
           console.log(newDate);
           const {averageSentiemnentTwitter, emojiTwitter} = await getTwitter(trend.name, date, 5);
           const {averageSentiemnentGithub, emojiGithub} = await getGithub('if',5,date);
-          const emojiReddit = await getReddit(trend.name, 5, startTimeSecs);
+          const {averageSentiemnentReddit, emojiReddit} = await getReddit(trend.name, 5, startTimeSecs);
           trendingTopics.push({
             name: trend.name,
             sentiment: {
               twitter: averageSentiemnentTwitter,
+              reddit: averageSentiemnentReddit,
               github: averageSentiemnentGithub
             },
             emojis: {
@@ -236,9 +227,7 @@ app.get('/getTrendingTopics', async(req, res) => {
     res.status(500).send('Error fetching trending topics');
   }
 });
-
-
-
+//used in github and twitter functions
 function GetEmojiForSentiment(averageSentiment) {
   if (averageSentiment > 1) {
     emoji = "😁";

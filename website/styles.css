@@ -1,29 +1,34 @@
+/* General styles */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f1f1f1;
+    background-color: lightgray;
 }
 * {
     box-sizing: border-box;
 }
-/* Full-width input fields */
-input[type=text], input[type=password] {
+html{
+    scroll-behavior: smooth;
+    background-color: lightgray;
+    opacity: 0.83;
+}
+/* Form styles */
+.form-input {
     width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
     display: inline-block;
+    padding: 15px;
+    margin: 5px 0;
     border: none;
     background: #f1f1f1;
 }
-input[type=text]:focus, input[type=password]:focus {
+.form-input:focus {
     background-color: #ddd;
     outline: none;
 }
 textarea {
-    width: 80%;
+    width: 800px;
     height: 200px;
-    padding: 15px;
-    margin: 5px 0 5px 0;
     display: inline-block;
+    padding: 15px;
     border: none;
     background: #f1f1f1;    
     border-radius: 4px;
@@ -33,65 +38,91 @@ textarea {
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
+    width: 100%;
     border: none;
     cursor: pointer;
-    width: 100%;
     opacity: 0.9;
+    border-radius: 4px;
 }
+.display-flex {
+    display: flex;
+    flex-direction: row;
+}
+.display-flex button{
+    flex-grow: 1;
+    width: 0;
+    margin: 5px;
+}
+
+/* Container styles */
 .container {
     border-radius: 10px;
     padding: 20px;
-    margin-top: 30px;
+    margin: 15px 100px 30px;
     background-color: #46856e7c;
-    margin-bottom: 30px;
 }
-/*container that extends other container with a diffretn background color*/
 .container2 {
     background-color: rgba(104, 160, 92, 0.5);
     border-radius: 10px;
     padding: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin: 15px 20px;
 }
+.loader {
+    margin: auto;
+    margin-left: 10px;
+    border: 5px solid #EAF0F6;
+    border-radius: 50%;
+    border-top: 5px solid #FF7A59;
+    width: 22px;
+    height: 22px;
+    animation: spinner 0.8s linear infinite;
+    visibility: hidden;
+}
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+/* Label styles */
 label {
     display: block;
     font: 1rem 'Fira Sans', sans-serif;
-}
-
-input,
-label {
     margin: 0.4rem 0;
 }
 
+/* Navigation styles */
 nav ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
 }
-
 nav li {
-	margin-right: 1rem;
+    margin-right: 1rem;
 }
-
 nav li:last-child {
-	margin-right: 0;
+    margin-right: 0;
 }
 
+/* Column styles */
 .left, .right {
     float: left;
     width: 20%; /* The width is 20%, by default */
-  }
-  
-  .main {
+}
+.main {
     float: left;
     width: 60%; /* The width is 60%, by default */
-  }
-  
+}
 @media screen and (max-width: 800px) {
     .left, .main, .right {
         width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
-      }  
+    }  
 }
+@media only screen and (max-width: 600px) {
+    /* Style adjustments for small screens */
+    body {
+      font-size: 16px;
+    }
+    .container2 {
+      padding: 5px;
+    }
+  }

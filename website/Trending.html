@@ -24,8 +24,24 @@
     <div class="container">
         <h2>Topics</h2>
         <p>These will be pulled from twitter then compared to reddit and github based on the sentiements</p>
-        <div class= 'container2' id="trendBox"></div>
+        <div class= 'container2' id="trendBox"><div class ="loader2" id="loader"></div></div>
+        <button class='button' id = 'refresh'>Refresh Results.</button>
     </div>
+    <footer>
+        <div class="container">
+          <p>We used the Twitter, Reddit, and GitHub APIs for this project. Please note that this is not a public website as the APIs prohibit public use of their data.</p>
+          <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Contact Us</a>
+          </div>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
+            <a href="#"><i class="fab fa-twitter"></i>Twitter</a>
+            <a href="#"><i class="fab fa-linkedin"></i>Linkedin</a>
+          </div>
+        </div>
+      </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="trending.js"></script>
 </body>

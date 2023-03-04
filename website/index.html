@@ -26,30 +26,53 @@
         
         <p>This page pulls data from Twitter. </p>
         <form id="serch-form" onsubmit="return submitForm()">
-            <input id="searchInput" type="text" placeholder="Enter Search"></input>
+            <div class="display-flex">
+                <input id="searchInput" autocomplete="off" type="text" placeholder="Enter Search"></input>
+                <div class ="loader" id="loader"></div>
+            </div>
             <label for="start">Start date:</label>
-
-            <input type="date" id="start" name="trip-start"
+            <input type="date"  autocomplete="off" id="start" name="trip-start"
                     value="2018-07-22"
                     min="2010-01-01" max="2023-2-18">
-            <button class='button' type="submit" id= "searchButton">Search</button>
+            <div class='display-flex'>
+                <button class='button' type="submit" id= "searchButton">Search</button>
+                <button class='button' id = 'clearButton'>Clear Results!</button>
+            </div>
         </form>
         <div class='container2' id="AvgSentiment">
-            Average Sentiment Twitter:
+            <h4 class='meep'>Average Sentiment Twitter:</h4>
+            <div class="data"></div>
         </div>
         <div class='container2' id="AvgSentiment2">
-            Average Sentiment Reddit: 
+            <h4 class='meep'>Average Sentiment Reddit:</h4>
+            <div class="data"></div>
         </div>
         <div class='container2' id="AvgSentiment4">
-            Average Sentiment Github(topics/repos/etc):
+            <h4 class='meep'>Average Sentiment Github(topics/repos/etc):</h4>
+            <div class="data"></div>
         </div>
         <div class='container2' id="AvgSentiment3">
-            Average Sentiment Custom text:
+            <h4 class='meep'>Average Sentiment Custom text:</h4>
+            <div class="data"></div>
         </div>
-    
         <textarea id="custom-Sentiment">Enter sample Text To get its Sentiment. </textarea>
         <button class='button' type="submit" id= "custom-Sentiment-Button">Custom Sentiment</button>
     </div>
+    <footer>
+        <div class="container">
+          <p>We used the Twitter, Reddit, and GitHub APIs for this project. Please note that this is not a public website as the APIs prohibit public use of their data.</p>
+          <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Contact Us</a>
+          </div>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
+            <a href="#"><i class="fab fa-twitter"></i>Twitter</a>
+            <a href="#"><i class="fab fa-linkedin"></i>Linkedin</a>
+          </div>
+        </div>
+      </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="client.js"></script>
 </body>
