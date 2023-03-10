@@ -1,35 +1,42 @@
 function startLoader() {
-  document.getElementById('loader').style.visibility = 'visible';
+  document.getElementById('newLoader').style.visibility = 'visible';
 };
 function stopLoader() {
-  document.getElementById('loader').style.visibility = 'hidden';
+  document.getElementById('newLoader').style.visibility = 'hidden';
 }
 
 function checkData() {//now doeesbt reset the headings
-  const cookieData1 = Cookies.get('sentDataReddit');
-  const cookieData2 = Cookies.get('sentDataTwitter');
-  const cookieData3 = Cookies.get('sentDataGithub');
+  let cookieData1 = Cookies.get('sentDataReddit');
+  let cookieData2 = Cookies.get('sentDataTwitter');
+  let cookieData3 = Cookies.get('sentDataGithub');
   if (cookieData1){
-    $('#AvgSentiment2').html(cookieData1);
+    $('#AvgSentiment2').html(`<h4>Average Sentiment Reddit:</h4> ${cookieData1}`); //fix NOW ORE ELSE
   }else {
     $('#AvgSentiment2').html('<h4>Average Sentiment Reddit:</h4>');
-  }if(cookieData2){
-    $('#AvgSentiment').html(cookieData2);
+  }
+  
+  if(cookieData2){
+    $('#AvgSentiment').html(`<h4>Average Sentiment Twitter:</h4> ${cookieData2}`);
+    
   }else{
     $('#AvgSentiment').html('<h4>Average Sentiment Twitter:</h4>');
   }
+
   if(cookieData3){
-    $('#AvgSentiment4').html(cookieData3);
-  }
-  else{
+    $('#AvgSentiment4').html(`<h4>Average Sentiment Github(topics/repos/etc):</h4> ${cookieData3}`);
+  }else{
     $('#AvgSentiment4').html('<h4>Average Sentiment Github(topics/repos/etc):</h4>');
   }
   return;
 }
 
-checkData();
+
 
 function appendData(data) {
+  //set cookies equal to header somewhere here 
+  //let cookieData1 = '<h4>Average Sentiment Twitter:</h4>';
+  //let cookieData2 = '<h4>Average Sentiment Reddit:</h4>';
+  //let cookieData3 = '<h4>Average Sentiment Github(topics/repos/etc):</h4>';
   var searchInput = $('#searchInput').val();
   $('#AvgSentiment2').append(
     `<p>Sentiment: ${data.averageSentiemnentReddit} ,${data.emojiReddit}, SearchTerm: ${searchInput} </p>`
@@ -41,9 +48,9 @@ function appendData(data) {
     `<p>Sentiment: ${data.averageSentiemnentGithub}, ${data.emojiGithub}, SearchTerm: ${searchInput} </p>`
   );
 
-  var cookieData1 = Cookies.get('sentDataReddit') || '';
-  var cookieData2 = Cookies.get('sentDataTwitter') || '';
-  var cookieData3 = Cookies.get('sentDataGithub') || '';
+  var cookieData1 = Cookies.get('sentDataReddit');
+  var cookieData2 = Cookies.get('sentDataTwitter');
+  var cookieData3 = Cookies.get('sentDataGithub');
 
   cookieData1 += `<p>Sentiment: ${data.emojiReddit}, SearchTerm: ${searchInput} </p>`;
   cookieData2 += `<p>Sentiment: ${data.averageSentiemnentTwitter}, ${data.emojiTwitter}, SearchTerm: ${searchInput} </p>`;
@@ -54,7 +61,7 @@ function appendData(data) {
   Cookies.set('sentDataGithub', cookieData3);
   stopLoader();
 }
-  
+checkData();
 function submitForm() {
   var searchInput = $('#searchInput').val();
   if(searchInput == ''){
@@ -62,7 +69,8 @@ function submitForm() {
     return false;
   }
   var startDate = $('#start').val();
-  $.get('/search', { term: searchInput, startD: startDate }, appendData);
+  var endDate = $('#end').val();
+  $.get('/search', { term: searchInput, startD: startDate, endD: endDate}, appendData);
   startLoader();
   return false;
 }
@@ -74,7 +82,7 @@ $(function () {
 function appendCustomData(data) {
   var customSentiment = $('#custom-Sentiment').val();
   $('#AvgSentiment3').append(
-    `<p>Average Sentiment General Text: ${data.sentiment}, ${data.emoji}, SearchTerm: ${customSentiment} </p>`
+    `<p>Average Sentiment General Text: ${data.custsentiment}, ${data.emoji}</p>`
   );
 }
   

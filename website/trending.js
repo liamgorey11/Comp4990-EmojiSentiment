@@ -1,13 +1,24 @@
 
 function appendTrendData(data){
   stopLoader();
+  $('#trendBox').empty();
     //adds sentiment data to string using join. and creates cookie for analysis data. 
-    cookieData = '';
-    $('#trendBox').empty();
-    for(let i = 0; i < data.length; i++){
-        $('#trendBox').append(`<p>${i + 1}: ${data[i].name} EmojiReddit: ${data[i].emojis.reddit}(${data[i].sentiment.reddit}) EmojiTwitter: ${data[i].emojis.twitter}(${data[i].sentiment.twitter}) EmojiGithub: ${data[i].emojis.github}(${data[i].sentiment.github})</p>`);
-        cookieData += `<p>${i + 1}: ${data[i].name} EmojiReddit: ${data[i].emojis.reddit} EmojiTwitter: ${data[i].emojis.twitter}(${data[i].sentiment.twitter}) EmojiGithub: ${data[i].emojis.github}(${data[i].sentiment.github})</p>`;
+    //const cookieData = '';
+    
+    let tableHTML = '<table>'; //start of table
+    let cookieData = '<table> <tr><th>Trend Number</th><th>Trend Name</th><th>Reddit Emoji</th><th>Twitter Emoji</th><th>Github Emoji</th></tr>';
+    //table header
+    if (Cookies.get('sentData')) {
+      tableHTML += '<tr><th>Trend Number</th><th>Trend Name</th><th>Reddit Emoji</th><th>Twitter Emoji</th><th>Github Emoji</th></tr>';
     }
+    for(let i = 0; i < data.length; i++){
+        tableHTML += `<tr><td>${i + 1}</td><td>${data[i].name}</td><td>${data[i].emojis.reddit}</td><td>${data[i].emojis.twitter}</td><td>${data[i].emojis.github}</td>`;
+        cookieData += `<tr><td>${i + 1}</td><td>${data[i].name}</td><td>${data[i].emojis.reddit}</td><td>${data[i].emojis.twitter}</td><td>${data[i].emojis.github}</td>`;
+    }
+    cookieData += '</table>';
+    tableHTML += '</table>';//end of table
+    //append data
+    $('#trendBox').append(tableHTML); 
     Cookies.set('sentData', cookieData);
 }
 function startLoader() {
@@ -22,13 +33,14 @@ document.addEventListener("load", function(){
 
 //will get getTrendingTopics every hour
 function getTrending() {
+  const hourTing = 3600000;
     //gets cookie data
     startLoader();
     const cookieData = Cookies.get('sentData');
     //if cookie data was set under an hour ago it resets the current cookie data to the html element trendbox or if the cookie data doesnt exist.
     if (cookieData) {
       const timeElapsed = Date.now() - Cookies.get('sentDataTime');
-      if (timeElapsed < 3600000) {
+      if (timeElapsed < hourTing) {
         $('#trendBox').html(cookieData);
         return;
       }
@@ -44,7 +56,7 @@ function getTrending() {
       $.get('/getTrendingTopics', appendTrendData); //might be abel to delete this 
       Cookies.set('sentDataTime', Date.now());
       console.log("Trending updated ");
-    }, 3600000);
+    }, hourTing);
   }
   $('#refresh').click(function () {
     startLoader();

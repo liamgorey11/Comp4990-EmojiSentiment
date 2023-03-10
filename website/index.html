@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>tweets</title>
+    <title>Emojify</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" href ="styles.css">
@@ -10,55 +10,50 @@
 </head>
 <body>
     <header>
-		<div class="container">
+		<div class="container smallRounding">
 			<nav>
 				<ul>
 					<li><a href="index.html">Home</a></li>
 					<li><a href="Trending.html">Trending</a></li>
-					<li><a href="#">idk something else maybe</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
-    <div class ="container">
-        <h2>Search for Tweets</h2>
-        
-        <p>This page pulls data from Twitter. </p>
+    <div class ="container smallRounding">
+        <h2>Search for topics on Twitter Reddit and Github</h2>
         <form id="serch-form" onsubmit="return submitForm()">
-            <div class="display-flex">
-                <input id="searchInput" autocomplete="off" type="text" placeholder="Enter Search"></input>
-                <div class ="loader" id="loader"></div>
-            </div>
-            <label for="start">Start date:</label>
-            <input type="date"  autocomplete="off" id="start" name="trip-start"
+            <div class='display-flex containerSearch'> 
+                <input class="doubleColumnWidth bigRounding" id="searchInput" autocomplete="off" type="text" placeholder="Enter Search"></input>
+                <input class="bigRounding" type="date"  id="start" name="trip-start"
                     value="2018-07-22"
-                    min="2010-01-01" max="2023-2-18">
+                    min="2000-01-01" max="2023-2-18"></input>
+                <input class="bigRounding" type="date"  id="end" name="trip-end"
+                    value="2022-07-22"
+                    min="2000-01-01" max="2023-2-18"></input>
+                <button class='button doubleColumnWidth rounding' type="submit" id= "searchButton">Search</button>
+                <button class='button doubleColumnWidth rounding' id = 'clearButton'>Clear Results!</button>
+            </div>
         </form>
-        <div class='display-flex'>
-            <button class='button' type="submit" id= "searchButton">Search</button>
-            <button class='button' id = 'clearButton'>Clear Results!</button>
+        <div class='newLoader' id="newLoader"></div>
+        <div class='container2 smallRounding' id="AvgSentiment">
+            <<DISPALU CIRCLE TINGS >>>>
+            <h4>Average Sentiment Twitter:</h4>
         </div>
-        <div class='container2' id="AvgSentiment">
-            <h4 class='meep'>Average Sentiment Twitter:</h4>
-            <div class="data"></div>
+        <div class='container2 smallRounding' id="AvgSentiment2">
+            <h4>Average Sentiment Reddit:</h4>
         </div>
-        <div class='container2' id="AvgSentiment2">
-            <h4 class='meep'>Average Sentiment Reddit:</h4>
-            <div class="data"></div>
+        <div class='container2 smallRounding' id="AvgSentiment4">
+            <h4>Average Sentiment Github(topics/repos/etc):</h4>
         </div>
-        <div class='container2' id="AvgSentiment4">
-            <h4 class='meep'>Average Sentiment Github(topics/repos/etc):</h4>
-            <div class="data"></div>
+        <div class='container2 smallRounding' id="AvgSentiment3">
+            <h4>Average Sentiment Custom text:</h4>
         </div>
-        <div class='container2' id="AvgSentiment3">
-            <h4 class='meep'>Average Sentiment Custom text:</h4>
-            <div class="data"></div>
-        </div>
-        <textarea id="custom-Sentiment">Enter sample Text To get its Sentiment. </textarea>
-        <button class='button' type="submit" id= "custom-Sentiment-Button">Custom Sentiment</button>
+        <div class ="loader" id="loaderCustom"></div>
+        <textarea class = "rounding" id="custom-Sentiment">Enter sample Text To get its Sentiment. </textarea>
+        <button class='button smallRounding' type="submit" id= "custom-Sentiment-Button">Custom Sentiment</button>
     </div>
     <footer>
-        <div class="container">
+        <div class="container rounding">
           <p>We used the Twitter, Reddit, and GitHub APIs for this project. Please note that this is not a public website as the APIs prohibit public use of their data.</p>
           <div class="footer-links">
             <a href="#">Privacy Policy</a>
