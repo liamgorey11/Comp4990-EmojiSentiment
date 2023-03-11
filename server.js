@@ -22,7 +22,7 @@ var T = new Twit({
   access_token_secret: accessTokenSecret,
 });
 
-//express setup
+//express setup localhost server
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
@@ -58,47 +58,135 @@ async function getReddit(query, limit, startDate, endDate) {
     const comments = await snoo.searchComments(searchParams);
     let commentBody = comments.map(comment => comment.body + "\n");
     let bodyText = commentBody.join("");
-    const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-      version: '2022-04-07',
-      authenticator: new IamAuthenticator({
-        apikey: process.env.Watson_apikey,
-      }),
-      serviceUrl: process.env.Watson_serviceUrl,
-    });
-    const analyzeParams = {
-      'text': bodyText,
-      'features': {
-        'emotion': {
-          'document': {
-            'emotion': true,
-          },
-        },
-        'sentiment': {
-          'document': {
-            'score': true,
-          },
-        },
-      },
-    };
-    const analysisResults = await naturalLanguageUnderstanding.analyze(
-      analyzeParams
-    );
-    let emotionResults = analysisResults.result.emotion.document.emotion;
-    const emoji = getEmojisIBMTING(emotionResults);
-    //const sentiment1 = new Sentiment();
-    //const emotionResults = sentiment1.analyze(bodyText);
-    //const sentiment = emotionResults;
-    //console.log("SENTIMENT: " + sentiment);
-    //const emoji = GetEmojiForSentiment(sentiment);
-    const sentiment = analysisResults.result.sentiment.document.score;
-    console.log("SENTIMENT: " + sentiment);
-    return ({averageSentiemnentReddit: sentiment, emojiReddit: emoji }); //fix this
+    const meep = await getEmojisIBMTING(bodyText);
+    return ({averageSentiemnentReddit: meep.sent, emojiReddit: meep.emojis}); //fix this
   } catch (error) {
     console.error(error);
   }
 };
 
-function getEmojisIBMTING(emotionResults) {
+//search twitter for user query
+function getTwitter(query, startDate, endDate, count) {
+  return new Promise((resolve, reject) => {
+    const params = {
+      q: `${query} since:${startDate}until:${endDate}`,
+      count,
+    }
+    T.get(
+      "search/tweets",
+      params,
+      function (err, data, response) {
+        console.log(`${query} since:${startDate}`);
+        if (err) {
+          reject(err);
+        } else {
+          const tweets = data.statuses;
+          const sentiment = new Sentiment();
+          let totalScore = 0;
+          for (let i = 0; i < tweets.length; i++) {
+            const result = sentiment.analyze(tweets[i].text);
+            totalScore += result.score;
+          }
+          const averageSentiment = totalScore / tweets.length;
+          const emoji = GetEmojiForSentiment(averageSentiment);
+          resolve({
+            averageSentiemnentTwitter: averageSentiment,
+            emojiTwitter: emoji,
+          });
+        } //convert to IBM ONE
+      }
+    );
+  });
+}
+//github searches repos/comments/commits
+async function getGithub(query, limit, startDate, endDate) {
+  const url = `${GITHUB_API_URL}/search/repositories?q=${query}+created:${startDate}..${endDate}&per_page=${limit}`;
+  const headers = {
+    Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+    "User-Agent": "MyApp",
+  };
+  try {
+    const response = await fetch(url, { headers });
+    const data = await response.json();
+    const repositories = data.items;
+    const sentiment = new Sentiment();
+    var totalSentiment = 0;
+    if(Array.isArray(repositories) && repositories.length >= 1){
+      for (const repo of repositories) {
+        var totalScore = 0;
+        const commitUrl = `${repo.url}/commits`;
+        const commitResponse = await fetch(commitUrl, { headers });
+        const commitData = await commitResponse.json();
+
+        //check commitData here
+        if (Array.isArray(commitData) && commitData.length > 0) {
+          const commits = commitData.map((commit) => commit.commit.message); //handle repo with no commit error
+          for (const commit of commits) {
+            const result = sentiment.analyze(commit);
+            totalScore += result.score / commits.length;
+          }
+        }
+        const commentUrl = `${repo.url}/issues/comments`;
+        const commentResponse = await fetch(commentUrl, { headers });
+        const commentData = await commentResponse.json();
+
+        //chech commentData here
+        if (Array.isArray(commentData) && commentData.length > 0) {
+          const comments = commentData.map((comment) => comment.body);
+          for (const comment of comments) {
+            const result = sentiment.analyze(comment);
+            totalScore += result.score / comments.length;
+          }
+        }
+        if (totalScore > 0) {
+          totalSentiment += totalScore / 2;
+        }
+      }
+  }
+  //check if there are any actual results 
+  if(repositories === undefined){
+    return ({averageSentiemnentGithub: "NO RESULTS", emojiGithub: "😐"});
+  }else{
+    const averageSentiment = totalSentiment / repositories.length;
+    const emoji = GetEmojiForSentiment(averageSentiment);
+    return ({ averageSentiemnentGithub: averageSentiment, emojiGithub: emoji });
+  }
+  } catch (error) {
+    console.error(error);
+    //res.status(500).json({ error: error.message });
+  }
+}
+
+async function getEmojisIBMTING(bodyText) {
+  const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
+    version: '2022-04-07',
+    authenticator: new IamAuthenticator({
+      apikey: process.env.Watson_apikey,
+    }),
+    serviceUrl: process.env.Watson_serviceUrl,
+  });
+  const analyzeParams = {
+    'text': bodyText,
+    'features': {
+      'emotion': {
+        'document': {
+          'emotion': true,
+        },
+      },
+      'sentiment': {
+        'document': {
+          'score': true,
+        },
+      },
+    },
+  };
+  const analysisResults = await naturalLanguageUnderstanding.analyze(
+    analyzeParams
+  );
+  let emotionResults = analysisResults.result.emotion.document.emotion;
+  const sentiment = analysisResults.result.sentiment.document.score;
+  console.log("SENTIMENT: " + sentiment);
+
   const joy = emotionResults.joy;
   const sadness = emotionResults.sadness;
   const fear = emotionResults.fear;
@@ -147,40 +235,7 @@ function getEmojisIBMTING(emotionResults) {
     emojis.push("😐:ERROR");
   }
   console.log(emojis);
-  return emojis;
-}
-
-function getTwitter(query, startDate, endDate, count) {
-  return new Promise((resolve, reject) => {
-    const params = {
-      q: `${query} since:${startDate}until:${endDate}`,
-      count,
-    }
-    T.get(
-      "search/tweets",
-      params,
-      function (err, data, response) {
-        console.log(`${query} since:${startDate}`);
-        if (err) {
-          reject(err);
-        } else {
-          const tweets = data.statuses;
-          const sentiment = new Sentiment();
-          let totalScore = 0;
-          for (let i = 0; i < tweets.length; i++) {
-            const result = sentiment.analyze(tweets[i].text);
-            totalScore += result.score;
-          }
-          const averageSentiment = totalScore / tweets.length;
-          const emoji = GetEmojiForSentiment(averageSentiment);
-          resolve({
-            averageSentiemnentTwitter: averageSentiment,
-            emojiTwitter: emoji,
-          });
-        } //convert to IBM ONE
-      }
-    );
-  });
+  return {emojis: emojis,sent: sentiment};
 }
 
 app.get("/search", async (req, res) => {
@@ -272,64 +327,6 @@ function GetEmojiForSentiment(averageSentiment) {
     emoji = "😐";
   }
   return emoji;
-}
-
-async function getGithub(query, limit, startDate, endDate) {
-  const url = `${GITHUB_API_URL}/search/repositories?q=${query}+created:${startDate}..${endDate}&per_page=${limit}`;
-  const headers = {
-    Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
-    "User-Agent": "MyApp",
-  };
-  try {
-    const response = await fetch(url, { headers });
-    const data = await response.json();
-    const repositories = data.items;
-    const sentiment = new Sentiment();
-    var totalSentiment = 0;
-    if(Array.isArray(repositories) && repositories.length >= 1){
-      for (const repo of repositories) {
-        var totalScore = 0;
-        const commitUrl = `${repo.url}/commits`;
-        const commitResponse = await fetch(commitUrl, { headers });
-        const commitData = await commitResponse.json();
-
-        //check commitData here
-        if (Array.isArray(commitData) && commitData.length > 0) {
-          const commits = commitData.map((commit) => commit.commit.message); //handle repo with no commit error
-          for (const commit of commits) {
-            const result = sentiment.analyze(commit);
-            totalScore += result.score / commits.length;
-          }
-        }
-        const commentUrl = `${repo.url}/issues/comments`;
-        const commentResponse = await fetch(commentUrl, { headers });
-        const commentData = await commentResponse.json();
-
-        //chech commentData here
-        if (Array.isArray(commentData) && commentData.length > 0) {
-          const comments = commentData.map((comment) => comment.body);
-          for (const comment of comments) {
-            const result = sentiment.analyze(comment);
-            totalScore += result.score / comments.length;
-          }
-        }
-        if (totalScore > 0) {
-          totalSentiment += totalScore / 2;
-        }
-      }
-  }
-  //check if there are any actual results 
-  if(repositories === undefined){
-    return ({averageSentiemnentGithub: "NO RESULTS", emojiGithub: "😐"});
-  }else{
-    const averageSentiment = totalSentiment / repositories.length;
-    const emoji = GetEmojiForSentiment(averageSentiment);
-    return ({ averageSentiemnentGithub: averageSentiment, emojiGithub: emoji });
-  }
-  } catch (error) {
-    console.error(error);
-    //res.status(500).json({ error: error.message });
-  }
 }
 
 //reccieves text from the client textarea then returns the sentiment of the text to the client page
