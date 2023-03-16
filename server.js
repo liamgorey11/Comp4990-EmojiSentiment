@@ -9,24 +9,19 @@ const fs = require("fs");
 const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
 const { IamAuthenticator } = require("ibm-watson/auth");
 
-//Twit Setup
-api_key = process.env.TWITTER_API_KEY;
-api_key_secret = process.env.TWITTER_API_SECRET;
-accessToken = process.env.TWITTER_ACCESS_TOKEN;
-accessTokenSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET;
-//twit object
+//twit object setup
 var T = new Twit({
-  consumer_key: api_key,
-  consumer_secret: api_key_secret,
-  access_token: accessToken,
-  access_token_secret: accessTokenSecret,
+  consumer_key: process.env.TWITTER_API_KEY,
+  consumer_secret: process.env.TWITTER_API_SECRET,
+  access_token: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
 //express setup localhost server
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
-app.use(express.static("website"));
+app.use(express.static("website"));//uses website folder 
 app.use(express.json({ limit: "1mb" }));
 
 //mongoose/express setup
@@ -46,7 +41,7 @@ const { response } = require("express");
 const GITHUB_API_URL = "https://api.github.com";
 
 //searches reddit comments using snooshift and ibmwatson
-async function getReddit(query, limit, startDate, endDate) {
+async function getDataReddit(query, limit, startDate, endDate) {
   const snoo = new SnooShift();
   const searchParams = {
     q: query,
@@ -56,50 +51,42 @@ async function getReddit(query, limit, startDate, endDate) {
   };
   try {
     const comments = await snoo.searchComments(searchParams);
-    let commentBody = comments.map(comment => comment.body + "\n");
+    console.log("comments", comments);
+    let commentBody = comments.map(comment => comment.body);
     let bodyText = commentBody.join("");
     const meep = await getEmojisIBMTING(bodyText);
-    return ({averageSentiemnentReddit: meep.sent, emojiReddit: meep.emojis}); //fix this
+    return {
+      averageSentiemnentReddit: meep.sent, 
+      emojiReddit: meep.emojis
+    }; 
   } catch (error) {
     console.error(error);
   }
 };
 
 //search twitter for user query
-function getTwitter(query, startDate, endDate, count) {
-  return new Promise((resolve, reject) => {
-    const params = {
-      q: `${query} since:${startDate}until:${endDate}`,
-      count,
-    }
-    T.get(
-      "search/tweets",
-      params,
-      function (err, data, response) {
-        console.log(`${query} since:${startDate}`);
-        if (err) {
-          reject(err);
-        } else {
-          const tweets = data.statuses;
-          const sentiment = new Sentiment();
-          let totalScore = 0;
-          for (let i = 0; i < tweets.length; i++) {
-            const result = sentiment.analyze(tweets[i].text);
-            totalScore += result.score;
-          }
-          const averageSentiment = totalScore / tweets.length;
-          const emoji = GetEmojiForSentiment(averageSentiment);
-          resolve({
-            averageSentiemnentTwitter: averageSentiment,
-            emojiTwitter: emoji,
-          });
-        } //convert to IBM ONE
-      }
-    );
-  });
+async function getDataTwitter(query, startDate, endDate, count) {
+  const params = {
+    q: `${query} since:${startDate}until:${endDate}`,
+    count,
+  };
+
+  try {
+    const { data } = await T.get("search/tweets", params);
+    const tweets = data.statuses;
+    let allTweets = tweets.map(tweet => tweet.text).join('\n');
+    const emojiData = await getEmojisIBMTING(allTweets);
+    return {
+      averageSentiemnentTwitter: emojiData.sent,
+      emojiTwitter: emojiData.emojis,
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
 //github searches repos/comments/commits
-async function getGithub(query, limit, startDate, endDate) {
+async function getDataGithub(query, limit, startDate, endDate) {
   const url = `${GITHUB_API_URL}/search/repositories?q=${query}+created:${startDate}..${endDate}&per_page=${limit}`;
   const headers = {
     Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
@@ -120,10 +107,10 @@ async function getGithub(query, limit, startDate, endDate) {
 
         //check commitData here
         if (Array.isArray(commitData) && commitData.length > 0) {
-          const commits = commitData.map((commit) => commit.commit.message); //handle repo with no commit error
-          for (const commit of commits) {
+          const commitSummarys = commitData.map((commitSum) => commitSum.commit.message); //handle repo with no commit error
+          for (const commit of commitSummarys) {
             const result = sentiment.analyze(commit);
-            totalScore += result.score / commits.length;
+            totalScore += result.score / commitSummarys.length;
           }
         }
         const commentUrl = `${repo.url}/issues/comments`;
@@ -250,9 +237,9 @@ app.get("/search", async (req, res) => {
     console.log(startTimeSecs);
     console.log(startDate);
 
-    const { averageSentiemnentTwitter, emojiTwitter } = await getTwitter(searchTerm,startDate,endDate,10);
-    const { averageSentiemnentGithub, emojiGithub } = await getGithub(searchTerm,10,startDate,endDate);
-    const { averageSentiemnentReddit, emojiReddit } = await getReddit(searchTerm,10,startTimeSecs,endTimeSecs);
+    const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(searchTerm,startDate,endDate,50);
+    const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(searchTerm,50,startDate,endDate);
+    const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(searchTerm,15,startTimeSecs,endTimeSecs);
     const results = {
       averageSentiemnentTwitter,
       emojiTwitter,
@@ -288,9 +275,9 @@ app.get("/getTrendingTopics", async (req, res) => {
         const trends = data[0].trends.slice(0, 3);
         for (const trend of trends) {
           const trimmedName = (trend.name).replace("#", "");
-          const { averageSentiemnentTwitter, emojiTwitter } = await getTwitter(trimmedName, date, date2, 10);
-          const { averageSentiemnentGithub, emojiGithub } = await getGithub(trimmedName, 10, date, date2);
-          const { averageSentiemnentReddit, emojiReddit } = await getReddit(trimmedName, 10, startTimeSecs, endTimeSecs);
+          const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(trimmedName, date, date2, 10);
+          const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(trimmedName, 10, date, date2);
+          const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(trimmedName, 10, startTimeSecs, endTimeSecs);
           trendingTopics.push({
             name: trend.name,
             sentiment: {
@@ -332,34 +319,6 @@ function GetEmojiForSentiment(averageSentiment) {
 //reccieves text from the client textarea then returns the sentiment of the text to the client page
 app.get("/customSentiment", async (req, res) => {
   const text = req.query.term;
-  const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-    version: "2022-04-07",
-    authenticator: new IamAuthenticator({
-      apikey: process.env.Watson_apikey,
-    }),
-    serviceUrl: process.env.Watson_serviceUrl,
-  });
-  const analyzeParams = {
-    text: text,
-    features: {
-      emotion: {
-        document: {
-          emotion: true,
-        },
-      },
-      sentiment: {
-        document: {
-          score: true,
-        },
-      },
-    },
-  };
-  const analysisResults = await naturalLanguageUnderstanding.analyze(
-    analyzeParams
-  );
-  let emotionResults = analysisResults.result.emotion.document.emotion;
-  const emoji = getEmojisIBMTING(emotionResults);
-  const custsentiment = analysisResults.result.sentiment.document.score;
-
-  res.json({ custsentiment, emoji });
+  const result = await getEmojisIBMTING(text);
+  res.json({ custsentiment: result.sent, emoji: result.emojis});
 });

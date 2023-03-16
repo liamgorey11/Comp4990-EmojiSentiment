@@ -6,26 +6,18 @@ function stopLoader() {
 }
 
 function checkData() {//now doeesbt reset the headings
-  let cookieData1 = Cookies.get('sentDataReddit');
-  let cookieData2 = Cookies.get('sentDataTwitter');
-  let cookieData3 = Cookies.get('sentDataGithub');
+  const cookieData1 = Cookies.get('sentDataReddit') || ''; //this is so it does not appened and undefined if nothing is changed 
+  const cookieData2 = Cookies.get('sentDataTwitter') || '';
+  const cookieData3 = Cookies.get('sentDataGithub') || '';
   if (cookieData1){
-    $('#AvgSentiment2').html(`<h4>Average Sentiment Reddit:</h4> ${cookieData1}`); //fix NOW ORE ELSE
-  }else {
-    $('#AvgSentiment2').html('<h4>Average Sentiment Reddit:</h4>');
+    $('#AvgSentiment2').html(`<h4>Average Sentiment Reddit:</h4> ${cookieData1}`);
   }
-  
   if(cookieData2){
     $('#AvgSentiment').html(`<h4>Average Sentiment Twitter:</h4> ${cookieData2}`);
     
-  }else{
-    $('#AvgSentiment').html('<h4>Average Sentiment Twitter:</h4>');
   }
-
   if(cookieData3){
     $('#AvgSentiment4').html(`<h4>Average Sentiment Github(topics/repos/etc):</h4> ${cookieData3}`);
-  }else{
-    $('#AvgSentiment4').html('<h4>Average Sentiment Github(topics/repos/etc):</h4>');
   }
   return;
 }
@@ -34,9 +26,7 @@ function checkData() {//now doeesbt reset the headings
 
 function appendData(data) {
   //set cookies equal to header somewhere here 
-  //let cookieData1 = '<h4>Average Sentiment Twitter:</h4>';
-  //let cookieData2 = '<h4>Average Sentiment Reddit:</h4>';
-  //let cookieData3 = '<h4>Average Sentiment Github(topics/repos/etc):</h4>';
+
   var searchInput = $('#searchInput').val();
   $('#AvgSentiment2').append(
     `<p>Sentiment: ${data.averageSentiemnentReddit} ,${data.emojiReddit}, SearchTerm: ${searchInput} </p>`
@@ -48,9 +38,9 @@ function appendData(data) {
     `<p>Sentiment: ${data.averageSentiemnentGithub}, ${data.emojiGithub}, SearchTerm: ${searchInput} </p>`
   );
 
-  var cookieData1 = Cookies.get('sentDataReddit');
-  var cookieData2 = Cookies.get('sentDataTwitter');
-  var cookieData3 = Cookies.get('sentDataGithub');
+  var cookieData1 = Cookies.get('sentDataReddit') || '';
+  var cookieData2 = Cookies.get('sentDataTwitter')|| '';
+  var cookieData3 = Cookies.get('sentDataGithub')|| '';
 
   cookieData1 += `<p>Sentiment: ${data.emojiReddit}, SearchTerm: ${searchInput} </p>`;
   cookieData2 += `<p>Sentiment: ${data.averageSentiemnentTwitter}, ${data.emojiTwitter}, SearchTerm: ${searchInput} </p>`;
