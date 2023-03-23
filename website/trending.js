@@ -1,71 +1,36 @@
 function startLoader() {
-  document.getElementById('loader1').style.visibility = 'visible';
-};
-function stopLoader() {
-  document.getElementById('loader1').style.visibility = 'hidden';
+  document.getElementById("loader1").style.visibility = "visible";
 }
-function appendTrendData(data){
-  $('#trendBox').empty();
-    //adds sentiment data to string using join. and creates cookie for analysis data. 
-    //const cookieData = '';
-    
-    let tableHTML = '<table>'; //start of table
-    let cookieData = '<table> <tr><th>Trend Number</th><th>Trend Name</th><th>Reddit Emoji</th><th>Twitter Emoji</th><th>Github Emoji</th></tr>';
-    //table header
-    if (Cookies.get('sentData')) {
-      tableHTML += '<tr><th>Trend Number</th><th>Trend Name</th><th>Reddit Emoji</th><th>Twitter Emoji</th><th>Github Emoji</th></tr>';
-    }
-    for(let i = 0; i < data.length; i++){
-        tableHTML += `<tr><td>${i + 1}</td><td>${data[i].name}</td><td>${data[i].emojis.reddit}</td><td>${data[i].emojis.twitter}</td><td>${data[i].emojis.github}</td>`;
-        cookieData += `<tr><td>${i + 1}</td><td>${data[i].name}</td><td>${data[i].emojis.reddit}</td><td>${data[i].emojis.twitter}</td><td>${data[i].emojis.github}</td>`;
-    }
-    cookieData += '</table>';
-    tableHTML += '</table>';//end of table
-    //append data
-    $('#trendBox').append(tableHTML); 
-    Cookies.set('sentData', cookieData);
-    stopLoader();
+function stopLoader() {
+  document.getElementById("loader1").style.visibility = "hidden";
+}
+function appendTrendData(data) {
+  $("#trendBox").empty();
+  //adds sentiment data to string using join. and creates cookie for analysis data.
+  //const cookieData = '';
+
+  let tableHTML = "<table> <tr><th>Trend Number</th><th>Trend Name</th><th>Reddit Emoji</th><th>Twitter Emoji</th><th>Github Emoji</th></tr>"; //start of table
+  for (let i = 0; i < data.length; i++) {
+    tableHTML += `<tr><td>${i + 1}</td><td>${data[i].name}</td><td>${data[i].emojis.reddit}</td><td>${data[i].emojis.twitter}</td><td>${data[i].emojis.github}</td>`;
+  }
+  tableHTML += "</table>"; //end of table
+
+  //append data
+  $("#trendBox").append(tableHTML);
+  stopLoader();
 }
 
 //will get getTrendingTopics every hour
 function getTrending() {
-  const hourTing = 3600000;
-    //gets cookie data
-    const cookieData = Cookies.get('sentData');
-    //if cookie data was set under an hour ago it resets the current cookie data to the html element trendbox or if the cookie data doesnt exist.
-    if (cookieData) {
-      const timeElapsed = Date.now() - Cookies.get('sentDataTime');
-      const timeLeft = 3600000 - timeElapsed;
-      var mins = Math.floor(timeLeft/60000);
-      var secs = ((timeLeft % 60000) / 1000).toFixed(0);
-      const time = mins + ":" +(secs < 10 ? '0': '') + secs;
-      //convert to mins and seconds
-      $('#timer').html(time);
-      if (timeElapsed < hourTing) {
-        $('#trendBox').html(cookieData);
-        return;
-      }
-    }
-    startLoader();
-    //calls append data function when the hour is up. and resets time cookie(try to make it reset cookies if server tuens off )
-    $.get('/getTrendingTopics', function(data) {
-      appendTrendData(data);
-      Cookies.set('sentDataTime', Date.now());
-      startLoader();
-    });
-    
-    setInterval(function() {
-      $.get('/getTrendingTopics', appendTrendData); //might be abel to delete this 
-      Cookies.set('sentDataTime', Date.now());
-      console.log("Trending updated ");
-      startLoader();
-    }, hourTing);
-  }
-  $('#refresh').click(function () {
-    startLoader();
-    console.log("refreshed");
-    Cookies.set('sentDataTime', Date.now());// reset so when they refresh it will still auto refresh in an hour after 
-    $.get('/getTrendingTopics', appendTrendData);
-  });
-  
-  getTrending();
+  startLoader();
+  //calls append data function when the hour is up. and resets time cookie(try to make it reset cookies if server tuens off )
+  $.get("/getTrendingTopics", appendTrendData);
+}
+$("#refresh").click(function () {
+  startLoader();
+  console.log("refreshed");
+  Cookies.set("sentDataTime", Date.now()); // reset so when they refresh it will still auto refresh in an hour after
+  $.get("/getTrendingTopics", appendTrendData);
+});
+
+getTrending();

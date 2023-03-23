@@ -42,7 +42,7 @@ const GITHUB_API_URL = "https://api.github.com";
 
 var trendingTopicsCache = [];
 var trendingTopicsTimestamp = 0;
-const trendingTopicsExpiry = 1000 * 60 * 60 * 12;
+const trendingTopicsExpiry = 1000 * 60 * 60 * 3;
 
 //searches reddit comments using snooshift and ibmwatson
 async function getDataReddit(query, limit, startDate, endDate) {
@@ -133,7 +133,7 @@ async function getDataGithub(query, limit, startDate, endDate) {
     };
   }
   } catch (error) {
-    console.error(error);
+    console.log(error); //This is an acceptable error that is handled in the trending topics case
   }
 }
 
@@ -274,9 +274,7 @@ app.get("/getTrendingTopics", async (req, res) => {
         const trends = data[0].trends.slice(0, 3);
         for (const trend of trends) {
 					const trimmedName = (trend.name).replace("#", "");
-					console.log("TRIMMED NAME::::", trimmedName);
- 
-					// OPTION 2: if any api fails, omit that data.
+
 					var averageSentiemnentTwitter = 0;
 					var averageSentiemnentGithub = 0;
 					var averageSentiemnentReddit = 0;
@@ -287,25 +285,22 @@ app.get("/getTrendingTopics", async (req, res) => {
 					const twitterResult = await getDataTwitter(trimmedName, date, date2, 100);
 					if (twitterResult != undefined)
 					{
-		 				// ( averageSentiemnentTwitter, emojiTwitter ) = twitterResult;
 						averageSentiemnentTwitter = twitterResult.averageSentiemnentTwitter;
 						emojiTwitter = twitterResult.emojiTwitter;
 					}
  
-					const githubResult = await getDataGithub(trimmedName, date, date2, 100);
+					const githubResult = await getDataGithub(trimmedName, 100,date, date2);
 					if (githubResult != undefined)
 					{
-						// ( averageSentiemnentGithub, emojiGithub ) = githubResult;
-						averageSentiemnentGithub = twitterResult.averageSentiemnentGithub;
-						emojiGithub = twitterResult.emojiGithub;
+						averageSentiemnentGithub = githubResult.averageSentiemnentGithub;
+						emojiGithub = githubResult.emojiGithub;
 					}
  
 					const redditResult = await getDataReddit(trimmedName, 25, startTimeSecs, endTimeSecs);
 					if (redditResult != undefined)
 					{
-						// ( averageSentiemnentReddit, emojiReddit ) = redditResult;
-						averageSentiemnentReddit = twitterResult.averageSentiemnentReddit;
-						emojiReddit = twitterResult.emojiReddit;
+						averageSentiemnentReddit = redditResult.averageSentiemnentReddit;
+						emojiReddit = redditResult.emojiReddit;
 					}
  
 					trendingTopics.push({
