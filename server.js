@@ -40,6 +40,10 @@ const fetch = require("node-fetch");
 const { response } = require("express");
 const GITHUB_API_URL = "https://api.github.com";
 
+var trendingTopicsCache = [];
+var trendingTopicsTimestamp = 0;
+const trendingTopicsExpiry = 1000 * 60 * 60 * 12;
+
 //searches reddit comments using snooshift and ibmwatson
 async function getDataReddit(query, limit, startDate, endDate) {
   const snoo = new SnooShift();
@@ -116,7 +120,7 @@ async function getDataGithub(query, limit, startDate, endDate) {
           commitAndCommentData = commitAndCommentData.concat(comments);
         }
       }
-  }
+    }
   //check if there are any actual results 
   if(repositories === undefined){
     return ({averageSentiemnentGithub: "NO RESULTS", emojiGithub: "😐"});
@@ -130,7 +134,6 @@ async function getDataGithub(query, limit, startDate, endDate) {
   }
   } catch (error) {
     console.error(error);
-    //res.status(500).json({ error: error.message });
   }
 }
 
@@ -242,47 +245,85 @@ app.get("/search", async (request, result) => {
     result.status(500).send(error);
   }
 });
+
 app.get("/getTrendingTopics", async (req, res) => {
   //calls the getTwitter, getGithub and getReddit functions with the trending topics on twitter maybe 4-10 of them.
   // will need a new function to grab the trending hashtags ,then put that in as the query term for the functions.
   // this will be called from the client every hour. (maybe find a way to make the functions faster)
   //right here will just be getting the trending topics(from canada)
+  const cacheReady = Date.now() < trendingTopicsTimestamp + trendingTopicsExpiry;
+  if(cacheReady) {
+    res.json(trendingTopicsCache);
+    return;
+  }
+
   try {
-    T.get("trends/place", { id: "23424775" }, async (err, data, response) => {
+    T.get("trends/place", { id: "23424775" }, async (err, data, response) => { //TODO: make const global var for Canada id in param section
       //gets from canadian trending in canada top 3
       if (err) {
         console.log(err);
       } else {
-        const newDate = new Date("2022-02-20");
+        const newDate = new Date("2022-02-20");//TODO: dont hardcode dates Put into functiion with date.now()now-24hours, and date2 date.now()
         const newDate2 = new Date("2023-02-21");
         const date = "2022-02-20";
         const date2 = "2023-02-21";
         const startTimeSecs = newDate.getTime() / 1000;
         const endTimeSecs = newDate2.getTime() / 1000;
         let trendingTopics = [];
-
         
         const trends = data[0].trends.slice(0, 3);
         for (const trend of trends) {
-          const trimmedName = (trend.name).replace("#", "");
-          console.log("TRIMMED NAME::::", trimmedName);
-          const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(trimmedName, date, date2, 100);
-          const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(trimmedName, 25, date, date2);
-          const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(trimmedName, 25, startTimeSecs, endTimeSecs);
-          trendingTopics.push({
-            name: trend.name,
-            sentiment: {
-              twitter: averageSentiemnentTwitter,
-              github: averageSentiemnentGithub,
-               reddit: averageSentiemnentReddit,
-            },
-            emojis: {
-              twitter: emojiTwitter,
-              reddit: emojiReddit,
-              github: emojiGithub,
-            },
-          });
-        }
+					const trimmedName = (trend.name).replace("#", "");
+					console.log("TRIMMED NAME::::", trimmedName);
+ 
+					// OPTION 2: if any api fails, omit that data.
+					var averageSentiemnentTwitter = 0;
+					var averageSentiemnentGithub = 0;
+					var averageSentiemnentReddit = 0;
+					var emojiTwitter = [];
+					var emojiReddit = [];
+					var emojiGithub = [];
+ 
+					const twitterResult = await getDataTwitter(trimmedName, date, date2, 100);
+					if (twitterResult != undefined)
+					{
+		 				// ( averageSentiemnentTwitter, emojiTwitter ) = twitterResult;
+						averageSentiemnentTwitter = twitterResult.averageSentiemnentTwitter;
+						emojiTwitter = twitterResult.emojiTwitter;
+					}
+ 
+					const githubResult = await getDataGithub(trimmedName, date, date2, 100);
+					if (githubResult != undefined)
+					{
+						// ( averageSentiemnentGithub, emojiGithub ) = githubResult;
+						averageSentiemnentGithub = twitterResult.averageSentiemnentGithub;
+						emojiGithub = twitterResult.emojiGithub;
+					}
+ 
+					const redditResult = await getDataReddit(trimmedName, 25, startTimeSecs, endTimeSecs);
+					if (redditResult != undefined)
+					{
+						// ( averageSentiemnentReddit, emojiReddit ) = redditResult;
+						averageSentiemnentReddit = twitterResult.averageSentiemnentReddit;
+						emojiReddit = twitterResult.emojiReddit;
+					}
+ 
+					trendingTopics.push({
+						name: trend.name,
+						sentiment: {
+							twitter: averageSentiemnentTwitter,
+							github: averageSentiemnentGithub,
+							reddit: averageSentiemnentReddit,
+						},
+						emojis: {
+							twitter: emojiTwitter,
+							reddit: emojiReddit,
+							github: emojiGithub,
+						},
+					});
+				}
+        trendingTopicsCache = trendingTopics;
+        trendingTopicsTimestamp = Date.now();
         res.json(trendingTopics);
       }
     });
@@ -291,6 +332,7 @@ app.get("/getTrendingTopics", async (req, res) => {
     res.status(500).send("Error fetching trending topics");
   }
 });
+
 //used in github and twitter functions
 function GetEmojiForSentiment(averageSentiment) {
   if (averageSentiment > 1) {
