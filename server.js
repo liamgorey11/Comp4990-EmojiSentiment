@@ -51,7 +51,6 @@ async function getDataReddit(query, limit, startDate, endDate) {
   };
   try {
     const comments = await snoo.searchComments(searchParams);
-    console.log("comments", comments);
     let commentBody = comments.map(comment => comment.body);
     let bodyText = commentBody.join("");
     const meep = await getEmojisIBMTING(bodyText);
@@ -85,6 +84,7 @@ async function getDataTwitter(query, startDate, endDate, count) {
     throw error;
   }
 }
+
 //github searches repos/comments/commits
 async function getDataGithub(query, limit, startDate, endDate) {
   const url = `${GITHUB_API_URL}/search/repositories?q=${query}+created:${startDate}..${endDate}&per_page=${limit}`;
@@ -96,37 +96,24 @@ async function getDataGithub(query, limit, startDate, endDate) {
     const response = await fetch(url, { headers });
     const data = await response.json();
     const repositories = data.items;
-    const sentiment = new Sentiment();
-    var totalSentiment = 0;
+    var commitAndCommentData = [];
     if(Array.isArray(repositories) && repositories.length >= 1){
       for (const repo of repositories) {
-        var totalScore = 0;
         const commitUrl = `${repo.url}/commits`;
         const commitResponse = await fetch(commitUrl, { headers });
         const commitData = await commitResponse.json();
-
         //check commitData here
         if (Array.isArray(commitData) && commitData.length > 0) {
           const commitSummarys = commitData.map((commitSum) => commitSum.commit.message); //handle repo with no commit error
-          for (const commit of commitSummarys) {
-            const result = sentiment.analyze(commit);
-            totalScore += result.score / commitSummarys.length;
-          }
+          commitAndCommentData = commitAndCommentData.concat(commitSummarys);
         }
         const commentUrl = `${repo.url}/issues/comments`;
         const commentResponse = await fetch(commentUrl, { headers });
         const commentData = await commentResponse.json();
-
         //chech commentData here
         if (Array.isArray(commentData) && commentData.length > 0) {
           const comments = commentData.map((comment) => comment.body);
-          for (const comment of comments) {
-            const result = sentiment.analyze(comment);
-            totalScore += result.score / comments.length;
-          }
-        }
-        if (totalScore > 0) {
-          totalSentiment += totalScore / 2;
+          commitAndCommentData = commitAndCommentData.concat(comments);
         }
       }
   }
@@ -134,9 +121,12 @@ async function getDataGithub(query, limit, startDate, endDate) {
   if(repositories === undefined){
     return ({averageSentiemnentGithub: "NO RESULTS", emojiGithub: "😐"});
   }else{
-    const averageSentiment = totalSentiment / repositories.length;
-    const emoji = GetEmojiForSentiment(averageSentiment);
-    return ({ averageSentiemnentGithub: averageSentiment, emojiGithub: emoji });
+    const CombinedData = commitAndCommentData.join(" ");
+    const emojiData = await getEmojisIBMTING(CombinedData);
+    return {
+      averageSentiemnentGithub: emojiData.sent,
+      emojiGithub: emojiData.emojis,
+    };
   }
   } catch (error) {
     console.error(error);
@@ -172,7 +162,6 @@ async function getEmojisIBMTING(bodyText) {
   );
   let emotionResults = analysisResults.result.emotion.document.emotion;
   const sentiment = analysisResults.result.sentiment.document.score;
-  console.log("SENTIMENT: " + sentiment);
 
   const joy = emotionResults.joy;
   const sadness = emotionResults.sadness;
@@ -225,32 +214,32 @@ async function getEmojisIBMTING(bodyText) {
   return {emojis: emojis,sent: sentiment};
 }
 
-app.get("/search", async (req, res) => {
+app.get("/search", async (request, result) => {
   try {
-    const searchTerm = req.query.term;
-    const startDate = req.query.startD;
-    const endDate = req.query.endD;
+    const searchTerm = request.query.term;
+    const startDate = request.query.startD;
+    const endDate = request.query.endD;
     const newDate = new Date(startDate);
     const newDate2 = new Date(endDate);
     const endTimeSecs = newDate2.getTime() / 1000;
     const startTimeSecs = newDate.getTime() / 1000;
     console.log(startTimeSecs);
     console.log(startDate);
-
-    const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(searchTerm,startDate,endDate,50);
-    const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(searchTerm,50,startDate,endDate);
-    const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(searchTerm,15,startTimeSecs,endTimeSecs);
+    console.log("SEARCH TERM:", searchTerm);
+    const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(searchTerm,startDate,endDate,100);
+    const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(searchTerm,25,startDate,endDate);
+    const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(searchTerm,25,startTimeSecs,endTimeSecs);
     const results = {
-      averageSentiemnentTwitter,
+      averageSentiemnentTwitter, 
       emojiTwitter,
       averageSentiemnentGithub,
       emojiGithub,
       averageSentiemnentReddit,
       emojiReddit,
     };
-    res.json(results);
+    result.json(results);
   } catch (error) {
-    res.status(500).send(error);
+    result.status(500).send(error);
   }
 });
 app.get("/getTrendingTopics", async (req, res) => {
@@ -272,12 +261,14 @@ app.get("/getTrendingTopics", async (req, res) => {
         const endTimeSecs = newDate2.getTime() / 1000;
         let trendingTopics = [];
 
+        
         const trends = data[0].trends.slice(0, 3);
         for (const trend of trends) {
           const trimmedName = (trend.name).replace("#", "");
-          const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(trimmedName, date, date2, 10);
-          const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(trimmedName, 10, date, date2);
-          const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(trimmedName, 10, startTimeSecs, endTimeSecs);
+          console.log("TRIMMED NAME::::", trimmedName);
+          const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(trimmedName, date, date2, 100);
+          const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(trimmedName, 25, date, date2);
+          const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(trimmedName, 25, startTimeSecs, endTimeSecs);
           trendingTopics.push({
             name: trend.name,
             sentiment: {

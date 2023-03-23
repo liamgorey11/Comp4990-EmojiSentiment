@@ -10,24 +10,25 @@
 </head>
 <body>
     <header>
-		<div class="container">
+		<div class="container smallRounding">
 			<nav>
 				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="Trending.html">Trending</a></li>
+					<li><a class ="smallRounding" href="index.html">Home</a></li>
+					<li><a class ="smallRounding" href="Trending.html">Trending</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
-    <div class="container">
+    <div class="container smallRounding">
         <h2>Trending Topics</h2>
         <p>These will be pulled from twitter then compared to reddit and github based on the sentiements</p>
         <div id="trendBox"></div>
-        <div class ="loader" id="loader"></div>
-        <button class='button' id = 'refresh'>Refresh Results.</button>
+        <div class ="newLoader" id="loader1"></div>
+        <div>Next Update: <span id="timer"></span></div>
+        <button class='button smallRounding' id = 'refresh'>Refresh Results.</button>
     </div>
     <footer>
-        <div class="container">
+        <div class="container smallRounding">
           <p>We used the Twitter, Reddit, and GitHub APIs for this project. Please note that this is not a public website as the APIs prohibit public use of their data.</p>
           <div class="footer-links">
             <a href="#">Privacy Policy</a>

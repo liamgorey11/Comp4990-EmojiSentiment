@@ -22,8 +22,6 @@ function checkData() {//now doeesbt reset the headings
   return;
 }
 
-
-
 function appendData(data) {
   //set cookies equal to header somewhere here 
 
