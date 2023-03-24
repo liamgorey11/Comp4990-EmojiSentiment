@@ -270,3 +270,7 @@ tfoot {
 #trendBox {
     padding-right: 40px;
 }
+#averageSentiment, #averageSentiment2 , #averageSentiment3, #averageSentiment4 {
+    padding-left: 1em;
+    padding-right: 1em;
+}

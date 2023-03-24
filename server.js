@@ -22,7 +22,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 app.use(express.static("website"));//uses website folder 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "2mb" }));
 
 //mongoose/express setup
 mongoose.set("strictQuery", false);
@@ -229,9 +229,9 @@ app.get("/search", async (request, result) => {
     console.log(startTimeSecs);
     console.log(startDate);
     console.log("SEARCH TERM:", searchTerm);
-    const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(searchTerm,startDate,endDate,100);
-    const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(searchTerm,25,startDate,endDate);
-    const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(searchTerm,25,startTimeSecs,endTimeSecs);
+    const { averageSentiemnentTwitter, emojiTwitter } = await getDataTwitter(searchTerm,startDate,endDate,50);
+    const { averageSentiemnentGithub, emojiGithub } = await getDataGithub(searchTerm,20,startDate,endDate);
+    const { averageSentiemnentReddit, emojiReddit } = await getDataReddit(searchTerm,20,startTimeSecs,endTimeSecs);
     const results = {
       averageSentiemnentTwitter, 
       emojiTwitter,
@@ -282,21 +282,21 @@ app.get("/getTrendingTopics", async (req, res) => {
 					var emojiReddit = [];
 					var emojiGithub = [];
  
-					const twitterResult = await getDataTwitter(trimmedName, date, date2, 100);
+					const twitterResult = await getDataTwitter(trimmedName, date, date2, 15);
 					if (twitterResult != undefined)
 					{
 						averageSentiemnentTwitter = twitterResult.averageSentiemnentTwitter;
 						emojiTwitter = twitterResult.emojiTwitter;
 					}
  
-					const githubResult = await getDataGithub(trimmedName, 100,date, date2);
+					const githubResult = await getDataGithub(trimmedName, 15,date, date2);
 					if (githubResult != undefined)
 					{
 						averageSentiemnentGithub = githubResult.averageSentiemnentGithub;
 						emojiGithub = githubResult.emojiGithub;
 					}
  
-					const redditResult = await getDataReddit(trimmedName, 25, startTimeSecs, endTimeSecs);
+					const redditResult = await getDataReddit(trimmedName, 15, startTimeSecs, endTimeSecs);
 					if (redditResult != undefined)
 					{
 						averageSentiemnentReddit = redditResult.averageSentiemnentReddit;
@@ -328,7 +328,7 @@ app.get("/getTrendingTopics", async (req, res) => {
   }
 });
 
-//used in github and twitter functions
+//used in github and twitter functions OLD
 function GetEmojiForSentiment(averageSentiment) {
   if (averageSentiment > 1) {
     emoji = "😁";

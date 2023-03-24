@@ -10,14 +10,14 @@ function checkData() {//now doeesbt reset the headings
   const cookieData2 = Cookies.get('sentDataTwitter') || '';
   const cookieData3 = Cookies.get('sentDataGithub') || '';
   if (cookieData1){
-    $('#AvgSentiment2').html(`<h4>Average Sentiment Reddit:</h4> ${cookieData1}`);
+    $('#AvgSentiment2').html(`<h4>Reddit:</h4> ${cookieData1}`);
   }
   if(cookieData2){
-    $('#AvgSentiment').html(`<h4>Average Sentiment Twitter:</h4> ${cookieData2}`);
+    $('#AvgSentiment').html(`<h4>Twitter:</h4> ${cookieData2}`);
     
   }
   if(cookieData3){
-    $('#AvgSentiment4').html(`<h4>Average Sentiment Github(topics/repos/etc):</h4> ${cookieData3}`);
+    $('#AvgSentiment4').html(`<h4>Github:</h4> ${cookieData3}`);
   }
   return;
 }
@@ -37,8 +37,8 @@ function appendData(data) {
   );
 
   var cookieData1 = Cookies.get('sentDataReddit') || '';
-  var cookieData2 = Cookies.get('sentDataTwitter')|| '';
-  var cookieData3 = Cookies.get('sentDataGithub')|| '';
+  var cookieData2 = Cookies.get('sentDataTwitter') || '';
+  var cookieData3 = Cookies.get('sentDataGithub') || '';
 
   cookieData1 += `<p>Sentiment: ${data.emojiReddit}, SearchTerm: ${searchInput} </p>`;
   cookieData2 += `<p>Sentiment: ${data.averageSentiemnentTwitter}, ${data.emojiTwitter}, SearchTerm: ${searchInput} </p>`;
@@ -82,10 +82,10 @@ $('#custom-Sentiment-Button').click(function () {
 $('#clearButton').click(function () {
   //aslo clear text in search box
   $('#searchInput').val('');
-  $('#AvgSentiment3').html('<h4>Average Sentiment Custom text:</h4>');
-  $('#AvgSentiment').html('<h4>Average Sentiment Twitter:</h4>');
-  $('#AvgSentiment2').html('<h4>Average Sentiment Reddit:</h4>');
-  $('#AvgSentiment4').html('<h4>Average Sentiment Github(topics/repos/etc):</h4>');
+  $('#AvgSentiment3').html('<h4>Custom text: </h4>');
+  $('#AvgSentiment').html('<h4>Twitter <i class="fab fa-twitter">: </h4>');
+  $('#AvgSentiment2').html('<h4> Reddit <i class="fab fa-reddit-alien">: </h4>');
+  $('#AvgSentiment4').html('<h4> Github <i class="fab fa-github">: </h4>');
   Cookies.remove('sentDataReddit');
   Cookies.remove('sentDataTwitter');
   Cookies.remove('sentDataGithub');
